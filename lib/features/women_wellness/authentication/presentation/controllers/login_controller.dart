@@ -10,8 +10,8 @@ class LoginController extends GetxController {
 
   final LoginUseCase loginUseCase;
 
-  final emailController = TextEditingController(text: 'demo@wellness.local');
-  final passwordController = TextEditingController(text: 'password123');
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   final rememberMe = true.obs;
   final obscurePassword = true.obs;
   final isLoading = false.obs;

@@ -17,7 +17,14 @@ class StorageService extends GetxService {
 
   String? getAuthToken() => _prefs.getString(AppConstants.keyAuthToken);
 
+  Future<void> saveRefreshToken(String token) =>
+      _prefs.setString(AppConstants.keyRefreshToken, token);
+
+  String? getRefreshToken() => _prefs.getString(AppConstants.keyRefreshToken);
+
   Future<void> clearAuthToken() => _prefs.remove(AppConstants.keyAuthToken);
+
+  Future<void> clearRefreshToken() => _prefs.remove(AppConstants.keyRefreshToken);
 
   Future<void> clearAll() => _prefs.clear();
 

@@ -54,9 +54,7 @@ class AuthRepositoryImpl implements AuthRepository {
       'password': password,
     });
     await _persistSession(response);
-    return AuthUserModel.fromJson(
-      (response['data'] as Map<String, dynamic>)['user'] as Map<String, dynamic>,
-    ).toEntity();
+    return AuthUserModel.fromJson(_normalizeUserPayload(response)).toEntity();
   }
 
   @override
@@ -85,9 +83,7 @@ class AuthRepositoryImpl implements AuthRepository {
       'password': password,
     });
     await _persistSession(response);
-    return AuthUserModel.fromJson(
-      (response['data'] as Map<String, dynamic>)['user'] as Map<String, dynamic>,
-    ).toEntity();
+    return AuthUserModel.fromJson(_normalizeUserPayload(response)).toEntity();
   }
 
   @override
@@ -141,21 +137,49 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
+    if (!environment.isMockMode) {
+      final refreshToken = storageService.getRefreshToken();
+      if (refreshToken != null && refreshToken.isNotEmpty) {
+        try {
+          await remoteDatasource.logout({'refreshToken': refreshToken});
+        } on AppException {
+          // Clear local session even if the server token is already invalid.
+        }
+      }
+    }
+
     await storageService.clearAuthToken();
+    await storageService.clearRefreshToken();
     await storageService.setString(WellnessStorageKeys.currentUserId, '');
   }
 
   Future<void> _persistSession(Map<String, dynamic> response) async {
     final data = response['data'] as Map<String, dynamic>?;
     if (data == null) return;
-    final token = data['token'] as String?;
+    final tokens = data['tokens'] as Map<String, dynamic>?;
+    final token = (tokens?['accessToken'] ?? data['token']) as String?;
+    final refreshToken = tokens?['refreshToken'] as String?;
     final user = data['user'] as Map<String, dynamic>?;
     if (token != null) await storageService.saveAuthToken(token);
+    if (refreshToken != null && refreshToken.isNotEmpty) {
+      await storageService.saveRefreshToken(refreshToken);
+    }
     if (user != null) {
       await storageService.setString(
         WellnessStorageKeys.currentUserId,
-        user['id'] as String,
+        '${user['id']}',
       );
     }
+  }
+
+  Map<String, dynamic> _normalizeUserPayload(Map<String, dynamic> response) {
+    final data = response['data'] as Map<String, dynamic>? ?? const {};
+    final user = data['user'] as Map<String, dynamic>? ?? const {};
+    return {
+      'id': '${user['id']}',
+      'fullName': user['fullName'] as String? ?? '',
+      'email': user['email'] as String? ?? '',
+      'mobile': user['phoneNumber'] as String? ?? user['mobile'] as String?,
+    };
   }
 }

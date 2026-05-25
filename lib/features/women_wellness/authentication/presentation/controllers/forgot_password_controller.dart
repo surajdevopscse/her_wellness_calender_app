@@ -25,7 +25,7 @@ class ForgotPasswordController extends GetxController {
     isLoading.value = true;
     try {
       await forgotPasswordUseCase(emailOrMobile: emailController.text.trim());
-      successMessage.value = 'Reset instructions sent (mock).';
+      successMessage.value = 'Reset instructions sent.';
       Get.toNamed(
         AuthenticationRoutes.resetPassword,
         arguments: emailController.text.trim(),

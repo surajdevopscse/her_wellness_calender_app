@@ -11,6 +11,7 @@ class AuthRemoteDatasource {
   static const forgotPasswordPath = '/api/v1/auth/forgot-password';
   static const resetPasswordPath = '/api/v1/auth/reset-password';
   static const verifyOtpPath = '/api/v1/auth/verify-otp';
+  static const logoutPath = '/api/v1/auth/logout';
 
   Future<Map<String, dynamic>> login(Map<String, dynamic> body) async {
     final response = await apiClient.post(loginPath, body: body);
@@ -34,6 +35,11 @@ class AuthRemoteDatasource {
 
   Future<Map<String, dynamic>> verifyOtp(Map<String, dynamic> body) async {
     final response = await apiClient.post(verifyOtpPath, body: body);
+    return response as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> logout(Map<String, dynamic> body) async {
+    final response = await apiClient.post(logoutPath, body: body);
     return response as Map<String, dynamic>;
   }
 }

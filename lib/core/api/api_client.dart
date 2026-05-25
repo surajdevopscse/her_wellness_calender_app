@@ -172,6 +172,9 @@ class ApiClient {
         : 'Request failed';
 
     switch (response.statusCode) {
+      case 400:
+      case 409:
+        throw ValidationAppException(message: message);
       case 401:
         throw UnauthorizedAppException(message: message);
       case 403:

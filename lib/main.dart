@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:her_wellness_calender/app/app.dart';
 import 'package:her_wellness_calender/app/di/app_dependencies.dart';
+import 'package:her_wellness_calender/app/environment/app_environment.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,7 @@ void main() async {
     ),
   );
 
-  await AppDependencies.initialize();
+  await AppDependencies.initialize(environment: AppEnvironment.live);
 
   runApp(const App());
 }

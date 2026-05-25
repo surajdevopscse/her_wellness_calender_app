@@ -13,4 +13,5 @@ class AppConstants {
   static const double dialogRadius = 12;
 
   static const String keyAuthToken = 'auth_token';
+  static const String keyRefreshToken = 'refresh_token';
 }

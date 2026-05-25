@@ -32,7 +32,7 @@ class AppEnvironment {
 
   static const AppEnvironment live = AppEnvironment(
     name: 'live',
-    baseUrl: 'https://localhost:62773',
+    baseUrl: 'https://localhost:7210',
     connectTimeout: Duration(seconds: 15),
     receiveTimeout: Duration(seconds: 20),
     dataSourceMode: DataSourceMode.remote,
