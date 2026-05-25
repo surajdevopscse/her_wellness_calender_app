@@ -1,0 +1,59 @@
+{
+  "success": true,
+  "message": "Symptoms loaded.",
+  "data": [
+    {
+      "id": "symptom_cramps",
+      "label": "Cramps",
+      "type": "cramps",
+      "isRecentlyUsed": true,
+      "isCustom": false
+    },
+    {
+      "id": "symptom_headache",
+      "label": "Headache",
+      "type": "headache",
+      "isRecentlyUsed": true,
+      "isCustom": false
+    },
+    {
+      "id": "symptom_acne",
+      "label": "Acne",
+      "type": "acne",
+      "isRecentlyUsed": false,
+      "isCustom": false
+    },
+    {
+      "id": "symptom_bloating",
+      "label": "Bloating",
+      "type": "bloating",
+      "isRecentlyUsed": true,
+      "isCustom": false
+    },
+    {
+      "id": "symptom_back_pain",
+      "label": "Back pain",
+      "type": "backPain",
+      "isRecentlyUsed": true,
+      "isCustom": false
+    },
+    {
+      "id": "symptom_nausea",
+      "label": "Nausea",
+      "type": "nausea",
+      "isRecentlyUsed": false,
+      "isCustom": false
+    },
+    {
+      "id": "symptom_breast_tenderness",
+      "label": "Breast tenderness",
+      "type": "breastTenderness",
+      "isRecentlyUsed": false,
+      "isCustom": false
+    }
+  ],
+  "meta": {
+    "source": "mock",
+    "version": "1.0"
+  }
+}

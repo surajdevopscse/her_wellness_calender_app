@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "message": "App settings loaded.",
+  "data": {
+    "themeMode": "system",
+    "languageCode": "en",
+    "notificationsEnabled": true,
+    "hideSensitiveNotificationText": true,
+    "appVersion": "1.0.0",
+    "buildNumber": "1"
+  },
+  "meta": {
+    "source": "mock",
+    "version": "1.0"
+  }
+}

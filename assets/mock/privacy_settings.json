@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "message": "Privacy settings loaded.",
+  "data": {
+    "appLockEnabled": true,
+    "pinEnabled": true,
+    "biometricEnabled": true,
+    "hideNotificationText": true,
+    "encryptedStorageEnabled": true,
+    "allowCloudBackup": false
+  },
+  "meta": {
+    "source": "mock",
+    "version": "1.0"
+  }
+}

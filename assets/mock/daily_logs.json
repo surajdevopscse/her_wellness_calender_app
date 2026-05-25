@@ -1,0 +1,80 @@
+{
+  "success": true,
+  "message": "Daily logs loaded.",
+  "data": [
+    {
+      "id": "log_001",
+      "logDate": "2026-05-04T00:00:00.000",
+      "flow": "medium",
+      "painLevel": "mild",
+      "mood": "tired",
+      "symptoms": ["cramps", "bloating"],
+      "energyLevel": "low",
+      "sleepQuality": "average",
+      "waterIntakeGlass": 5,
+      "medicineTaken": false,
+      "medicineName": null,
+      "customNotes": "Rest helped."
+    },
+    {
+      "id": "log_002",
+      "logDate": "2026-05-05T00:00:00.000",
+      "flow": "heavy",
+      "painLevel": "moderate",
+      "mood": "emotional",
+      "symptoms": ["cramps", "backPain", "headache"],
+      "energyLevel": "low",
+      "sleepQuality": "poor",
+      "waterIntakeGlass": 6,
+      "medicineTaken": true,
+      "medicineName": "Pain relief",
+      "customNotes": "Medicine taken after lunch."
+    },
+    {
+      "id": "log_003",
+      "logDate": "2026-05-06T00:00:00.000",
+      "flow": "medium",
+      "painLevel": "mild",
+      "mood": "happy",
+      "symptoms": ["acne"],
+      "energyLevel": "normal",
+      "sleepQuality": "good",
+      "waterIntakeGlass": 8,
+      "medicineTaken": false,
+      "medicineName": null,
+      "customNotes": "Gentle walk."
+    },
+    {
+      "id": "log_004",
+      "logDate": "2026-05-15T00:00:00.000",
+      "flow": "none",
+      "painLevel": "none",
+      "mood": "happy",
+      "symptoms": ["breastTenderness"],
+      "energyLevel": "high",
+      "sleepQuality": "excellent",
+      "waterIntakeGlass": 9,
+      "medicineTaken": false,
+      "medicineName": null,
+      "customNotes": "Fertile window estimate."
+    },
+    {
+      "id": "log_005",
+      "logDate": "2026-05-18T00:00:00.000",
+      "flow": "none",
+      "painLevel": "none",
+      "mood": "anxious",
+      "symptoms": ["nausea"],
+      "energyLevel": "normal",
+      "sleepQuality": "average",
+      "waterIntakeGlass": 7,
+      "medicineTaken": false,
+      "medicineName": null,
+      "customNotes": "Ovulation estimate day."
+    }
+  ],
+  "meta": {
+    "source": "mock",
+    "version": "1.0"
+  }
+}

@@ -1,0 +1,46 @@
+name: her_wellness_calender
+description: "Private women wellness calendar and period tracker."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  get: ^4.7.2
+  dio: ^5.9.0
+  fl_chart: ^1.1.1
+  flutter_secure_storage: ^10.0.0-beta.4
+  google_fonts: ^6.3.3
+  http: ^1.6.0
+  intl: ^0.20.2
+  local_auth: ^3.0.0
+  pdf: ^3.11.3
+  printing: ^5.14.2
+  shared_preferences: ^2.5.4
+  table_calendar: ^3.2.0
+  path_provider: ^2.1.5
+  share_plus: ^12.0.1
+  file_picker: ^10.3.10
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/mock/women_wellness.json
+    - assets/mock/wellness_profile.json
+    - assets/mock/privacy_settings.json
+    - assets/mock/period_tracking.json
+    - assets/mock/daily_logs.json
+    - assets/mock/symptoms.json
+    - assets/mock/auth_users.json
+    - assets/mock/app_settings.json
+    - assets/mock/notifications.json

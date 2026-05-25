@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "message": "Auth users loaded.",
+  "data": {
+    "users": [
+      {
+        "id": "user_001",
+        "fullName": "Aisha Sharma",
+        "email": "demo@wellness.local",
+        "mobile": "+919876543210",
+        "password": "password123"
+      },
+      {
+        "id": "user_002",
+        "fullName": "Maya Patel",
+        "email": "maya@wellness.local",
+        "mobile": "+919876543211",
+        "password": "password123"
+      }
+    ]
+  },
+  "meta": {
+    "source": "mock",
+    "version": "1.0"
+  }
+}

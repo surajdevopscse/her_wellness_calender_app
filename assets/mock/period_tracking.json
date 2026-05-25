@@ -1,0 +1,60 @@
+{
+  "success": true,
+  "message": "Period history loaded.",
+  "data": [
+    {
+      "id": "period_006",
+      "startDate": "2026-05-04T00:00:00.000",
+      "endDate": "2026-05-08T00:00:00.000",
+      "periodLength": 5,
+      "isPredicted": false,
+      "isConfirmed": true,
+      "irregularCycleNote": null,
+      "notes": "Normal flow."
+    },
+    {
+      "id": "period_005",
+      "startDate": "2026-04-06T00:00:00.000",
+      "endDate": "2026-04-10T00:00:00.000",
+      "periodLength": 5,
+      "isPredicted": false,
+      "isConfirmed": true,
+      "irregularCycleNote": null,
+      "notes": "Moderate cramps day two."
+    },
+    {
+      "id": "period_004",
+      "startDate": "2026-03-08T00:00:00.000",
+      "endDate": "2026-03-13T00:00:00.000",
+      "periodLength": 6,
+      "isPredicted": false,
+      "isConfirmed": true,
+      "irregularCycleNote": "Cycle was longer than usual.",
+      "notes": "Stressful week."
+    },
+    {
+      "id": "period_003",
+      "startDate": "2026-02-09T00:00:00.000",
+      "endDate": "2026-02-13T00:00:00.000",
+      "periodLength": 5,
+      "isPredicted": false,
+      "isConfirmed": true,
+      "irregularCycleNote": null,
+      "notes": "Light start."
+    },
+    {
+      "id": "period_002",
+      "startDate": "2026-01-12T00:00:00.000",
+      "endDate": "2026-01-16T00:00:00.000",
+      "periodLength": 5,
+      "isPredicted": false,
+      "isConfirmed": true,
+      "irregularCycleNote": null,
+      "notes": "Baseline record."
+    }
+  ],
+  "meta": {
+    "source": "mock",
+    "version": "1.0"
+  }
+}

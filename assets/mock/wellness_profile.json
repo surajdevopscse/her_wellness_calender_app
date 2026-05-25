@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "message": "Wellness profile loaded.",
+  "data": {
+    "id": "profile_001",
+    "userId": "user_001",
+    "ageGroup": "18-24",
+    "averageCycleLength": 28,
+    "averagePeriodLength": 5,
+    "lastPeriodStartDate": "2026-05-04T00:00:00.000",
+    "healthNotes": "Cramps are stronger on day two.",
+    "privacySettings": {
+      "appLockEnabled": true,
+      "pinEnabled": true,
+      "biometricEnabled": true,
+      "hideSensitiveNotificationText": true,
+      "encryptedLocalStorageEnabled": true,
+      "cloudBackupAllowed": false
+    }
+  },
+  "meta": {
+    "source": "mock",
+    "version": "1.0"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "success": true,
+  "message": "Notification templates loaded.",
+  "data": {
+    "templates": [
+      {
+        "id": "notif_period",
+        "type": "upcoming_period",
+        "privateTitle": "Wellness Reminder",
+        "privateBody": "You have a private wellness reminder.",
+        "visibleTitle": "Period Reminder",
+        "visibleBody": "Your period is expected in 2 days."
+      },
+      {
+        "id": "notif_ovulation",
+        "type": "ovulation",
+        "privateTitle": "Wellness Reminder",
+        "privateBody": "You have a private wellness reminder.",
+        "visibleTitle": "Ovulation Reminder",
+        "visibleBody": "Your predicted ovulation day is tomorrow."
+      },
+      {
+        "id": "notif_daily_log",
+        "type": "daily_log",
+        "privateTitle": "Wellness Reminder",
+        "privateBody": "You have a private wellness reminder.",
+        "visibleTitle": "Daily Log",
+        "visibleBody": "Take a moment to log how you feel today."
+      }
+    ]
+  },
+  "meta": {
+    "source": "mock",
+    "version": "1.0"
+  }
+}

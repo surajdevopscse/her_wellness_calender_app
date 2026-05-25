@@ -1,0 +1,240 @@
+{
+  "success": true,
+  "message": "Women wellness data loaded.",
+  "data": {
+    "profile": {
+      "id": "profile_001",
+      "userId": "user_001",
+      "ageGroup": "18-24",
+      "averageCycleLength": 28,
+      "averagePeriodLength": 5,
+      "lastPeriodStartDate": "2026-05-04T00:00:00.000",
+      "healthNotes": "Cramps are stronger on day two.",
+      "privacySettings": {
+        "appLockEnabled": true,
+        "pinEnabled": true,
+        "biometricEnabled": true,
+        "hideSensitiveNotificationText": true,
+        "encryptedLocalStorageEnabled": true,
+        "cloudBackupAllowed": false
+      }
+    },
+    "periods": [
+      {
+        "id": "period_006",
+        "startDate": "2026-05-04T00:00:00.000",
+        "endDate": "2026-05-08T00:00:00.000",
+        "isPredicted": false,
+        "isConfirmed": true,
+        "irregularCycleNote": null,
+        "notes": "Normal flow."
+      },
+      {
+        "id": "period_005",
+        "startDate": "2026-04-06T00:00:00.000",
+        "endDate": "2026-04-10T00:00:00.000",
+        "isPredicted": false,
+        "isConfirmed": true,
+        "irregularCycleNote": null,
+        "notes": "Moderate cramps day two."
+      },
+      {
+        "id": "period_004",
+        "startDate": "2026-03-08T00:00:00.000",
+        "endDate": "2026-03-13T00:00:00.000",
+        "isPredicted": false,
+        "isConfirmed": true,
+        "irregularCycleNote": "Cycle was longer than usual.",
+        "notes": "Stressful week."
+      },
+      {
+        "id": "period_003",
+        "startDate": "2026-02-09T00:00:00.000",
+        "endDate": "2026-02-13T00:00:00.000",
+        "isPredicted": false,
+        "isConfirmed": true,
+        "irregularCycleNote": null,
+        "notes": "Light start."
+      },
+      {
+        "id": "period_002",
+        "startDate": "2026-01-12T00:00:00.000",
+        "endDate": "2026-01-16T00:00:00.000",
+        "isPredicted": false,
+        "isConfirmed": true,
+        "irregularCycleNote": null,
+        "notes": "Baseline record."
+      },
+      {
+        "id": "period_001",
+        "startDate": "2025-12-15T00:00:00.000",
+        "endDate": "2025-12-19T00:00:00.000",
+        "isPredicted": false,
+        "isConfirmed": true,
+        "irregularCycleNote": null,
+        "notes": "Normal."
+      }
+    ],
+    "dailyLogs": [
+      {
+        "id": "log_001",
+        "logDate": "2026-05-04T00:00:00.000",
+        "flow": "medium",
+        "painLevel": "mild",
+        "mood": "tired",
+        "symptoms": ["cramps", "bloating"],
+        "energyLevel": "low",
+        "sleepQuality": "average",
+        "waterIntakeGlass": 5,
+        "medicineTaken": false,
+        "medicineName": null,
+        "customNotes": "Rest helped."
+      },
+      {
+        "id": "log_002",
+        "logDate": "2026-05-05T00:00:00.000",
+        "flow": "heavy",
+        "painLevel": "moderate",
+        "mood": "emotional",
+        "symptoms": ["cramps", "backPain", "headache"],
+        "energyLevel": "low",
+        "sleepQuality": "poor",
+        "waterIntakeGlass": 6,
+        "medicineTaken": true,
+        "medicineName": "Pain relief",
+        "customNotes": "Medicine taken after lunch."
+      },
+      {
+        "id": "log_003",
+        "logDate": "2026-05-06T00:00:00.000",
+        "flow": "medium",
+        "painLevel": "mild",
+        "mood": "happy",
+        "symptoms": ["acne"],
+        "energyLevel": "normal",
+        "sleepQuality": "good",
+        "waterIntakeGlass": 8,
+        "medicineTaken": false,
+        "medicineName": null,
+        "customNotes": "Gentle walk."
+      },
+      {
+        "id": "log_004",
+        "logDate": "2026-05-15T00:00:00.000",
+        "flow": "none",
+        "painLevel": "none",
+        "mood": "happy",
+        "symptoms": ["breastTenderness"],
+        "energyLevel": "high",
+        "sleepQuality": "excellent",
+        "waterIntakeGlass": 9,
+        "medicineTaken": false,
+        "medicineName": null,
+        "customNotes": "Fertile window estimate."
+      },
+      {
+        "id": "log_005",
+        "logDate": "2026-05-18T00:00:00.000",
+        "flow": "none",
+        "painLevel": "none",
+        "mood": "anxious",
+        "symptoms": ["nausea"],
+        "energyLevel": "normal",
+        "sleepQuality": "average",
+        "waterIntakeGlass": 7,
+        "medicineTaken": false,
+        "medicineName": null,
+        "customNotes": "Ovulation estimate day."
+      }
+    ],
+    "reminders": [
+      {
+        "id": "rem_001",
+        "type": "upcomingPeriod",
+        "isEnabled": true,
+        "reminderTime": "08:00",
+        "daysBefore": 2,
+        "title": "Period Reminder",
+        "message": "Your period is expected in 2 days.",
+        "hideSensitiveText": true
+      },
+      {
+        "id": "rem_002",
+        "type": "ovulation",
+        "isEnabled": true,
+        "reminderTime": "09:00",
+        "daysBefore": 0,
+        "title": "Ovulation Reminder",
+        "message": "Ovulation is estimated today.",
+        "hideSensitiveText": true
+      },
+      {
+        "id": "rem_003",
+        "type": "dailyLog",
+        "isEnabled": true,
+        "reminderTime": "21:00",
+        "daysBefore": 0,
+        "title": "Daily Log",
+        "message": "Track your symptoms and mood.",
+        "hideSensitiveText": true
+      },
+      {
+        "id": "rem_004",
+        "type": "hydration",
+        "isEnabled": true,
+        "reminderTime": "14:00",
+        "daysBefore": 0,
+        "title": "Hydration",
+        "message": "Drink water and take a short pause.",
+        "hideSensitiveText": false
+      },
+      {
+        "id": "rem_005",
+        "type": "appointment",
+        "isEnabled": false,
+        "reminderTime": "10:30",
+        "daysBefore": 1,
+        "title": "Appointment",
+        "message": "Wellness appointment tomorrow.",
+        "hideSensitiveText": true
+      }
+    ],
+    "report": {
+      "averageCycleLength": 28.2,
+      "averagePeriodLength": 5.2,
+      "cycleRegularity": "Mostly regular with one irregular cycle.",
+      "cycleLengthTrend": [28, 28, 27, 29, 29, 28],
+      "symptomFrequency": {
+        "Cramps": 8,
+        "Bloating": 5,
+        "Back pain": 4,
+        "Headache": 3,
+        "Nausea": 2
+      },
+      "moodDistribution": {
+        "Happy": 6,
+        "Tired": 4,
+        "Anxious": 3,
+        "Emotional": 4
+      },
+      "painTrend": {
+        "None": 6,
+        "Mild": 8,
+        "Moderate": 4,
+        "Severe": 0
+      },
+      "flowTrend": {
+        "Spotting": 2,
+        "Light": 3,
+        "Medium": 8,
+        "Heavy": 4
+      },
+      "commonSymptoms": ["Cramps", "Bloating", "Back pain"],
+      "pmsPattern": "Mood changes and bloating often appear 5-7 days before period.",
+      "hasLatePeriodAlert": false,
+      "monthlySummary": "May cycle is within the saved average range with moderate symptoms on day two.",
+      "yearlySummary": "Six months of data show a stable pattern with one longer cycle.",
+      "notes": "Use this report for personal tracking and share with a clinician only if you choose."
+    }
+  }
+}
