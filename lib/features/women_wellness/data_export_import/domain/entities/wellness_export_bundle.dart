@@ -17,7 +17,7 @@ class WellnessExportBundle {
   final Map<String, dynamic>? profile;
   final List<Map<String, dynamic>> periods;
   final List<Map<String, dynamic>> dailyLogs;
-  final Map<String, dynamic>? symptoms;
+  final List<Map<String, dynamic>> symptoms;
   final Map<String, dynamic>? reports;
   final List<Map<String, dynamic>> reminders;
   final Map<String, dynamic>? privacy;

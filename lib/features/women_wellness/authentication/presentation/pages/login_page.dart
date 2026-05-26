@@ -14,6 +14,7 @@ class LoginPage extends GetView<LoginController> {
     return AuthShellLayout(
       title: 'Private wellness,\nyour way',
       subtitle: 'Track your cycle with confidence and discretion.',
+      eyebrow: 'Sign in securely',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -23,25 +24,32 @@ class LoginPage extends GetView<LoginController> {
           ),
           const SizedBox(height: WellnessSpacing.xs),
           Text(
-            'A calm space to understand your cycle, symptoms, and energy.',
+            'Pick up where you left off with your latest cycle, symptoms, and reminders.',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: WellnessSpacing.lg),
+          Text(
+            'Email or mobile',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+          const SizedBox(height: WellnessSpacing.xs),
           TextField(
             controller: controller.emailController,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
-              labelText: 'Email or mobile',
+              hintText: 'Enter your email or mobile',
               prefixIcon: Icon(Icons.alternate_email_outlined),
             ),
           ),
           const SizedBox(height: WellnessSpacing.md),
+          Text('Password', style: Theme.of(context).textTheme.labelLarge),
+          const SizedBox(height: WellnessSpacing.xs),
           Obx(
             () => TextField(
               controller: controller.passwordController,
               obscureText: controller.obscurePassword.value,
               decoration: InputDecoration(
-                labelText: 'Password',
+                hintText: 'Enter your password',
                 prefixIcon: const Icon(Icons.lock_outline),
                 suffixIcon: IconButton(
                   onPressed: () => controller.obscurePassword.toggle(),
@@ -58,7 +66,7 @@ class LoginPage extends GetView<LoginController> {
             () => CheckboxListTile(
               value: controller.rememberMe.value,
               onChanged: (v) => controller.rememberMe.value = v ?? false,
-              title: const Text('Remember me'),
+              title: const Text('Keep me signed in on this device'),
               contentPadding: EdgeInsets.zero,
               controlAffinity: ListTileControlAffinity.leading,
             ),
@@ -86,9 +94,18 @@ class LoginPage extends GetView<LoginController> {
             onPressed: () => Get.toNamed(AuthenticationRoutes.forgotPassword),
             child: const Text('Forgot password?'),
           ),
-          OutlinedButton(
-            onPressed: () {},
-            child: const Text('Continue with Google'),
+          const SizedBox(height: WellnessSpacing.sm),
+          Container(
+            padding: const EdgeInsets.all(WellnessSpacing.md),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest
+                  .withValues(alpha: 0.42),
+              borderRadius: BorderRadius.circular(WellnessSpacing.controlRadius),
+            ),
+            child: Text(
+              'Your wellness data stays private and editable after sign-in.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ),
           TextButton(
             onPressed: () => Get.toNamed(AuthenticationRoutes.register),

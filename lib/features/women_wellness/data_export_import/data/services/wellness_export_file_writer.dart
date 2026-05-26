@@ -75,7 +75,8 @@ class WellnessExportFileWriter {
           .cast<Map<String, dynamic>>(),
       dailyLogs: (json['dailyLogs'] as List<dynamic>? ?? [])
           .cast<Map<String, dynamic>>(),
-      symptoms: json['symptoms'] as Map<String, dynamic>?,
+      symptoms: (json['symptoms'] as List<dynamic>? ?? [])
+          .cast<Map<String, dynamic>>(),
       reports: json['reports'] as Map<String, dynamic>?,
       reminders: (json['reminders'] as List<dynamic>? ?? [])
           .cast<Map<String, dynamic>>(),

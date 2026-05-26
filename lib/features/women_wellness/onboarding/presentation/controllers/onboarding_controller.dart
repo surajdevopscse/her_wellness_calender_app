@@ -11,23 +11,23 @@ class OnboardingController extends GetxController {
 
   static const slides = [
     (
-      'Welcome to private wellness tracking',
-      'Your cycle data stays discreet and under your control.',
+      'Private wellness tracking, designed to feel calm',
+      'Follow your cycle in a way that feels discreet, supportive, and easy to keep up with.',
       'shield_outlined',
     ),
     (
-      'Track periods and symptoms',
-      'Log flow, mood, pain, sleep, and habits in seconds.',
+      'Check in quickly, without overthinking it',
+      'Log flow, mood, pain, sleep, and symptoms in under a minute.',
       'calendar_month_outlined',
     ),
     (
-      'Understand cycle predictions',
-      'See fertile windows, ovulation, and PMS estimates.',
+      'See your rhythm more clearly over time',
+      'Understand upcoming periods, ovulation timing, and recurring symptom patterns.',
       'insights_outlined',
     ),
     (
-      'Privacy and security first',
-      'Lock the app, hide notification text, and delete data anytime.',
+      'Stay in control of privacy from the start',
+      'Use discreet reminders, protect the app, and remove data whenever you choose.',
       'lock_person_outlined',
     ),
   ];
@@ -37,6 +37,12 @@ class OnboardingController extends GetxController {
       pageIndex.value++;
     } else {
       finish();
+    }
+  }
+
+  void previous() {
+    if (pageIndex.value > 0) {
+      pageIndex.value--;
     }
   }
 

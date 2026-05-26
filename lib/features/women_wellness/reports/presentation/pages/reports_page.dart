@@ -72,13 +72,16 @@ class ReportsPage extends GetView<ReportsController> {
                     final cards = [
                       WellnessInsightCard(
                         title: 'Regularity',
-                        message: 'Your cycle average is ${report.averageCycleLength.toStringAsFixed(1)} days with ${report.cycleRegularity} regularity.',
+                        message:
+                            'Your cycle average is ${report.averageCycleLength.toStringAsFixed(1)} days with ${report.cycleRegularity.toLowerCase()} timing across recent entries.',
                         icon: Icons.track_changes_rounded,
                         tint: WellnessColors.secondary,
                       ),
-                      const WellnessInsightCard(
-                        title: 'Mood awareness',
-                        message: 'Review emotional trends alongside symptoms to better plan recovery, rest, and social energy.',
+                      WellnessInsightCard(
+                        title: 'Most common pattern',
+                        message: report.commonSymptoms.isEmpty
+                            ? 'Keep logging a few more days to reveal your most consistent symptom patterns.'
+                            : 'The symptoms showing up most often are ${report.commonSymptoms.take(3).join(', ').toLowerCase()}.',
                         icon: Icons.favorite_outline_rounded,
                         tint: WellnessColors.primaryHot,
                       ),

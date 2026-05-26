@@ -32,11 +32,29 @@ class WellnessAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           if (!isCompact)
-            Text(
-              'Your personal wellness companion',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: WellnessTextStyles.caption(context),
+            Container(
+              margin: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.08)
+                    : Colors.white.withValues(alpha: 0.62),
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : WellnessColors.borderFor(brightness)
+                          .withValues(alpha: 0.6),
+                ),
+              ),
+              child: Text(
+                'Private cycle insights',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: WellnessTextStyles.caption(context).copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
         ],
       ),

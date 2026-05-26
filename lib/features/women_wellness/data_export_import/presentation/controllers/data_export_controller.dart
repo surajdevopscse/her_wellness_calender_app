@@ -5,12 +5,18 @@ import 'package:share_plus/share_plus.dart';
 import 'package:her_wellness_calender/features/women_wellness/data_export_import/domain/entities/export_file_result.dart';
 import 'package:her_wellness_calender/features/women_wellness/data_export_import/domain/usecases/export_wellness_data_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/data_export_import/domain/usecases/import_wellness_data_usecase.dart';
+import 'package:her_wellness_calender/features/women_wellness/data_export_import/domain/usecases/restore_wellness_data_usecase.dart';
 
 class DataExportController extends GetxController {
-  DataExportController(this.exportUseCase, this.importUseCase);
+  DataExportController(
+    this.exportUseCase,
+    this.importUseCase,
+    this.restoreUseCase,
+  );
 
   final ExportWellnessDataUseCase exportUseCase;
   final ImportWellnessDataUseCase importUseCase;
+  final RestoreWellnessDataUseCase restoreUseCase;
 
   final isBusy = false.obs;
   final statusMessage = ''.obs;
@@ -54,10 +60,10 @@ class DataExportController extends GetxController {
         return;
       }
       final bundle = await importUseCase(picked.files.single.path!);
+      await restoreUseCase(bundle);
       statusMessage.value =
-          'Imported backup from ${bundle.exportedAt.toIso8601String()} '
-          '(${bundle.periods.length} periods, ${bundle.dailyLogs.length} logs). '
-          'Restore to repositories is API-ready.';
+          'Restored backup from ${bundle.exportedAt.toIso8601String()} '
+          'with ${bundle.periods.length} periods and ${bundle.dailyLogs.length} daily logs.';
     } catch (error) {
       statusMessage.value = 'Import failed: $error';
     } finally {

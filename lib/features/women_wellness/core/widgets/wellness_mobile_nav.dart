@@ -17,10 +17,10 @@ class WellnessMobileNav extends StatelessWidget {
 
   static const _items = [
     (Icons.home_rounded, 'Home', 0),
-    (Icons.calendar_month_rounded, 'Cycle', 1),
-    (Icons.add_rounded, 'Log', 2),
-    (Icons.favorite_outline_rounded, 'Care', 3),
-    (Icons.insights_rounded, 'Trends', 5),
+    (Icons.calendar_month_rounded, 'Calendar', 1),
+    (Icons.edit_note_rounded, 'Check-in', 3),
+    (Icons.insights_rounded, 'Reports', 5),
+    (Icons.tune_rounded, 'Settings', 9),
   ];
 
   @override
@@ -38,7 +38,7 @@ class WellnessMobileNav extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: _items.map((item) {
           final selected = selectedPageIndex == item.$3;
-          final prominent = item.$3 == 2;
+          final prominent = item.$3 == 3;
           return _MobileNavItem(
             icon: item.$1,
             label: item.$2,
@@ -70,7 +70,9 @@ class _MobileNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final activeColor = prominent ? WellnessColors.textOnPrimary : WellnessColors.primaryDeep;
+    final activeColor = prominent
+        ? WellnessColors.textOnPrimary
+        : WellnessColors.primaryDeep;
     final inactiveColor = WellnessColors.textSecondaryFor(brightness);
 
     return Expanded(

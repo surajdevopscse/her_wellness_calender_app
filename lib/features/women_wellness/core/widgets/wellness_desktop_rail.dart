@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_colors.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_spacing.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_text_styles.dart';
 
 /// Theme-aware desktop navigation rail for the wellness shell.
 class WellnessDesktopRail extends StatelessWidget {
@@ -41,7 +42,7 @@ class WellnessDesktopRail extends StatelessWidget {
         : WellnessColors.primary.withValues(alpha: 0.14);
 
     return Container(
-      width: 104,
+      width: 196,
       decoration: BoxDecoration(
         color: surface,
         borderRadius: BorderRadius.circular(WellnessSpacing.cardRadius),
@@ -56,29 +57,59 @@ class WellnessDesktopRail extends StatelessWidget {
           ),
         ],
       ),
-      child: NavigationRail(
-        backgroundColor: Colors.transparent,
-        selectedIndex: selectedIndex,
-        onDestinationSelected: onSelected,
-        scrollable: true,
-        labelType: NavigationRailLabelType.none,
-        indicatorColor: isDark
-            ? WellnessColors.darkPrimary.withValues(alpha: 0.35)
-            : WellnessColors.primaryHot.withValues(alpha: 0.45),
-        selectedIconTheme: IconThemeData(
-          color: isDark ? WellnessColors.darkPrimary : WellnessColors.primaryDeep,
-          size: 24,
-        ),
-        unselectedIconTheme: IconThemeData(
-          color: WellnessColors.textSecondaryFor(brightness),
-          size: 22,
-        ),
-        destinations: [
-          for (final d in _destinations)
-            NavigationRailDestination(
-              icon: Icon(d.$1),
-              label: Text(d.$2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 20, 18, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Wellness',
+                  style: WellnessTextStyles.sectionHeader(brightness)
+                      .copyWith(fontSize: 24),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Your daily cycle space',
+                  style: WellnessTextStyles.caption(context),
+                ),
+              ],
             ),
+          ),
+          const Divider(height: 1),
+          Expanded(
+            child: NavigationRail(
+              backgroundColor: Colors.transparent,
+              selectedIndex: selectedIndex,
+              onDestinationSelected: onSelected,
+              scrollable: true,
+              extended: true,
+              minExtendedWidth: 196,
+              labelType: NavigationRailLabelType.none,
+              indicatorColor: isDark
+                  ? WellnessColors.darkPrimary.withValues(alpha: 0.35)
+                  : WellnessColors.primaryHot.withValues(alpha: 0.45),
+              selectedIconTheme: IconThemeData(
+                color: isDark
+                    ? WellnessColors.darkPrimary
+                    : WellnessColors.primaryDeep,
+                size: 24,
+              ),
+              unselectedIconTheme: IconThemeData(
+                color: WellnessColors.textSecondaryFor(brightness),
+                size: 22,
+              ),
+              destinations: [
+                for (final d in _destinations)
+                  NavigationRailDestination(
+                    icon: Icon(d.$1),
+                    label: Text(d.$2),
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
     );

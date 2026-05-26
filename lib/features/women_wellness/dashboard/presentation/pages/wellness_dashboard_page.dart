@@ -8,7 +8,6 @@ import 'package:her_wellness_calender/features/women_wellness/core/theme/wellnes
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_spacing.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_insight_card.dart';
 import 'package:her_wellness_calender/features/women_wellness/dashboard/domain/usecases/get_wellness_dashboard_usecase.dart';
-import 'package:her_wellness_calender/features/women_wellness/cycle_history/domain/entities/cycle_prediction.dart';
 import 'package:her_wellness_calender/features/women_wellness/dashboard/presentation/controllers/wellness_dashboard_controller.dart';
 import 'package:her_wellness_calender/features/women_wellness/dashboard/presentation/widgets/cycle_status_card.dart';
 import 'package:her_wellness_calender/features/women_wellness/dashboard/presentation/widgets/fertility_status_card.dart';
@@ -147,7 +146,7 @@ class _DashboardHome extends StatelessWidget {
               children: [
                 WellnessHeroCard(data: data, tip: controller.dailyTip),
                 const SizedBox(height: WellnessSpacing.lg),
-                _InsightStrip(prediction: data.prediction),
+                _InsightStrip(data: data),
                 const SizedBox(height: WellnessSpacing.lg),
                 const DashboardDisclaimerStrip(),
                 const SizedBox(height: WellnessSpacing.lg),
@@ -182,31 +181,41 @@ class _DashboardHome extends StatelessWidget {
 }
 
 class _InsightStrip extends StatelessWidget {
-  const _InsightStrip({required this.prediction});
+  const _InsightStrip({required this.data});
 
-  final CyclePrediction prediction;
+  final WellnessDashboardData data;
 
   @override
   Widget build(BuildContext context) {
+    final latestLog = data.logs.isEmpty ? null : data.logs.first;
+    final hydrationMessage = latestLog == null
+        ? 'Add a quick daily check-in to unlock more personal hydration and recovery nudges.'
+        : latestLog.waterIntakeGlass >= 7
+        ? 'You logged ${latestLog.waterIntakeGlass} glasses of water on your latest check-in. Hydration is supporting a steadier recovery rhythm.'
+        : 'Your latest check-in logged ${latestLog.waterIntakeGlass} glasses of water. A small hydration push may help energy and cramp recovery.';
+    final symptomSummary = data.report.commonSymptoms.isEmpty
+        ? 'You are still building a symptom pattern. A few more logs will make insights more specific.'
+        : 'Recent patterns point to ${data.report.commonSymptoms.take(2).join(' and ').toLowerCase()} showing up most often around this cycle.';
+    final outlookMessage = data.prediction.daysUntilNextPeriod >= 0
+        ? 'Your next period is estimated in ${data.prediction.daysUntilNextPeriod} days, with ovulation around ${WellnessDateHelper.shortDate.format(data.prediction.ovulationDate)}.'
+        : 'Your next period looks later than expected. If this feels unusual for you, keep logging and consider checking in with a clinician.';
+
     final cards = [
-      const WellnessInsightCard(
+      WellnessInsightCard(
         title: 'Energy',
-        message:
-            'You may feel more energetic today. This is a good window for movement and planning.',
+        message: hydrationMessage,
         icon: Icons.bolt_rounded,
         tint: WellnessColors.secondary,
       ),
-      const WellnessInsightCard(
-        title: 'Hydration',
-        message:
-            'Hydration may help reduce cramps and support a steadier mood through the week.',
-        icon: Icons.water_drop_outlined,
+      WellnessInsightCard(
+        title: 'Pattern',
+        message: symptomSummary,
+        icon: Icons.favorite_outline_rounded,
         tint: WellnessColors.accent,
       ),
       WellnessInsightCard(
         title: 'Looking ahead',
-        message:
-            'You are approaching ovulation on ${WellnessDateHelper.shortDate.format(prediction.ovulationDate)}.',
+        message: outlookMessage,
         icon: Icons.auto_graph_rounded,
         tint: WellnessColors.primaryHot,
       ),

@@ -81,6 +81,29 @@ class PrivacyHeroCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: WellnessSpacing.md,
+                    vertical: WellnessSpacing.sm,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: isDark ? 0.1 : 0.16),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.18),
+                    ),
+                  ),
+                  child: Text(
+                    'You control reminders, previews, storage, and deletion from one place.',
+                    style: WellnessTextStyles.caption(context).copyWith(
+                      color: isDark
+                          ? WellnessColors.darkTextSecondary
+                          : Colors.white.withValues(alpha: 0.94),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: WellnessSpacing.lg),
                 const _TrustRow(text: WellnessConstants.privacyTrustNoSell),
                 const SizedBox(height: WellnessSpacing.sm),
                 const _TrustRow(text: WellnessConstants.privacyTrustOnDevice),

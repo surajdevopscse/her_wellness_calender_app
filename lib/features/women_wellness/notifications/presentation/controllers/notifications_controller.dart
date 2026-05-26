@@ -12,6 +12,7 @@ class NotificationsController extends GetxController {
   final templates = <NotificationTemplate>[].obs;
   final hideSensitive = true.obs;
   final isLoading = false.obs;
+  final errorMessage = ''.obs;
 
   @override
   void onReady() {
@@ -21,10 +22,34 @@ class NotificationsController extends GetxController {
 
   Future<void> load() async {
     isLoading.value = true;
-    templates.assignAll(await notificationsRepository.getTemplates());
-    final privacy = await privacyRepository.getSettings();
-    hideSensitive.value = privacy?.hideNotificationText ?? true;
-    isLoading.value = false;
+    errorMessage.value = '';
+    try {
+      templates.assignAll(await notificationsRepository.getTemplates());
+      final privacy = await privacyRepository.getSettings();
+      hideSensitive.value = privacy?.hideNotificationText ?? true;
+    } catch (_) {
+      errorMessage.value = 'Unable to load notification settings.';
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> toggleSensitiveText(bool value) async {
+    final current = await privacyRepository.getSettings();
+    if (current == null) {
+      hideSensitive.value = value;
+      return;
+    }
+
+    hideSensitive.value = value;
+    try {
+      await privacyRepository.updateSettings(
+        current.copyWith(hideNotificationText: value),
+      );
+    } catch (_) {
+      hideSensitive.value = !value;
+      errorMessage.value = 'Unable to update notification privacy.';
+    }
   }
 
   ({String title, String body}) previewFor(NotificationTemplate template) {

@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_spacing.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_card.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_insight_card.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_primary_button.dart';
+import 'package:her_wellness_calender/features/women_wellness/data_export_import/presentation/controllers/data_export_controller.dart';
 
-class BackupRestorePage extends StatelessWidget {
+class BackupRestorePage extends GetView<DataExportController> {
   const BackupRestorePage({super.key});
 
   @override
@@ -14,21 +16,42 @@ class BackupRestorePage extends StatelessWidget {
       padding: const EdgeInsets.all(WellnessSpacing.xl),
       child: Column(
         children: [
+          const WellnessInsightCard(
+            title: 'Backup with clarity',
+            message:
+                'Create a portable copy of your cycle history, daily logs, reminders, and privacy preferences, then restore it when you need it.',
+            icon: Icons.cloud_done_outlined,
+          ),
+          const SizedBox(height: WellnessSpacing.lg),
           WellnessCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Cloud backup', style: Theme.of(context).textTheme.titleLarge),
+                Text('Backup file', style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: WellnessSpacing.sm),
                 const Text(
-                  'Encrypted cloud backup placeholder. Enable only in Privacy settings.',
+                  'Create a local encrypted-style backup file you can store in your preferred drive or share destination.',
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
-                WellnessPrimaryButton(
-                  label: 'Backup now',
-                  icon: Icons.cloud_upload_outlined,
-                  onPressed: () =>
-                      Get.snackbar('Backup', 'Cloud backup queued (mock).'),
+                Obx(
+                  () => WellnessPrimaryButton(
+                    label:
+                        controller.isBusy.value ? 'Saving...' : 'Backup as JSON',
+                    icon: Icons.cloud_upload_outlined,
+                    onPressed:
+                        controller.isBusy.value ? null : controller.exportJson,
+                  ),
+                ),
+                const SizedBox(height: WellnessSpacing.sm),
+                Obx(
+                  () => OutlinedButton.icon(
+                    onPressed:
+                        controller.isBusy.value ? null : controller.exportCsv,
+                    icon: const Icon(Icons.table_rows_outlined),
+                    label: Text(
+                      controller.isBusy.value ? 'Saving...' : 'Backup as CSV',
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -40,14 +63,31 @@ class BackupRestorePage extends StatelessWidget {
               children: [
                 Text('Restore', style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: WellnessSpacing.sm),
-                const Text('Restore from your latest encrypted backup file.'),
-                const SizedBox(height: WellnessSpacing.lg),
-                OutlinedButton.icon(
-                  onPressed: () =>
-                      Get.snackbar('Restore', 'Restore flow ready (mock).'),
-                  icon: const Icon(Icons.restore_outlined),
-                  label: const Text('Restore backup'),
+                const Text(
+                  'Choose a previously exported JSON backup to restore profile, cycle history, daily logs, symptoms, reminders, and privacy settings.',
                 ),
+                const SizedBox(height: WellnessSpacing.lg),
+                Obx(
+                  () => OutlinedButton.icon(
+                    onPressed:
+                        controller.isBusy.value ? null : controller.importBackup,
+                    icon: const Icon(Icons.restore_outlined),
+                    label: Text(
+                      controller.isBusy.value
+                          ? 'Restoring...'
+                          : 'Restore backup',
+                    ),
+                  ),
+                ),
+                Obx(() {
+                  if (controller.statusMessage.value.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.only(top: WellnessSpacing.md),
+                    child: Text(controller.statusMessage.value),
+                  );
+                }),
               ],
             ),
           ),

@@ -171,6 +171,7 @@ class App extends StatelessWidget {
           GetPage(
             name: WellnessRoutes.backupRestore,
             page: () => const BackupRestorePage(),
+            binding: DataExportBinding(),
           ),
           GetPage(
             name: WellnessRoutes.pdfPreview,

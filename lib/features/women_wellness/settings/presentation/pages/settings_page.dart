@@ -62,6 +62,14 @@ class SettingsPage extends GetView<SettingsController> {
                 WellnessCard(
                   child: Column(
                     children: [
+                      ListTile(
+                        leading: const Icon(Icons.person_outline_rounded),
+                        title: const Text('Profile & cycle baseline'),
+                        subtitle: const Text(
+                          'Review your average cycle length, age group, and last period date.',
+                        ),
+                        onTap: controller.openProfile,
+                      ),
                       SwitchListTile(
                         title: const Text('Notifications'),
                         value: settings?.notificationsEnabled ?? true,

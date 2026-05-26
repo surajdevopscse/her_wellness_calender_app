@@ -47,6 +47,7 @@ class SettingsController extends GetxController {
   }
 
   void openPrivacy() => Get.toNamed(WellnessRoutes.privacy);
+  void openProfile() => Get.toNamed(WellnessRoutes.profile);
   void openExport() => Get.toNamed(WellnessRoutes.dataExport);
   void openBackup() => Get.toNamed(WellnessRoutes.backupRestore);
   void openNotifications() => Get.toNamed(WellnessRoutes.notifications);

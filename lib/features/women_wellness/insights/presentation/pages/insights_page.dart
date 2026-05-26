@@ -40,12 +40,18 @@ class InsightsPage extends GetView<ReportsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Monthly summary',
+                    'Cycle story',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: WellnessSpacing.sm),
-                  Text('Average cycle: ${report.averageCycleLength.toStringAsFixed(1)} days'),
+                  Text(
+                    'Average cycle: ${report.averageCycleLength.toStringAsFixed(1)} days',
+                  ),
                   Text('Regularity: ${report.cycleRegularity}'),
+                  if (report.commonSymptoms.isNotEmpty)
+                    Text(
+                      'Most frequent symptoms: ${report.commonSymptoms.take(3).join(', ')}',
+                    ),
                 ],
               ),
             ),

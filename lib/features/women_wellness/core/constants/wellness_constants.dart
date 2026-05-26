@@ -114,7 +114,7 @@ class WellnessConstants {
       'Choose how information is stored and backed up';
   static const privacyDataStoredTitle = 'What we store';
   static const privacyDataStoredBody =
-      'Cycle dates, daily logs, symptoms, and profile details you enter. We use this only to show your calendar and insights—not for ads.';
+      'Cycle dates, daily logs, symptoms, and profile details you enter. We use this only to show your calendar and insights, not for ads.';
   static const privacyEmpty =
       'Privacy settings are not available yet. Please try again.';
   static const privacyLoadError =

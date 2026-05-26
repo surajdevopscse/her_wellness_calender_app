@@ -15,33 +15,45 @@ class RegisterPage extends GetView<RegisterController> {
       title: 'Start your\nwellness journey',
       subtitle: 'Create a private account to track cycles and symptoms.',
       heroIcon: Icons.spa_outlined,
+      eyebrow: 'Create a private account',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Create account', style: Theme.of(context).textTheme.headlineSmall),
+          const SizedBox(height: WellnessSpacing.xs),
+          Text(
+            'Set up your account first. You can adjust cycle details, reminders, and privacy settings after sign-up.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
           const SizedBox(height: WellnessSpacing.lg),
+          Text('Full name', style: Theme.of(context).textTheme.labelLarge),
+          const SizedBox(height: WellnessSpacing.xs),
           TextField(
             controller: controller.fullNameController,
             decoration: const InputDecoration(
-              labelText: 'Full name',
+              hintText: 'Enter your full name',
               prefixIcon: Icon(Icons.person_outline),
             ),
           ),
           const SizedBox(height: WellnessSpacing.md),
+          Text('Email or mobile', style: Theme.of(context).textTheme.labelLarge),
+          const SizedBox(height: WellnessSpacing.xs),
           TextField(
             controller: controller.emailController,
             decoration: const InputDecoration(
-              labelText: 'Email or mobile',
+              hintText: 'Enter your email or mobile',
               prefixIcon: Icon(Icons.alternate_email_outlined),
             ),
           ),
           const SizedBox(height: WellnessSpacing.md),
+          Text('Password', style: Theme.of(context).textTheme.labelLarge),
+          const SizedBox(height: WellnessSpacing.xs),
           Obx(
             () => TextField(
               controller: controller.passwordController,
               obscureText: controller.obscurePassword.value,
               decoration: InputDecoration(
-                labelText: 'Password',
+                hintText: 'Create a password',
                 prefixIcon: const Icon(Icons.lock_outline),
                 suffixIcon: IconButton(
                   onPressed: () => controller.obscurePassword.toggle(),
@@ -55,12 +67,17 @@ class RegisterPage extends GetView<RegisterController> {
             ),
           ),
           const SizedBox(height: WellnessSpacing.md),
+          Text(
+            'Confirm password',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+          const SizedBox(height: WellnessSpacing.xs),
           Obx(
             () => TextField(
               controller: controller.confirmPasswordController,
               obscureText: controller.obscureConfirm.value,
               decoration: InputDecoration(
-                labelText: 'Confirm password',
+                hintText: 'Re-enter your password',
                 prefixIcon: const Icon(Icons.lock_reset_outlined),
                 suffixIcon: IconButton(
                   onPressed: () => controller.obscureConfirm.toggle(),
@@ -77,7 +94,7 @@ class RegisterPage extends GetView<RegisterController> {
             () => CheckboxListTile(
               value: controller.acceptedPolicy.value,
               onChanged: (v) => controller.acceptedPolicy.value = v ?? false,
-              title: const Text('I accept the privacy policy'),
+              title: const Text('I accept the privacy policy and secure data handling'),
               contentPadding: EdgeInsets.zero,
               controlAffinity: ListTileControlAffinity.leading,
             ),
@@ -95,8 +112,23 @@ class RegisterPage extends GetView<RegisterController> {
             () => FilledButton(
               onPressed: controller.isLoading.value ? null : controller.register,
               child: Text(
-                controller.isLoading.value ? 'Creating...' : 'Create account',
+                controller.isLoading.value
+                    ? 'Creating your private space...'
+                    : 'Create account',
               ),
+            ),
+          ),
+          const SizedBox(height: WellnessSpacing.sm),
+          Container(
+            padding: const EdgeInsets.all(WellnessSpacing.md),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest
+                  .withValues(alpha: 0.42),
+              borderRadius: BorderRadius.circular(WellnessSpacing.controlRadius),
+            ),
+            child: Text(
+              'You can update period history, reminders, and privacy controls after registration.',
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
           TextButton(

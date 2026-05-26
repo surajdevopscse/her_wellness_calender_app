@@ -6,4 +6,5 @@ abstract class DataExportRepository {
   Future<ExportFileResult> exportJson(WellnessExportBundle bundle);
   Future<ExportFileResult> exportCsv(WellnessExportBundle bundle);
   Future<WellnessExportBundle> importFromJsonFile(String filePath);
+  Future<void> restoreFromBundle(WellnessExportBundle bundle);
 }

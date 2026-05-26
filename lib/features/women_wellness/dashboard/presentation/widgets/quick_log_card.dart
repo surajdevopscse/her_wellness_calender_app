@@ -31,6 +31,7 @@ class QuickLogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
+    final sectionTint = Theme.of(context).colorScheme.surfaceContainerHighest;
 
     return FadeInContainer(
       delay: const Duration(milliseconds: 160),
@@ -38,9 +39,38 @@ class QuickLogCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Quick check-in',
+                    style: WellnessTextStyles.sectionHeader(brightness),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: sectionTint.withValues(alpha: 0.55),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    'Under 1 minute',
+                    style: WellnessTextStyles.caption(context).copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: WellnessSpacing.xs),
             Text(
-              'Quick log',
-              style: WellnessTextStyles.sectionHeader(brightness),
+              'Capture the essentials quickly, then return later for more detail if you need it.',
+              style: WellnessTextStyles.body.copyWith(
+                color: WellnessColors.textSecondaryFor(brightness),
+              ),
             ),
             const SizedBox(height: WellnessSpacing.md),
             Row(
@@ -66,7 +96,7 @@ class QuickLogCard extends StatelessWidget {
             ),
             const SizedBox(height: WellnessSpacing.lg),
             Text(
-              'How are you feeling?',
+              'How are you feeling right now?',
               style: WellnessTextStyles.label.copyWith(
                 color: WellnessColors.textSecondaryFor(brightness),
               ),

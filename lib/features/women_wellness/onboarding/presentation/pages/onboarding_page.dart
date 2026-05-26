@@ -34,11 +34,48 @@ class OnboardingPage extends GetView<OnboardingController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: controller.goLogin,
-                            child: const Text('I already have an account'),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Welcome',
+                                    style: Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  const SizedBox(height: WellnessSpacing.xs),
+                                  Text(
+                                    'A thoughtful cycle space in four short steps',
+                                    style: WellnessTextStyles.caption(context),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: controller.goLogin,
+                              child: const Text('I already have an account'),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: WellnessSpacing.md),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(999),
+                          child: LinearProgressIndicator(
+                            value: (controller.pageIndex.value + 1) /
+                                OnboardingController.slides.length,
+                            minHeight: 8,
+                            backgroundColor: WellnessColors.border,
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                              WellnessColors.primaryDeep,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: WellnessSpacing.md),
+                        Text(
+                          'Step ${controller.pageIndex.value + 1} of ${OnboardingController.slides.length}',
+                          style: WellnessTextStyles.caption(context).copyWith(
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         Expanded(
@@ -53,6 +90,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                               final copy = _CopyBlock(
                                 title: slide.$1,
                                 subtitle: slide.$2,
+                                points: _pointsForSlide(controller.pageIndex.value),
                               );
                               if (wide) {
                                 return Row(
@@ -93,10 +131,19 @@ class OnboardingPage extends GetView<OnboardingController> {
                         const SizedBox(height: WellnessSpacing.lg),
                         Row(
                           children: [
+                            if (controller.pageIndex.value > 0)
+                              Expanded(
+                                child: OutlinedButton(
+                                  onPressed: controller.previous,
+                                  child: const Text('Back'),
+                                ),
+                              ),
+                            if (controller.pageIndex.value > 0)
+                              const SizedBox(width: WellnessSpacing.md),
                             Expanded(
                               child: OutlinedButton(
                                 onPressed: controller.goRegister,
-                                child: const Text('Create account'),
+                                child: const Text('Create account now'),
                               ),
                             ),
                             const SizedBox(width: WellnessSpacing.md),
@@ -106,7 +153,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                                 child: Text(
                                   controller.pageIndex.value ==
                                           OnboardingController.slides.length - 1
-                                      ? 'Begin your journey'
+                                      ? 'Go to sign in'
                                       : 'Continue',
                                 ),
                               ),
@@ -138,6 +185,25 @@ class OnboardingPage extends GetView<OnboardingController> {
         'calendar_month_outlined' => Icons.calendar_month_outlined,
         'insights_outlined' => Icons.insights_outlined,
         _ => Icons.lock_person_outlined,
+      };
+
+  List<String> _pointsForSlide(int index) => switch (index) {
+        0 => [
+            'Private by design, not as an afterthought',
+            'A calmer way to return to your data each day',
+          ],
+        1 => [
+            'Quick logging for periods, moods, symptoms, and energy',
+            'Built to be useful even on low-energy days',
+          ],
+        2 => [
+            'Predictions become more meaningful as you keep logging',
+            'Reports help surface recurring patterns, not just dates',
+          ],
+        _ => [
+            'Discreet lock-screen notifications when you want them',
+            'You can edit, export, or delete wellness data anytime',
+          ],
       };
 }
 
@@ -200,10 +266,15 @@ class _IllustrationCard extends StatelessWidget {
 }
 
 class _CopyBlock extends StatelessWidget {
-  const _CopyBlock({required this.title, required this.subtitle});
+  const _CopyBlock({
+    required this.title,
+    required this.subtitle,
+    required this.points,
+  });
 
   final String title;
   final String subtitle;
+  final List<String> points;
 
   @override
   Widget build(BuildContext context) {
@@ -231,6 +302,46 @@ class _CopyBlock extends StatelessWidget {
           style: WellnessTextStyles.body.copyWith(
             color: WellnessColors.textSecondaryFor(brightness),
             fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: WellnessSpacing.lg),
+        for (final point in points) ...[
+          _PointRow(text: point),
+          const SizedBox(height: WellnessSpacing.sm),
+        ],
+      ],
+    );
+  }
+}
+
+class _PointRow extends StatelessWidget {
+  const _PointRow({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 24,
+          height: 24,
+          decoration: const BoxDecoration(
+            color: WellnessColors.primaryHot,
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(
+            Icons.check_rounded,
+            size: 16,
+            color: WellnessColors.primaryDeep,
+          ),
+        ),
+        const SizedBox(width: WellnessSpacing.sm),
+        Expanded(
+          child: Text(
+            text,
+            style: WellnessTextStyles.bodyFor(context),
           ),
         ),
       ],

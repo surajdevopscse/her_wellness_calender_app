@@ -15,12 +15,14 @@ class AuthShellLayout extends StatelessWidget {
     required this.subtitle,
     required this.child,
     this.heroIcon = Icons.favorite_rounded,
+    this.eyebrow,
   });
 
   final String title;
   final String subtitle;
   final Widget child;
   final IconData heroIcon;
+  final String? eyebrow;
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +125,25 @@ class AuthShellLayout extends StatelessWidget {
                   ).copyWith(fontSize: compact ? 34 : 50),
                 ),
                 const SizedBox(height: WellnessSpacing.md),
+                if (eyebrow != null) ...[
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: WellnessSpacing.md,
+                      vertical: WellnessSpacing.xs,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.42),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      eyebrow!,
+                      style: WellnessTextStyles.label.copyWith(
+                        color: WellnessColors.textPrimaryFor(brightness),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: WellnessSpacing.md),
+                ],
                 Text(
                   subtitle,
                   style: WellnessTextStyles.body.copyWith(
@@ -146,6 +167,10 @@ class AuthShellLayout extends StatelessWidget {
                     _HeroPoint(
                       icon: Icons.favorite_outline_rounded,
                       text: 'Gentle support for every phase',
+                    ),
+                    _HeroPoint(
+                      icon: Icons.timelapse_rounded,
+                      text: 'Fast daily check-ins',
                     ),
                   ],
                 ),
@@ -173,7 +198,22 @@ class AuthShellLayout extends StatelessWidget {
     return WellnessBlurContainer(
       radius: 34,
       padding: const EdgeInsets.all(WellnessSpacing.xl),
-      child: child,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Your personal space',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: WellnessSpacing.xs),
+          Text(
+            'Designed to be calm, private, and easy to update in under a minute.',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: WellnessSpacing.lg),
+          child,
+        ],
+      ),
     );
   }
 }
