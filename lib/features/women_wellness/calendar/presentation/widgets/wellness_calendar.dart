@@ -52,10 +52,16 @@ class _WellnessCalendarState extends State<WellnessCalendar> {
   @override
   void didUpdateWidget(covariant WellnessCalendar oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!WellnessDateHelper.isSameDay(oldWidget.focusedDay, widget.focusedDay)) {
+    if (!WellnessDateHelper.isSameDay(
+      oldWidget.focusedDay,
+      widget.focusedDay,
+    )) {
       _focusedDay = widget.focusedDay;
     }
-    if (!WellnessDateHelper.isSameDay(oldWidget.selectedDay, widget.selectedDay)) {
+    if (!WellnessDateHelper.isSameDay(
+      oldWidget.selectedDay,
+      widget.selectedDay,
+    )) {
       _selectedDay = widget.selectedDay;
     }
   }
@@ -69,7 +75,8 @@ class _WellnessCalendarState extends State<WellnessCalendar> {
       firstDay: DateTime(2024),
       lastDay: DateTime(2030),
       focusedDay: _focusedDay,
-      selectedDayPredicate: (day) => WellnessDateHelper.isSameDay(day, _selectedDay),
+      selectedDayPredicate: (day) =>
+          WellnessDateHelper.isSameDay(day, _selectedDay),
       availableGestures: AvailableGestures.horizontalSwipe,
       rowHeight: WellnessSpacing.calendarCellSize,
       daysOfWeekHeight: 32,
@@ -119,7 +126,8 @@ class _WellnessCalendarState extends State<WellnessCalendar> {
       ),
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, day, _) => _buildDay(context, day),
-        todayBuilder: (context, day, _) => _buildDay(context, day, isToday: true),
+        todayBuilder: (context, day, _) =>
+            _buildDay(context, day, isToday: true),
         selectedBuilder: (context, day, _) =>
             _buildDay(context, day, isSelected: true),
         outsideBuilder: (context, day, _) => const SizedBox.shrink(),
@@ -136,7 +144,8 @@ class _WellnessCalendarState extends State<WellnessCalendar> {
     final marker = _markerFor(day);
     final color = _colorForMarker(marker);
     final hasLog = _hasLog(day);
-    final isWeekend = day.weekday == DateTime.saturday || day.weekday == DateTime.sunday;
+    final isWeekend =
+        day.weekday == DateTime.saturday || day.weekday == DateTime.sunday;
 
     Widget cell = _DayCell(
       day: day,
@@ -162,7 +171,9 @@ class _WellnessCalendarState extends State<WellnessCalendar> {
         return _DayMarker.period;
       }
     }
-    final predictedEnd = widget.prediction.nextPeriodDate.add(const Duration(days: 4));
+    final predictedEnd = widget.prediction.nextPeriodDate.add(
+      const Duration(days: 4),
+    );
     if (!day.isBefore(widget.prediction.nextPeriodDate) &&
         !day.isAfter(predictedEnd)) {
       return _DayMarker.predicted;
@@ -182,13 +193,13 @@ class _WellnessCalendarState extends State<WellnessCalendar> {
   }
 
   Color? _colorForMarker(_DayMarker? marker) => switch (marker) {
-        _DayMarker.period => WellnessColors.period,
-        _DayMarker.predicted => WellnessColors.predicted,
-        _DayMarker.ovulation => WellnessColors.ovulation,
-        _DayMarker.fertile => WellnessColors.fertile,
-        _DayMarker.pms => WellnessColors.pms,
-        null => null,
-      };
+    _DayMarker.period => WellnessColors.period,
+    _DayMarker.predicted => WellnessColors.predicted,
+    _DayMarker.ovulation => WellnessColors.ovulation,
+    _DayMarker.fertile => WellnessColors.fertile,
+    _DayMarker.pms => WellnessColors.pms,
+    null => null,
+  };
 
   bool _hasLog(DateTime day) =>
       widget.logs.any((log) => WellnessDateHelper.isSameDay(log.logDate, day));
@@ -217,7 +228,9 @@ class _DayCell extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     final weekendTint = isWeekend
-        ? WellnessColors.lavender.withValues(alpha: brightness == Brightness.dark ? 0.2 : 0.45)
+        ? WellnessColors.lavender.withValues(
+            alpha: brightness == Brightness.dark ? 0.2 : 0.45,
+          )
         : Colors.transparent;
 
     return AnimatedContainer(
@@ -232,20 +245,10 @@ class _DayCell extends StatelessWidget {
           color: isToday && !isSelected
               ? WellnessColors.primaryHot
               : isSelected
-                  ? WellnessColors.primaryDeep
-                  : Colors.transparent,
+              ? WellnessColors.primaryDeep
+              : Colors.transparent,
           width: isToday ? 2 : 0,
         ),
-        gradient: marker == _DayMarker.period && !isSelected
-            ? LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  WellnessColors.period.withValues(alpha: 0.9),
-                  WellnessColors.period.withValues(alpha: 0.15),
-                ],
-              )
-            : null,
       ),
       child: Stack(
         alignment: Alignment.center,
@@ -254,16 +257,34 @@ class _DayCell extends StatelessWidget {
             '${day.day}',
             style: TextStyle(
               fontSize: 14,
-              fontWeight: isToday || isSelected ? FontWeight.w700 : FontWeight.w500,
+              fontWeight: isToday || isSelected
+                  ? FontWeight.w700
+                  : FontWeight.w500,
               color: isSelected
                   ? Colors.white
                   : WellnessColors.textPrimaryFor(brightness),
             ),
           ),
           if (marker == _DayMarker.fertile)
-            const Positioned(top: 4, right: 4, child: Icon(Icons.eco, size: 11, color: WellnessColors.fertileDeep)),
+            const Positioned(
+              top: 4,
+              right: 4,
+              child: Icon(
+                Icons.eco,
+                size: 11,
+                color: WellnessColors.fertileDeep,
+              ),
+            ),
           if (marker == _DayMarker.ovulation)
-            const Positioned(top: 4, right: 4, child: Icon(Icons.wb_sunny, size: 11, color: WellnessColors.ovulationDeep)),
+            const Positioned(
+              top: 4,
+              right: 4,
+              child: Icon(
+                Icons.wb_sunny,
+                size: 11,
+                color: WellnessColors.ovulationDeep,
+              ),
+            ),
           if (hasLog)
             Positioned(
               right: 6,
@@ -294,14 +315,51 @@ class WellnessCalendarMonthHeader extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
     final title = DateFormat.yMMMM().format(month);
     final seasonIcon = _seasonIcon(month.month);
+    final subtitle = _seasonSubtitle(month.month);
+    final isDark = brightness == Brightness.dark;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: WellnessSpacing.sm),
+    return Container(
+      padding: const EdgeInsets.all(WellnessSpacing.lg),
+      decoration: BoxDecoration(
+        color: isDark ? WellnessColors.darkSurface : WellnessColors.surface,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: WellnessColors.borderFor(brightness).withValues(alpha: 0.45),
+        ),
+      ),
       child: Row(
         children: [
-          Icon(seasonIcon, color: WellnessColors.primaryHot, size: 22),
-          const SizedBox(width: WellnessSpacing.sm),
-          Text(title, style: WellnessTextStyles.sectionHeader(brightness)),
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.08)
+                  : Colors.white.withValues(alpha: 0.7),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Icon(
+              seasonIcon,
+              color: WellnessColors.primaryDeep,
+              size: 22,
+            ),
+          ),
+          const SizedBox(width: WellnessSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: WellnessTextStyles.sectionHeader(
+                    brightness,
+                  ).copyWith(fontSize: 24),
+                ),
+                const SizedBox(height: 4),
+                Text(subtitle, style: WellnessTextStyles.caption(context)),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -312,5 +370,18 @@ class WellnessCalendarMonthHeader extends StatelessWidget {
     if (month >= 6 && month <= 8) return Icons.wb_sunny_outlined;
     if (month >= 9 && month <= 11) return Icons.park_outlined;
     return Icons.ac_unit_outlined;
+  }
+
+  String _seasonSubtitle(int month) {
+    if (month >= 3 && month <= 5) {
+      return 'A fresh month to keep your rhythm visible';
+    }
+    if (month >= 6 && month <= 8) {
+      return 'Track energy, heat, and cycle patterns with ease';
+    }
+    if (month >= 9 && month <= 11) {
+      return 'A grounded view of your upcoming cycle days';
+    }
+    return 'A calm place to follow your cycle through the season';
   }
 }

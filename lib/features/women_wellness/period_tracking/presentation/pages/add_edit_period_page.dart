@@ -41,56 +41,59 @@ class AddEditPeriodPage extends GetView<PeriodEntryController> {
               maxWidth: WellnessSpacing.pageMaxWidth,
             ),
             child: WellnessCard(
-                padding: const EdgeInsets.all(WellnessSpacing.xl),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(WellnessSpacing.lg),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0x33F5B7C5),
-                            Color(0x33D8B4FE),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(24),
+              padding: const EdgeInsets.all(WellnessSpacing.xl),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(WellnessSpacing.lg),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? WellnessColors.darkSurface
+                          : WellnessColors.secondary.withValues(alpha: 0.32),
+                      border: Border.all(
+                        color: WellnessColors.borderFor(
+                          Theme.of(context).brightness,
+                        ).withValues(alpha: 0.7),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            controller.isEditMode
-                                ? 'Refine your cycle record'
-                                : 'Capture this cycle gently',
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          const SizedBox(height: WellnessSpacing.sm),
-                          Text(
-                            'Track start and end dates with notes that help you recognize patterns over time.',
-                            style: WellnessTextStyles.bodyFor(context).copyWith(
-                              color: WellnessColors.textSecondaryFor(
-                                Theme.of(context).brightness,
-                              ),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          controller.isEditMode
+                              ? 'Refine your cycle record'
+                              : 'Capture this cycle gently',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        const SizedBox(height: WellnessSpacing.sm),
+                        Text(
+                          'Track start and end dates with notes that help you recognize patterns over time.',
+                          style: WellnessTextStyles.bodyFor(context).copyWith(
+                            color: WellnessColors.textSecondaryFor(
+                              Theme.of(context).brightness,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: WellnessSpacing.xl),
-                    Text(
-                      controller.isEditMode
-                          ? WellnessConstants.editPeriodTitle
+                  ),
+                  const SizedBox(height: WellnessSpacing.xl),
+                  Text(
+                    controller.isEditMode
+                        ? WellnessConstants.editPeriodTitle
                         : WellnessConstants.addPeriodTitle,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: WellnessSpacing.xl),
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      final useColumns = WellnessResponsive.useComfortableColumns(
-                        context,
-                        constraints.maxWidth,
-                      );
+                      final useColumns =
+                          WellnessResponsive.useComfortableColumns(
+                            context,
+                            constraints.maxWidth,
+                          );
                       if (!useColumns) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -188,7 +191,10 @@ class AddEditPeriodPage extends GetView<PeriodEntryController> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.auto_awesome_rounded, color: WellnessColors.primaryDeep),
+              const Icon(
+                Icons.auto_awesome_rounded,
+                color: WellnessColors.primaryDeep,
+              ),
               const SizedBox(width: WellnessSpacing.md),
               Expanded(
                 child: Text(

@@ -1,7 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
+import 'package:her_wellness_calender/features/women_wellness/core/theme/app_radius.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/theme/app_shadows.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_colors.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_spacing.dart';
 
@@ -24,61 +24,47 @@ class WellnessGlassCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
-    final base = tint ??
-        (isDark
-            ? WellnessColors.darkCard.withValues(alpha: 0.46)
-            : Colors.white.withValues(alpha: 0.62));
+    final base =
+        tint ?? (isDark ? WellnessColors.darkCard : WellnessColors.surface);
+    final radius = AppRadius.lg + 4;
+    final textColor = WellnessColors.textPrimaryFor(brightness);
 
     final content = ClipRRect(
-      borderRadius: BorderRadius.circular(WellnessSpacing.cardRadius + 4),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-        child: Container(
-          decoration: BoxDecoration(
-            color: base,
-            borderRadius: BorderRadius.circular(WellnessSpacing.cardRadius + 4),
-            border: Border.all(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.1)
-                  : Colors.white.withValues(alpha: 0.76),
-              width: 1.1,
-            ),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDark
-                  ? [
-                      WellnessColors.darkCard.withValues(alpha: 0.65),
-                      WellnessColors.darkSurface.withValues(alpha: 0.48),
-                    ]
-                  : [
-                      Colors.white.withValues(alpha: 0.82),
-                      WellnessColors.blush.withValues(alpha: 0.45),
-                    ],
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: isDark
-                    ? Colors.black.withValues(alpha: 0.15)
-                    : WellnessColors.primary.withValues(alpha: 0.08),
-                blurRadius: 26,
-                offset: const Offset(0, 16),
-              ),
-            ],
+      borderRadius: BorderRadius.circular(radius),
+      child: Container(
+        decoration: BoxDecoration(
+          color: base,
+          borderRadius: BorderRadius.circular(radius),
+          border: Border.all(
+            color: WellnessColors.borderFor(brightness).withValues(alpha: 0.72),
+            width: 1,
           ),
-          padding: padding ?? const EdgeInsets.all(WellnessSpacing.xl),
-          child: child,
+          boxShadow: AppShadows.soft(brightness),
+        ),
+        padding: padding ?? const EdgeInsets.all(WellnessSpacing.xl),
+        child: DefaultTextStyle.merge(
+          style: TextStyle(color: textColor, decoration: TextDecoration.none),
+          child: IconTheme.merge(
+            data: IconThemeData(color: WellnessColors.primaryDeep),
+            child: child,
+          ),
         ),
       ),
     );
 
-    if (onTap == null) return content;
+    final surface = Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(radius),
+      child: content,
+    );
+
+    if (onTap == null) return surface;
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(WellnessSpacing.cardRadius + 4),
-        child: content,
+        borderRadius: BorderRadius.circular(radius),
+        child: surface,
       ),
     );
   }

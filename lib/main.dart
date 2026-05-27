@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 import 'package:her_wellness_calender/app/app.dart';
@@ -7,6 +8,10 @@ import 'package:her_wellness_calender/app/environment/app_environment.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  debugPaintBaselinesEnabled = false;
+  debugPaintSizeEnabled = false;
+  debugPaintPointersEnabled = false;
+  debugRepaintRainbowEnabled = false;
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -15,7 +20,7 @@ void main() async {
     ),
   );
 
-  await AppDependencies.initialize(environment: AppEnvironment.live);
+  await AppDependencies.initialize(environment: AppEnvironment.mock);
 
   runApp(const App());
 }

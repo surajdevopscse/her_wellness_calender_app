@@ -40,8 +40,9 @@ class WellnessChartCard extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(WellnessSpacing.lg),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceContainerHighest
-                    .withValues(alpha: 0.32),
+                color: Theme.of(
+                  context,
+                ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.32),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
@@ -78,15 +79,7 @@ class WellnessChartCard extends StatelessWidget {
                             borderRadius: const BorderRadius.vertical(
                               top: Radius.circular(14),
                             ),
-                            gradient: const LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [
-                                WellnessColors.primaryDeep,
-                                WellnessColors.secondary,
-                                WellnessColors.accent,
-                              ],
-                            ),
+                            color: WellnessColors.primaryDeep,
                           ),
                         ],
                       ),
@@ -96,14 +89,52 @@ class WellnessChartCard extends StatelessWidget {
             ),
           if (entries.isNotEmpty) ...[
             const SizedBox(height: WellnessSpacing.md),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: entries
-                  .map(
-                    (entry) => Chip(label: Text('${entry.key}: ${entry.value}')),
-                  )
-                  .toList(),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final compact = constraints.maxWidth < 360;
+                return Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: entries.map((entry) {
+                    final pill = Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest
+                            .withValues(alpha: 0.34),
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(
+                          color: WellnessColors.borderFor(
+                            brightness,
+                          ).withValues(alpha: 0.42),
+                        ),
+                      ),
+                      child: Text(
+                        '${entry.key}: ${entry.value}',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    );
+
+                    if (!compact) {
+                      return pill;
+                    }
+
+                    return SizedBox(
+                      width: (constraints.maxWidth - 8) / 2,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: pill,
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
             ),
           ],
         ],

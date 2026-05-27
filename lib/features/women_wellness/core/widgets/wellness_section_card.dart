@@ -35,16 +35,20 @@ class WellnessSectionCard extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
-                    gradient: LinearGradient(
-                      colors: [
-                        WellnessColors.primaryHot.withValues(alpha: 0.72),
-                        WellnessColors.secondary.withValues(alpha: 0.42),
-                      ],
+                    color: brightness == Brightness.dark
+                        ? WellnessColors.darkSurface
+                        : WellnessColors.secondary.withValues(alpha: 0.42),
+                    border: Border.all(
+                      color: WellnessColors.borderFor(
+                        brightness,
+                      ).withValues(alpha: 0.7),
                     ),
                   ),
                   child: Icon(
                     icon,
-                    color: WellnessColors.textOnPrimary,
+                    color: brightness == Brightness.dark
+                        ? WellnessColors.darkPrimary
+                        : WellnessColors.primaryDeep,
                     size: 20,
                   ),
                 ),
@@ -56,8 +60,9 @@ class WellnessSectionCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: WellnessTextStyles.sectionHeader(brightness)
-                          .copyWith(fontSize: 22),
+                      style: WellnessTextStyles.sectionHeader(
+                        brightness,
+                      ).copyWith(fontSize: 22),
                     ),
                     if (subtitle != null) ...[
                       const SizedBox(height: 2),

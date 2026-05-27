@@ -6,7 +6,7 @@ import 'package:her_wellness_calender/features/women_wellness/core/theme/wellnes
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_animations.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_card.dart';
 
-/// Today's wellness tip with soft gradient and fade-in.
+/// Today's wellness tip with readable neutral surfaces.
 class WellnessTipCard extends StatelessWidget {
   const WellnessTipCard({super.key, required this.tip});
 
@@ -15,14 +15,20 @@ class WellnessTipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+    final chipColor = isDark
+        ? Colors.white.withValues(alpha: 0.08)
+        : WellnessColors.secondary.withValues(alpha: 0.38);
+    final titleColor = isDark
+        ? WellnessColors.darkTextPrimary
+        : WellnessColors.textPrimary;
+    final bodyColor = isDark
+        ? WellnessColors.darkTextSecondary
+        : WellnessColors.textSecondary;
+
     return FadeInContainer(
       delay: const Duration(milliseconds: 120),
       child: WellnessCard(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [WellnessColors.peach, WellnessColors.blush, WellnessColors.lavender],
-        ),
         padding: const EdgeInsets.all(WellnessSpacing.lg),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,8 +37,15 @@ class WellnessTipCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.55),
-                borderRadius: BorderRadius.circular(WellnessSpacing.controlRadius),
+                color: chipColor,
+                borderRadius: BorderRadius.circular(
+                  WellnessSpacing.controlRadius,
+                ),
+                border: Border.all(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : Colors.white.withValues(alpha: 0.5),
+                ),
               ),
               child: const Icon(
                 Icons.spa_outlined,
@@ -47,12 +60,14 @@ class WellnessTipCard extends StatelessWidget {
                 children: [
                   Text(
                     'Today\'s tip',
-                    style: WellnessTextStyles.sectionHeader(brightness),
+                    style: WellnessTextStyles.sectionHeader(
+                      brightness,
+                    ).copyWith(color: titleColor),
                   ),
                   const SizedBox(height: WellnessSpacing.sm),
                   Text(
                     tip,
-                    style: WellnessTextStyles.bodyForBrightness(brightness),
+                    style: WellnessTextStyles.body.copyWith(color: bodyColor),
                   ),
                 ],
               ),

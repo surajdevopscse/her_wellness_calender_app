@@ -17,10 +17,10 @@ class WellnessMobileNav extends StatelessWidget {
 
   static const _items = [
     (Icons.home_rounded, 'Home', 0),
-    (Icons.calendar_month_rounded, 'Calendar', 1),
-    (Icons.edit_note_rounded, 'Check-in', 3),
-    (Icons.insights_rounded, 'Reports', 5),
-    (Icons.tune_rounded, 'Settings', 9),
+    (Icons.calendar_month_rounded, 'Cycle', 1),
+    (Icons.edit_note_rounded, 'Log', 3),
+    (Icons.insights_rounded, 'Trends', 5),
+    (Icons.tune_rounded, 'More', 9),
   ];
 
   @override
@@ -29,11 +29,11 @@ class WellnessMobileNav extends StatelessWidget {
     final isDark = brightness == Brightness.dark;
 
     return WellnessBlurContainer(
-      radius: 30,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      radius: 22,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       color: isDark
-          ? WellnessColors.darkCard.withValues(alpha: 0.56)
-          : Colors.white.withValues(alpha: 0.72),
+          ? WellnessColors.darkCard.withValues(alpha: 0.72)
+          : WellnessColors.surface.withValues(alpha: 0.94),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: _items.map((item) {
@@ -70,9 +70,7 @@ class _MobileNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final activeColor = prominent
-        ? WellnessColors.textOnPrimary
-        : WellnessColors.primaryDeep;
+    final activeColor = prominent ? Colors.white : WellnessColors.primaryDeep;
     final inactiveColor = WellnessColors.textSecondaryFor(brightness);
 
     return Expanded(
@@ -82,42 +80,31 @@ class _MobileNavItem extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 240),
           padding: EdgeInsets.symmetric(
-            vertical: prominent ? 4 : 8,
-            horizontal: prominent ? 0 : 6,
+            vertical: prominent ? 2 : 3,
+            horizontal: prominent ? 0 : 4,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               AnimatedContainer(
                 duration: const Duration(milliseconds: 240),
-                width: prominent ? 52 : (selected ? 44 : 38),
-                height: prominent ? 52 : 38,
+                width: prominent ? 42 : (selected ? 36 : 32),
+                height: prominent ? 42 : 32,
                 decoration: BoxDecoration(
-                  gradient: prominent
-                      ? const LinearGradient(
-                          colors: [
-                            WellnessColors.primaryHot,
-                            WellnessColors.secondary,
-                          ],
-                        )
+                  color: prominent
+                      ? WellnessColors.primaryDeep
                       : selected
-                          ? LinearGradient(
-                              colors: [
-                                WellnessColors.primaryHot.withValues(alpha: 0.78),
-                                WellnessColors.peach.withValues(alpha: 0.5),
-                              ],
-                            )
-                          : null,
-                  color: !prominent && !selected
-                      ? Colors.white.withValues(alpha: 0.04)
-                      : null,
-                  borderRadius: BorderRadius.circular(prominent ? 18 : 16),
+                      ? WellnessColors.secondary.withValues(alpha: 0.75)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(prominent ? 14 : 12),
                   boxShadow: selected || prominent
                       ? [
                           BoxShadow(
-                            color: WellnessColors.primaryHot.withValues(alpha: 0.22),
-                            blurRadius: 18,
-                            offset: const Offset(0, 10),
+                            color: WellnessColors.primaryHot.withValues(
+                              alpha: 0.22,
+                            ),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
                           ),
                         ]
                       : const [],
@@ -127,12 +114,14 @@ class _MobileNavItem extends StatelessWidget {
                   color: selected || prominent ? activeColor : inactiveColor,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 3),
               Text(
                 label,
                 style: WellnessTextStyles.caption(context).copyWith(
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                   color: selected ? WellnessColors.primaryDeep : inactiveColor,
+                  fontSize: 10,
+                  height: 1.1,
                 ),
               ),
             ],

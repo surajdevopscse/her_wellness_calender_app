@@ -58,9 +58,9 @@ class QuickLogCard extends StatelessWidget {
                   ),
                   child: Text(
                     'Under 1 minute',
-                    style: WellnessTextStyles.caption(context).copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: WellnessTextStyles.caption(
+                      context,
+                    ).copyWith(fontWeight: FontWeight.w700),
                   ),
                 ),
               ],
@@ -122,13 +122,19 @@ class QuickLogCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
                       color: WellnessColors.blush.withValues(alpha: 0.7),
-                      borderRadius: BorderRadius.circular(WellnessSpacing.pillRadius),
+                      borderRadius: BorderRadius.circular(
+                        WellnessSpacing.pillRadius,
+                      ),
                       border: Border.all(color: WellnessColors.border),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(mood.icon, size: 20, color: WellnessColors.primaryDeep),
+                        Icon(
+                          mood.icon,
+                          size: 20,
+                          color: WellnessColors.primaryDeep,
+                        ),
                         const SizedBox(width: 6),
                         Text(mood.label, style: WellnessTextStyles.label),
                       ],
@@ -159,6 +165,7 @@ class _QuickActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return ScaleTap(
       onTap: onTap,
       child: Container(
@@ -171,7 +178,13 @@ class _QuickActionButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 22),
+            Icon(
+              icon,
+              color: brightness == Brightness.dark
+                  ? WellnessColors.darkTextPrimary
+                  : WellnessColors.primaryDeep,
+              size: 22,
+            ),
             const SizedBox(width: 8),
             Text(label, style: WellnessTextStyles.label),
           ],

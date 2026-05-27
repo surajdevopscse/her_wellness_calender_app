@@ -19,21 +19,7 @@ class PrivacyHeroCard extends StatelessWidget {
     return FadeInContainer(
       child: WellnessCard(
         padding: const EdgeInsets.all(WellnessSpacing.xl),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-              ? [
-                  WellnessColors.darkCard,
-                  const Color(0xFF4A2F38),
-                  WellnessColors.darkPrimary.withValues(alpha: 0.35),
-                ]
-              : [
-                  WellnessColors.primaryHot,
-                  WellnessColors.primary,
-                  WellnessColors.primaryDeep,
-                ],
-        ),
+        color: isDark ? WellnessColors.darkCard : WellnessColors.surface,
         child: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -54,11 +40,15 @@ class PrivacyHeroCard extends StatelessWidget {
                   height: 52,
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: isDark ? 0.12 : 0.22),
-                    borderRadius: BorderRadius.circular(WellnessSpacing.controlRadius),
+                    borderRadius: BorderRadius.circular(
+                      WellnessSpacing.controlRadius,
+                    ),
                   ),
                   child: Icon(
                     Icons.lock_person_outlined,
-                    color: isDark ? WellnessColors.darkPrimary : Colors.white,
+                    color: isDark
+                        ? WellnessColors.darkPrimary
+                        : WellnessColors.primaryDeep,
                     size: 28,
                   ),
                 ),
@@ -66,16 +56,14 @@ class PrivacyHeroCard extends StatelessWidget {
                 Text(
                   WellnessConstants.privacyHeroTitle,
                   style: WellnessTextStyles.display(
-                    color: isDark ? WellnessColors.darkTextPrimary : Colors.white,
+                    color: WellnessColors.textPrimaryFor(brightness),
                   ).copyWith(fontSize: 26),
                 ),
                 const SizedBox(height: WellnessSpacing.sm),
                 Text(
                   WellnessConstants.privacyHeroSubtitle,
                   style: WellnessTextStyles.body.copyWith(
-                    color: isDark
-                        ? WellnessColors.darkTextSecondary
-                        : Colors.white.withValues(alpha: 0.92),
+                    color: WellnessColors.textSecondaryFor(brightness),
                     fontSize: 15,
                     height: 1.5,
                   ),
@@ -87,18 +75,18 @@ class PrivacyHeroCard extends StatelessWidget {
                     vertical: WellnessSpacing.sm,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: isDark ? 0.1 : 0.16),
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.06)
+                        : WellnessColors.secondary.withValues(alpha: 0.38),
                     borderRadius: BorderRadius.circular(999),
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.18),
+                      color: WellnessColors.borderFor(brightness),
                     ),
                   ),
                   child: Text(
                     'You control reminders, previews, storage, and deletion from one place.',
                     style: WellnessTextStyles.caption(context).copyWith(
-                      color: isDark
-                          ? WellnessColors.darkTextSecondary
-                          : Colors.white.withValues(alpha: 0.94),
+                      color: WellnessColors.textSecondaryFor(brightness),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -132,14 +120,18 @@ class _TrustRow extends StatelessWidget {
         Icon(
           Icons.check_circle_outline,
           size: 18,
-          color: isDark ? WellnessColors.darkAccent : Colors.white.withValues(alpha: 0.95),
+          color: isDark
+              ? WellnessColors.darkAccent
+              : WellnessColors.primaryDeep,
         ),
         const SizedBox(width: 8),
         Expanded(
           child: Text(
             text,
             style: WellnessTextStyles.body.copyWith(
-              color: isDark ? WellnessColors.darkTextSecondary : Colors.white.withValues(alpha: 0.9),
+              color: WellnessColors.textSecondaryFor(
+                Theme.of(context).brightness,
+              ),
               fontSize: 13,
               fontWeight: FontWeight.w500,
             ),

@@ -43,18 +43,22 @@ class PrivacySettingsSection extends StatelessWidget {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          WellnessColors.primaryHot.withValues(alpha: 0.78),
-                          WellnessColors.secondary.withValues(alpha: 0.45),
-                        ],
+                      color: brightness == Brightness.dark
+                          ? WellnessColors.darkSurface
+                          : WellnessColors.secondary.withValues(alpha: 0.45),
+                      border: Border.all(
+                        color: WellnessColors.borderFor(
+                          brightness,
+                        ).withValues(alpha: 0.7),
                       ),
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Icon(
                       icon,
                       size: 22,
-                      color: WellnessColors.textOnPrimary,
+                      color: brightness == Brightness.dark
+                          ? WellnessColors.darkPrimary
+                          : WellnessColors.primaryDeep,
                     ),
                   ),
                   const SizedBox(width: WellnessSpacing.md),
@@ -68,10 +72,7 @@ class PrivacySettingsSection extends StatelessWidget {
                         style: WellnessTextStyles.sectionHeader(brightness),
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        hint,
-                        style: WellnessTextStyles.caption(context),
-                      ),
+                      Text(hint, style: WellnessTextStyles.caption(context)),
                     ],
                   ),
                 ),

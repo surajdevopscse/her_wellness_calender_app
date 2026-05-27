@@ -39,7 +39,12 @@ class ReportsPage extends GetView<ReportsController> {
         );
       }
       return SingleChildScrollView(
-        padding: WellnessResponsive.pagePadding(context),
+        padding: EdgeInsets.fromLTRB(
+          WellnessResponsive.pagePadding(context).left,
+          WellnessResponsive.pagePadding(context).top,
+          WellnessResponsive.pagePadding(context).right,
+          WellnessResponsive.bottomContentInset(context),
+        ),
         child: Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(
@@ -124,13 +129,7 @@ class ReportsPage extends GetView<ReportsController> {
                             titlesData: const FlTitlesData(show: false),
                             lineBarsData: [
                               LineChartBarData(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    WellnessColors.primaryHot,
-                                    WellnessColors.secondary,
-                                    WellnessColors.accent,
-                                  ],
-                                ),
+                                color: WellnessColors.primaryDeep,
                                 spots: [
                                   for (
                                     var i = 0;
@@ -147,13 +146,8 @@ class ReportsPage extends GetView<ReportsController> {
                                 dotData: const FlDotData(show: false),
                                 belowBarData: BarAreaData(
                                   show: true,
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      WellnessColors.primaryHot.withValues(alpha: 0.28),
-                                      WellnessColors.secondary.withValues(alpha: 0.04),
-                                    ],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
+                                  color: WellnessColors.secondary.withValues(
+                                    alpha: 0.18,
                                   ),
                                 ),
                               ),
@@ -170,9 +164,15 @@ class ReportsPage extends GetView<ReportsController> {
                   values: report.symptomFrequency,
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
-                WellnessChartCard(title: 'Pain Trend', values: report.painTrend),
+                WellnessChartCard(
+                  title: 'Pain Trend',
+                  values: report.painTrend,
+                ),
                 const SizedBox(height: WellnessSpacing.lg),
-                WellnessChartCard(title: 'Flow Trend', values: report.flowTrend),
+                WellnessChartCard(
+                  title: 'Flow Trend',
+                  values: report.flowTrend,
+                ),
                 const SizedBox(height: WellnessSpacing.lg),
                 WellnessChartCard(
                   title: 'Mood Distribution',

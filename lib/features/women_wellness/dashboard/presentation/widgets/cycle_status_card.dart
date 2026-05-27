@@ -54,7 +54,7 @@ class CycleStatusCard extends StatelessWidget {
                 const Icon(
                   Icons.event_outlined,
                   size: 18,
-                  color: WellnessColors.primaryHot,
+                  color: WellnessColors.primaryDeep,
                 ),
                 const SizedBox(width: 6),
                 Expanded(

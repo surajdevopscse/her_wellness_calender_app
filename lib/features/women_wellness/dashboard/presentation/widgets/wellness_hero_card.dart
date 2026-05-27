@@ -20,18 +20,12 @@ class WellnessHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
     final next = data.prediction.daysUntilNextPeriod;
     final phaseName = _phaseName(data.prediction.currentCycleDay);
 
     return FadeInContainer(
       child: WellnessBlurContainer(
         radius: 34,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: WellnessColors.heroGradientFor(brightness),
-        ),
         child: Column(
           children: [
             LayoutBuilder(
@@ -68,7 +62,9 @@ class WellnessHeroCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     copy,
-                    SizedBox(height: compact ? WellnessSpacing.lg : WellnessSpacing.xl),
+                    SizedBox(
+                      height: compact ? WellnessSpacing.lg : WellnessSpacing.xl,
+                    ),
                     Align(alignment: Alignment.center, child: ring),
                   ],
                 );
@@ -134,10 +130,9 @@ class _HeroCopy extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               greeting,
-              style: WellnessTextStyles.caption(context).copyWith(
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.4,
-              ),
+              style: WellnessTextStyles.caption(
+                context,
+              ).copyWith(fontWeight: FontWeight.w700, letterSpacing: 0.4),
             ),
           ],
         ),
@@ -154,10 +149,7 @@ class _HeroCopy extends StatelessWidget {
               maxLines: compact ? 3 : null,
               style: WellnessTextStyles.display(
                 color: WellnessColors.textPrimaryFor(brightness),
-              ).copyWith(
-                fontSize: fontSize,
-                height: compact ? 1.06 : 1.1,
-              ),
+              ).copyWith(fontSize: fontSize, height: compact ? 1.06 : 1.1),
             );
           },
         ),

@@ -11,10 +11,14 @@ class WellnessEmptyState extends StatelessWidget {
     super.key,
     required this.message,
     this.icon = Icons.spa_outlined,
+    this.actionLabel,
+    this.onAction,
   });
 
   final String message;
   final IconData icon;
+  final String? actionLabel;
+  final VoidCallback? onAction;
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +37,21 @@ class WellnessEmptyState extends StatelessWidget {
                   height: 82,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [
-                        WellnessColors.primaryHot.withValues(alpha: 0.85),
-                        WellnessColors.secondary.withValues(alpha: 0.55),
-                      ],
+                    color: brightness == Brightness.dark
+                        ? WellnessColors.darkSurface
+                        : WellnessColors.secondary.withValues(alpha: 0.44),
+                    border: Border.all(
+                      color: WellnessColors.borderFor(
+                        brightness,
+                      ).withValues(alpha: 0.7),
                     ),
                   ),
                   child: Icon(
                     icon,
                     size: 38,
-                    color: WellnessColors.textOnPrimary,
+                    color: brightness == Brightness.dark
+                        ? WellnessColors.darkPrimary
+                        : WellnessColors.primaryDeep,
                   ),
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
@@ -60,6 +68,10 @@ class WellnessEmptyState extends StatelessWidget {
                     color: WellnessColors.textSecondaryFor(brightness),
                   ),
                 ),
+                if (actionLabel != null && onAction != null) ...[
+                  const SizedBox(height: WellnessSpacing.lg),
+                  FilledButton(onPressed: onAction, child: Text(actionLabel!)),
+                ],
               ],
             ),
           ),

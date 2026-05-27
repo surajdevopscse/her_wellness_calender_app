@@ -12,21 +12,12 @@ class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return AuthShellLayout(
-      title: 'Private wellness,\nyour way',
-      subtitle: 'Track your cycle with confidence and discretion.',
+      title: 'Serene care,\nyour way',
+      subtitle: 'Track your cycle with calm, confidence, and discretion.',
       eyebrow: 'Sign in securely',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Welcome back',
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
-          const SizedBox(height: WellnessSpacing.xs),
-          Text(
-            'Pick up where you left off with your latest cycle, symptoms, and reminders.',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
           const SizedBox(height: WellnessSpacing.lg),
           Text(
             'Email or mobile',
@@ -78,7 +69,9 @@ class LoginPage extends GetView<LoginController> {
                     padding: const EdgeInsets.only(bottom: WellnessSpacing.sm),
                     child: Text(
                       controller.errorMessage.value,
-                      style: TextStyle(color: Theme.of(context).colorScheme.error),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
                     ),
                   ),
           ),
@@ -86,7 +79,9 @@ class LoginPage extends GetView<LoginController> {
             () => FilledButton(
               onPressed: controller.isLoading.value ? null : controller.login,
               child: Text(
-                controller.isLoading.value ? 'Entering your space...' : 'Continue',
+                controller.isLoading.value
+                    ? 'Entering your space...'
+                    : 'Continue',
               ),
             ),
           ),
@@ -98,9 +93,12 @@ class LoginPage extends GetView<LoginController> {
           Container(
             padding: const EdgeInsets.all(WellnessSpacing.md),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.42),
-              borderRadius: BorderRadius.circular(WellnessSpacing.controlRadius),
+              color: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.42),
+              borderRadius: BorderRadius.circular(
+                WellnessSpacing.controlRadius,
+              ),
             ),
             child: Text(
               'Your wellness data stays private and editable after sign-in.',

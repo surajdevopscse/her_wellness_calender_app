@@ -56,7 +56,7 @@ class App extends StatelessWidget {
     final themeController = Get.find<ThemeController>();
     return Obx(
       () => GetMaterialApp(
-        title: 'Her Wellness Calendar',
+        title: 'Serene',
         theme: WellnessTheme.light,
         darkTheme: WellnessTheme.dark,
         themeMode: themeController.materialThemeMode,

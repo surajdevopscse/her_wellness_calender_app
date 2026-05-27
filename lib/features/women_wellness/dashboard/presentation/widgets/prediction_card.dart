@@ -57,7 +57,9 @@ class PredictionCard extends StatelessWidget {
               icon: Icons.wb_sunny_outlined,
               color: WellnessColors.ovulation,
               label: 'Ovulation',
-              value: WellnessDateHelper.shortDate.format(prediction.ovulationDate),
+              value: WellnessDateHelper.shortDate.format(
+                prediction.ovulationDate,
+              ),
             ),
             const SizedBox(height: WellnessSpacing.sm),
             _PhaseRow(
@@ -79,7 +81,9 @@ class PredictionCard extends StatelessWidget {
               const SizedBox(height: WellnessSpacing.md),
               Text(
                 prediction.warningMessage!,
-                style: WellnessTextStyles.body.copyWith(color: WellnessColors.error),
+                style: WellnessTextStyles.body.copyWith(
+                  color: WellnessColors.error,
+                ),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -106,6 +110,7 @@ class _PhaseRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -115,8 +120,19 @@ class _PhaseRow extends StatelessWidget {
           decoration: BoxDecoration(
             color: color.withValues(alpha: 0.35),
             borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: WellnessColors.borderFor(
+                brightness,
+              ).withValues(alpha: 0.7),
+            ),
           ),
-          child: Icon(icon, size: 18, color: color),
+          child: Icon(
+            icon,
+            size: 18,
+            color: brightness == Brightness.dark
+                ? WellnessColors.darkTextPrimary
+                : WellnessColors.primaryDeep,
+          ),
         ),
         const SizedBox(width: WellnessSpacing.sm),
         Expanded(
@@ -124,10 +140,7 @@ class _PhaseRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(label, style: WellnessTextStyles.label),
-              Text(
-                value,
-                style: WellnessTextStyles.bodyFor(context),
-              ),
+              Text(value, style: WellnessTextStyles.bodyFor(context)),
             ],
           ),
         ),

@@ -7,6 +7,7 @@ import 'package:her_wellness_calender/features/women_wellness/core/theme/wellnes
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_card.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_insight_card.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_loading_view.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_section_header.dart';
 import 'package:her_wellness_calender/features/women_wellness/settings/domain/entities/app_settings.dart';
 import 'package:her_wellness_calender/features/women_wellness/settings/presentation/controllers/settings_controller.dart';
 
@@ -29,36 +30,114 @@ class SettingsPage extends GetView<SettingsController> {
         ),
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: WellnessSpacing.compactMaxWidth),
+            constraints: const BoxConstraints(
+              maxWidth: WellnessSpacing.compactMaxWidth,
+            ),
             child: Column(
               children: [
                 const WellnessInsightCard(
                   title: 'Make the app feel like your space',
-                  message: 'Adjust appearance, privacy, backups, and notifications to match your comfort and rhythm.',
+                  message:
+                      'Adjust appearance, privacy, backups, and notifications to match your comfort and rhythm.',
                   icon: Icons.tune_rounded,
                   tint: WellnessColors.secondary,
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
+                const WellnessSectionHeader(
+                  title: 'Appearance',
+                  subtitle:
+                      'Choose a theme that feels right on both bright and low-light screens.',
+                ),
+                const SizedBox(height: WellnessSpacing.md),
                 WellnessCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Appearance', style: Theme.of(context).textTheme.titleMedium),
+                      Text(
+                        'Appearance',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                       const SizedBox(height: WellnessSpacing.md),
-                      SegmentedButton<AppThemeMode>(
-                        segments: const [
-                          ButtonSegment(value: AppThemeMode.system, label: Text('System')),
-                          ButtonSegment(value: AppThemeMode.light, label: Text('Light')),
-                          ButtonSegment(value: AppThemeMode.dark, label: Text('Dark')),
-                        ],
-                        selected: {settings?.themeMode ?? AppThemeMode.system},
-                        onSelectionChanged: (value) =>
-                            controller.updateTheme(value.first),
+                      SizedBox(
+                        width: double.infinity,
+                        child: SegmentedButton<AppThemeMode>(
+                          showSelectedIcon: false,
+                          style: ButtonStyle(
+                            visualDensity: VisualDensity.standard,
+                            backgroundColor: WidgetStateProperty.resolveWith((
+                              states,
+                            ) {
+                              if (states.contains(WidgetState.selected)) {
+                                return Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? WellnessColors.darkPrimary.withValues(
+                                        alpha: 0.22,
+                                      )
+                                    : WellnessColors.secondary.withValues(
+                                        alpha: 0.55,
+                                      );
+                              }
+                              return Colors.transparent;
+                            }),
+                            foregroundColor: WidgetStateProperty.resolveWith((
+                              states,
+                            ) {
+                              if (states.contains(WidgetState.selected)) {
+                                return WellnessColors.textPrimaryFor(
+                                  Theme.of(context).brightness,
+                                );
+                              }
+                              return WellnessColors.textSecondaryFor(
+                                Theme.of(context).brightness,
+                              );
+                            }),
+                            side: WidgetStatePropertyAll(
+                              BorderSide(
+                                color: WellnessColors.textPrimaryFor(
+                                  Theme.of(context).brightness,
+                                ),
+                              ),
+                            ),
+                            padding: WidgetStateProperty.all(
+                              const EdgeInsets.symmetric(vertical: 12),
+                            ),
+                            textStyle: WidgetStatePropertyAll(
+                              Theme.of(context).textTheme.labelMedium?.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                          segments: const [
+                            ButtonSegment(
+                              value: AppThemeMode.system,
+                              label: Text('Auto'),
+                            ),
+                            ButtonSegment(
+                              value: AppThemeMode.light,
+                              label: Text('Light'),
+                            ),
+                            ButtonSegment(
+                              value: AppThemeMode.dark,
+                              label: Text('Dark'),
+                            ),
+                          ],
+                          selected: {
+                            settings?.themeMode ?? AppThemeMode.system,
+                          },
+                          onSelectionChanged: (value) =>
+                              controller.updateTheme(value.first),
+                        ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
+                const WellnessSectionHeader(
+                  title: 'Personal controls',
+                  subtitle:
+                      'Manage your profile, reminders, and privacy from one place.',
+                ),
+                const SizedBox(height: WellnessSpacing.md),
                 WellnessCard(
                   child: Column(
                     children: [
@@ -89,6 +168,12 @@ class SettingsPage extends GetView<SettingsController> {
                   ),
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
+                const WellnessSectionHeader(
+                  title: 'Data & portability',
+                  subtitle:
+                      'Export, restore, and review how your information moves with you.',
+                ),
+                const SizedBox(height: WellnessSpacing.md),
                 WellnessCard(
                   child: Column(
                     children: [
@@ -112,6 +197,12 @@ class SettingsPage extends GetView<SettingsController> {
                   ),
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
+                const WellnessSectionHeader(
+                  title: 'About the app',
+                  subtitle:
+                      'Keep policy, version, and trust information easy to find.',
+                ),
+                const SizedBox(height: WellnessSpacing.md),
                 WellnessCard(
                   child: Column(
                     children: [
@@ -134,10 +225,30 @@ class SettingsPage extends GetView<SettingsController> {
                   ),
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
-                FilledButton.icon(
-                  onPressed: controller.logout,
-                  icon: const Icon(Icons.logout),
-                  label: const Text('Sign out'),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    onPressed: controller.logout,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: WellnessColors.periodDeep,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: WellnessSpacing.md,
+                      ),
+                      textStyle: Theme.of(context).textTheme.titleSmall
+                          ?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          WellnessSpacing.controlRadius + 2,
+                        ),
+                      ),
+                    ),
+                    icon: const Icon(Icons.logout_rounded, size: 18),
+                    label: const Text('Sign out'),
+                  ),
                 ),
               ],
             ),

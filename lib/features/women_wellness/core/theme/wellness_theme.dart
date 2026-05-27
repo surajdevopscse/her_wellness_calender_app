@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'app_radius.dart';
 import 'wellness_colors.dart';
 import 'wellness_spacing.dart';
 import 'wellness_text_styles.dart';
@@ -14,8 +15,9 @@ class WellnessTheme {
 
   static ThemeData _build(Brightness brightness) {
     final isDark = brightness == Brightness.dark;
-    final scheme =
-        isDark ? WellnessColors.darkScheme : WellnessColors.lightScheme;
+    final scheme = isDark
+        ? WellnessColors.darkScheme
+        : WellnessColors.lightScheme;
     final textTheme = WellnessTextStyles.textTheme(brightness);
 
     return ThemeData(
@@ -38,8 +40,9 @@ class WellnessTheme {
         surfaceTintColor: Colors.transparent,
       ),
       cardTheme: CardThemeData(
-        color: WellnessColors.cardFor(brightness)
-            .withValues(alpha: isDark ? 0.64 : 0.82),
+        color: WellnessColors.cardFor(
+          brightness,
+        ).withValues(alpha: isDark ? 0.64 : 0.82),
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
@@ -56,23 +59,53 @@ class WellnessTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor:
-              isDark ? WellnessColors.darkPrimary : WellnessColors.primaryDeep,
-          foregroundColor: isDark ? WellnessColors.darkTextOnPrimary : Colors.white,
+          backgroundColor: isDark
+              ? WellnessColors.darkPrimary
+              : WellnessColors.primaryDeep,
+          foregroundColor: isDark
+              ? WellnessColors.darkTextOnPrimary
+              : Colors.white,
           elevation: 0,
+          shadowColor: Colors.transparent,
           minimumSize: const Size(0, WellnessSpacing.minTouchTarget + 4),
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(WellnessSpacing.controlRadius + 2),
+            borderRadius: BorderRadius.circular(
+              WellnessSpacing.controlRadius + 2,
+            ),
+          ),
+          textStyle: WellnessTextStyles.button(brightness),
+        ),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: isDark
+              ? WellnessColors.darkPrimary
+              : WellnessColors.primaryDeep,
+          foregroundColor: isDark
+              ? WellnessColors.darkTextOnPrimary
+              : Colors.white,
+          disabledBackgroundColor: WellnessColors.borderFor(
+            brightness,
+          ).withValues(alpha: 0.55),
+          disabledForegroundColor: WellnessColors.textMuted,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          minimumSize: const Size(0, WellnessSpacing.minTouchTarget + 2),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              WellnessSpacing.controlRadius + 2,
+            ),
           ),
           textStyle: WellnessTextStyles.button(brightness),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor:
-              isDark ? WellnessColors.darkPrimary : WellnessColors.primaryDeep,
+          foregroundColor: isDark
+              ? WellnessColors.darkPrimary
+              : WellnessColors.primaryDeep,
           side: BorderSide(
             color: isDark
                 ? WellnessColors.darkPrimary.withValues(alpha: 0.55)
@@ -81,16 +114,18 @@ class WellnessTheme {
           minimumSize: const Size(0, WellnessSpacing.minTouchTarget + 4),
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(WellnessSpacing.controlRadius + 2),
+            borderRadius: BorderRadius.circular(
+              WellnessSpacing.controlRadius + 2,
+            ),
           ),
           textStyle: WellnessTextStyles.button(brightness),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor:
-              isDark ? WellnessColors.darkPrimary : WellnessColors.primaryDeep,
+          foregroundColor: isDark
+              ? WellnessColors.darkPrimary
+              : WellnessColors.primaryDeep,
           minimumSize: const Size(
             WellnessSpacing.minTouchTarget,
             WellnessSpacing.minTouchTarget,
@@ -101,34 +136,43 @@ class WellnessTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: isDark
-            ? WellnessColors.darkSurface.withValues(alpha: 0.68)
-            : Colors.white.withValues(alpha: 0.84),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+            ? WellnessColors.darkSurface.withValues(alpha: 0.7)
+            : WellnessColors.surface.withValues(alpha: 0.9),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 18,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
-          borderRadius:
-              BorderRadius.circular(WellnessSpacing.controlRadius + 2),
+          borderRadius: BorderRadius.circular(
+            WellnessSpacing.controlRadius + 2,
+          ),
           borderSide: BorderSide(
             color: WellnessColors.borderFor(brightness).withValues(alpha: 0.5),
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius:
-              BorderRadius.circular(WellnessSpacing.controlRadius + 2),
+          borderRadius: BorderRadius.circular(
+            WellnessSpacing.controlRadius + 2,
+          ),
           borderSide: BorderSide(
             color: WellnessColors.borderFor(brightness).withValues(alpha: 0.45),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius:
-              BorderRadius.circular(WellnessSpacing.controlRadius + 2),
+          borderRadius: BorderRadius.circular(
+            WellnessSpacing.controlRadius + 2,
+          ),
           borderSide: BorderSide(
-            color: isDark ? WellnessColors.darkPrimary : WellnessColors.primaryDeep,
+            color: isDark
+                ? WellnessColors.darkPrimary
+                : WellnessColors.primaryDeep,
             width: 2,
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius:
-              BorderRadius.circular(WellnessSpacing.controlRadius + 2),
+          borderRadius: BorderRadius.circular(
+            WellnessSpacing.controlRadius + 2,
+          ),
           borderSide: const BorderSide(color: WellnessColors.error),
         ),
         labelStyle: WellnessTextStyles.label.copyWith(
@@ -141,13 +185,15 @@ class WellnessTheme {
       chipTheme: ChipThemeData(
         backgroundColor: isDark
             ? WellnessColors.darkSurface.withValues(alpha: 0.7)
-            : WellnessColors.blush.withValues(alpha: 0.72),
+            : WellnessColors.secondary.withValues(alpha: 0.38),
         selectedColor: isDark
             ? WellnessColors.darkPrimary.withValues(alpha: 0.35)
-            : WellnessColors.primaryHot.withValues(alpha: 0.62),
+            : WellnessColors.primaryHot.withValues(alpha: 0.7),
         labelStyle: WellnessTextStyles.label,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(WellnessSpacing.controlRadius + 4),
+          borderRadius: BorderRadius.circular(
+            WellnessSpacing.controlRadius + 4,
+          ),
         ),
         side: BorderSide.none,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -155,17 +201,20 @@ class WellnessTheme {
       navigationBarTheme: NavigationBarThemeData(
         height: 72,
         backgroundColor: WellnessColors.cardFor(brightness),
-        indicatorColor: WellnessColors.primaryHot.withValues(alpha: 0.35),
+        indicatorColor: WellnessColors.secondary.withValues(alpha: 0.55),
         labelTextStyle: WidgetStatePropertyAll(
-          WellnessTextStyles.captionStatic.copyWith(fontWeight: FontWeight.w600),
+          WellnessTextStyles.captionStatic.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: isDark ? WellnessColors.darkCard : WellnessColors.textPrimary,
+        backgroundColor: isDark
+            ? WellnessColors.darkCard
+            : WellnessColors.textPrimary,
         contentTextStyle: WellnessTextStyles.body.copyWith(color: Colors.white),
         shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(WellnessSpacing.controlRadius + 2),
+          borderRadius: BorderRadius.circular(AppRadius.md),
         ),
         behavior: SnackBarBehavior.floating,
       ),
@@ -173,16 +222,29 @@ class WellnessTheme {
         backgroundColor: WellnessColors.cardFor(brightness),
         elevation: 8,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(WellnessSpacing.sheetRadius + 4),
+          borderRadius: BorderRadius.circular(AppRadius.lg),
         ),
         titleTextStyle: WellnessTextStyles.sectionHeader(brightness),
         contentTextStyle: WellnessTextStyles.bodyForBrightness(brightness),
       ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+        },
+      ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor:
-            isDark ? WellnessColors.darkPrimary : WellnessColors.primaryHot,
-        foregroundColor: isDark ? WellnessColors.darkTextOnPrimary : Colors.white,
+        backgroundColor: isDark
+            ? WellnessColors.darkPrimary
+            : WellnessColors.primaryHot,
+        foregroundColor: isDark
+            ? WellnessColors.darkTextOnPrimary
+            : Colors.white,
         elevation: 0,
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 18),
       ),
       listTileTheme: ListTileThemeData(
         minVerticalPadding: 10,
@@ -203,7 +265,9 @@ class WellnessTheme {
           if (states.contains(WidgetState.selected)) {
             return isDark ? WellnessColors.darkTextOnPrimary : Colors.white;
           }
-          return isDark ? WellnessColors.darkTextMuted : WellnessColors.textMuted;
+          return isDark
+              ? WellnessColors.darkTextMuted
+              : WellnessColors.textMuted;
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
@@ -214,6 +278,24 @@ class WellnessTheme {
           return isDark ? WellnessColors.darkBorder : WellnessColors.border;
         }),
         trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return isDark
+                ? WellnessColors.darkPrimary
+                : WellnessColors.primaryDeep;
+          }
+          return Colors.transparent;
+        }),
+        checkColor: WidgetStatePropertyAll(
+          isDark ? WellnessColors.darkTextOnPrimary : Colors.white,
+        ),
+        side: BorderSide(
+          color: WellnessColors.borderFor(brightness),
+          width: 1.4,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       ),
       extensions: const [WellnessThemeExtension()],
     );
@@ -231,6 +313,5 @@ class WellnessThemeExtension extends ThemeExtension<WellnessThemeExtension> {
   WellnessThemeExtension lerp(
     covariant ThemeExtension<WellnessThemeExtension>? other,
     double t,
-  ) =>
-      const WellnessThemeExtension();
+  ) => const WellnessThemeExtension();
 }

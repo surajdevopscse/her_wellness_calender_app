@@ -19,12 +19,6 @@ class RegisterPage extends GetView<RegisterController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Create account', style: Theme.of(context).textTheme.headlineSmall),
-          const SizedBox(height: WellnessSpacing.xs),
-          Text(
-            'Set up your account first. You can adjust cycle details, reminders, and privacy settings after sign-up.',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
           const SizedBox(height: WellnessSpacing.lg),
           Text('Full name', style: Theme.of(context).textTheme.labelLarge),
           const SizedBox(height: WellnessSpacing.xs),
@@ -36,7 +30,10 @@ class RegisterPage extends GetView<RegisterController> {
             ),
           ),
           const SizedBox(height: WellnessSpacing.md),
-          Text('Email or mobile', style: Theme.of(context).textTheme.labelLarge),
+          Text(
+            'Email or mobile',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
           const SizedBox(height: WellnessSpacing.xs),
           TextField(
             controller: controller.emailController,
@@ -94,7 +91,9 @@ class RegisterPage extends GetView<RegisterController> {
             () => CheckboxListTile(
               value: controller.acceptedPolicy.value,
               onChanged: (v) => controller.acceptedPolicy.value = v ?? false,
-              title: const Text('I accept the privacy policy and secure data handling'),
+              title: const Text(
+                'I accept the privacy policy and secure data handling',
+              ),
               contentPadding: EdgeInsets.zero,
               controlAffinity: ListTileControlAffinity.leading,
             ),
@@ -104,13 +103,17 @@ class RegisterPage extends GetView<RegisterController> {
                 ? const SizedBox.shrink()
                 : Text(
                     controller.errorMessage.value,
-                    style: TextStyle(color: Theme.of(context).colorScheme.error),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
           ),
           const SizedBox(height: WellnessSpacing.sm),
           Obx(
             () => FilledButton(
-              onPressed: controller.isLoading.value ? null : controller.register,
+              onPressed: controller.isLoading.value
+                  ? null
+                  : controller.register,
               child: Text(
                 controller.isLoading.value
                     ? 'Creating your private space...'
@@ -122,9 +125,12 @@ class RegisterPage extends GetView<RegisterController> {
           Container(
             padding: const EdgeInsets.all(WellnessSpacing.md),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.42),
-              borderRadius: BorderRadius.circular(WellnessSpacing.controlRadius),
+              color: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.42),
+              borderRadius: BorderRadius.circular(
+                WellnessSpacing.controlRadius,
+              ),
             ),
             child: Text(
               'You can update period history, reminders, and privacy controls after registration.',

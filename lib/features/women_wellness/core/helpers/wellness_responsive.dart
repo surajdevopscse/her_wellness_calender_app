@@ -34,21 +34,26 @@ class WellnessResponsive {
 
   static EdgeInsets pagePadding(BuildContext context) {
     if (isLargeDesktop(context)) {
-      return const EdgeInsets.symmetric(horizontal: 40, vertical: 28);
+      return const EdgeInsets.symmetric(horizontal: 44, vertical: 32);
     }
     if (isTablet(context) || isDesktop(context)) {
-      return const EdgeInsets.symmetric(horizontal: 28, vertical: 24);
+      return const EdgeInsets.symmetric(horizontal: 32, vertical: 28);
     }
-    return const EdgeInsets.all(16);
+    return const EdgeInsets.fromLTRB(18, 18, 18, 18);
   }
 
-  static double bottomContentInset(BuildContext context) =>
-      isMobile(context) ? 110 : 24;
+  static double bottomContentInset(BuildContext context) {
+    final safeBottom = MediaQuery.paddingOf(context).bottom;
+    if (isMobile(context)) {
+      return 86 + safeBottom;
+    }
+    return 28 + safeBottom;
+  }
 
   static double contentMaxWidth(BuildContext context) {
-    if (isLargeDesktop(context)) return 1320;
-    if (isDesktop(context)) return 1180;
-    if (isTablet(context)) return 820;
+    if (isLargeDesktop(context)) return 1280;
+    if (isDesktop(context)) return 1120;
+    if (isTablet(context)) return 860;
     return double.infinity;
   }
 

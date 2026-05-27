@@ -23,21 +23,31 @@ class CalendarLegend extends StatelessWidget {
       spacing: WellnessSpacing.md,
       runSpacing: WellnessSpacing.sm,
       children: items.map((item) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 28,
-              height: 28,
-              decoration: BoxDecoration(
-                color: item.$3.withValues(alpha: 0.35),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(item.$1, size: 16, color: item.$3),
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          decoration: BoxDecoration(
+            color: item.$3.withValues(alpha: 0.14),
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(
+              color: item.$3.withValues(alpha: 0.24),
             ),
-            const SizedBox(width: 6),
-            Text(item.$2, style: WellnessTextStyles.caption(context)),
-          ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: item.$3.withValues(alpha: 0.28),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(item.$1, size: 14, color: item.$3),
+              ),
+              const SizedBox(width: 6),
+              Text(item.$2, style: WellnessTextStyles.caption(context)),
+            ],
+          ),
         );
       }).toList(),
     );

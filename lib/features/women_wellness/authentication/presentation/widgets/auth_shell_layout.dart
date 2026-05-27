@@ -81,116 +81,100 @@ class AuthShellLayout extends StatelessWidget {
   Widget _heroPanel(BuildContext context, {bool compact = false}) {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
-    return Stack(
-      children: [
-        WellnessBlurContainer(
-          radius: 34,
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: WellnessColors.heroGradientFor(brightness),
-          ),
-          padding: EdgeInsets.all(compact ? WellnessSpacing.xl : 36),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: compact
-                  ? WellnessSpacing.heroCompactMinHeight
-                  : WellnessSpacing.heroWideMinHeight,
+    return WellnessBlurContainer(
+      radius: 34,
+      padding: EdgeInsets.all(compact ? WellnessSpacing.xl : 36),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: compact
+              ? WellnessSpacing.heroCompactMinHeight
+              : WellnessSpacing.heroWideMinHeight,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: compact ? 58 : WellnessSpacing.largeIconBox + 14,
+              height: compact ? 58 : WellnessSpacing.largeIconBox + 14,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: isDark ? 0.12 : 0.62),
+                border: Border.all(
+                  color: WellnessColors.primaryDeep.withValues(alpha: 0.22),
+                ),
+              ),
+              child: Icon(
+                heroIcon,
+                size: compact ? 28 : 34,
+                color: WellnessColors.primaryDeep,
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: compact ? 58 : WellnessSpacing.largeIconBox + 14,
-                  height: compact ? 58 : WellnessSpacing.largeIconBox + 14,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white.withValues(alpha: isDark ? 0.12 : 0.55),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.22),
-                    ),
-                  ),
-                  child: Icon(
-                    heroIcon,
-                    size: compact ? 28 : 34,
-                    color: WellnessColors.primaryDeep,
+            const SizedBox(height: WellnessSpacing.xl),
+            Text(
+              title,
+              style: WellnessTextStyles.display(
+                color: WellnessColors.textPrimaryFor(brightness),
+              ).copyWith(fontSize: compact ? 34 : 50),
+            ),
+            const SizedBox(height: WellnessSpacing.md),
+            if (eyebrow != null) ...[
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: WellnessSpacing.md,
+                  vertical: WellnessSpacing.xs,
+                ),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.06)
+                      : WellnessColors.secondary.withValues(alpha: 0.36),
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(
+                    color: WellnessColors.borderFor(brightness),
                   ),
                 ),
-                const SizedBox(height: WellnessSpacing.xl),
-                Text(
-                  title,
-                  style: WellnessTextStyles.display(
+                child: Text(
+                  eyebrow!,
+                  style: WellnessTextStyles.label.copyWith(
                     color: WellnessColors.textPrimaryFor(brightness),
-                  ).copyWith(fontSize: compact ? 34 : 50),
-                ),
-                const SizedBox(height: WellnessSpacing.md),
-                if (eyebrow != null) ...[
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: WellnessSpacing.md,
-                      vertical: WellnessSpacing.xs,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.42),
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                    child: Text(
-                      eyebrow!,
-                      style: WellnessTextStyles.label.copyWith(
-                        color: WellnessColors.textPrimaryFor(brightness),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: WellnessSpacing.md),
-                ],
-                Text(
-                  subtitle,
-                  style: WellnessTextStyles.body.copyWith(
-                    color: WellnessColors.textSecondaryFor(brightness),
-                    fontSize: compact ? 15 : 16,
                   ),
                 ),
-                const SizedBox(height: WellnessSpacing.xl),
-                Wrap(
-                  spacing: WellnessSpacing.md,
-                  runSpacing: WellnessSpacing.md,
-                  children: const [
-                    _HeroPoint(
-                      icon: Icons.lock_outline_rounded,
-                      text: 'Private and secure tracking',
-                    ),
-                    _HeroPoint(
-                      icon: Icons.auto_awesome_rounded,
-                      text: 'Personalized cycle insights',
-                    ),
-                    _HeroPoint(
-                      icon: Icons.favorite_outline_rounded,
-                      text: 'Gentle support for every phase',
-                    ),
-                    _HeroPoint(
-                      icon: Icons.timelapse_rounded,
-                      text: 'Fast daily check-ins',
-                    ),
-                  ],
+              ),
+              const SizedBox(height: WellnessSpacing.md),
+            ],
+            Text(
+              subtitle,
+              style: WellnessTextStyles.body.copyWith(
+                color: WellnessColors.textSecondaryFor(brightness),
+                fontSize: compact ? 15 : 16,
+              ),
+            ),
+            const SizedBox(height: WellnessSpacing.xl),
+            Wrap(
+              spacing: WellnessSpacing.md,
+              runSpacing: WellnessSpacing.md,
+              children: const [
+                _HeroPoint(
+                  icon: Icons.lock_outline_rounded,
+                  text: 'Private and secure tracking',
                 ),
+                // _HeroPoint(
+                //   icon: Icons.auto_awesome_rounded,
+                //   text: 'Personalized cycle insights',
+                // ),
+                // _HeroPoint(
+                //   icon: Icons.favorite_outline_rounded,
+                //   text: 'Gentle support for every phase',
+                // ),
+                // _HeroPoint(
+                //   icon: Icons.timelapse_rounded,
+                //   text: 'Fast daily check-ins',
+                // ),
               ],
             ),
-          ),
+          ],
         ),
-        Positioned(
-          right: 26,
-          top: 26,
-          child: Container(
-            width: compact ? 96 : 130,
-            height: compact ? 96 : 130,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: WellnessColors.glowLavender.withValues(alpha: 0.24),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -226,15 +210,18 @@ class _HeroPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: WellnessSpacing.md,
         vertical: WellnessSpacing.sm,
       ),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.22),
+        color: brightness == Brightness.dark
+            ? Colors.white.withValues(alpha: 0.06)
+            : WellnessColors.secondary.withValues(alpha: 0.34),
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.28)),
+        border: Border.all(color: WellnessColors.borderFor(brightness)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

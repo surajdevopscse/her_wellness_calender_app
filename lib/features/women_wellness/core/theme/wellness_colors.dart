@@ -1,60 +1,60 @@
 import 'package:flutter/material.dart';
 
-/// Premium women wellness color system with layered glow tokens.
+/// Serene women wellness color system with sage, cream, rose, and clay tones.
 class WellnessColors {
   WellnessColors._();
 
-  static const primary = Color(0xFFF3B5BE);
-  static const primaryDeep = Color(0xFFD97F91);
-  static const primaryHot = Color(0xFFFFE3E6);
-  static const secondary = Color(0xFFC7E4D5);
-  static const accent = Color(0xFFE8B17C);
-  static const glowRose = Color(0xFFFFCDD5);
-  static const glowLavender = Color(0xFFE7E0F3);
-  static const glowPeach = Color(0xFFF7D3AE);
+  static const primary = Color(0xFFDCE9D4);
+  static const primaryDeep = Color(0xFF3F5F3E);
+  static const primaryHot = Color(0xFFF2C9D1);
+  static const secondary = Color(0xFFE5EDDC);
+  static const accent = Color(0xFFC9935A);
+  static const glowRose = Color(0xFFF6C5CF);
+  static const glowLavender = Color(0xFFEDE5EF);
+  static const glowPeach = Color(0xFFF5D6B6);
 
-  static const background = Color(0xFFFCF7F4);
-  static const backgroundAlt = Color(0xFFF5EFE9);
-  static const surface = Color(0xFFFFFBF8);
+  static const background = Color(0xFFFAF6EF);
+  static const backgroundAlt = Color(0xFFF3EDE4);
+  static const surface = Color(0xFFFFFCF8);
   static const card = Color(0xFFFFFFFF);
-  static const border = Color(0xFFE8DDD7);
-  static const blush = Color(0xFFFFF0F1);
-  static const lavender = Color(0xFFF4F0F7);
-  static const peach = Color(0xFFFBF0E4);
+  static const border = Color(0xFFE3D8CB);
+  static const blush = Color(0xFFFFEEF1);
+  static const lavender = Color(0xFFF4EFF4);
+  static const peach = Color(0xFFF7E8D5);
 
-  static const textPrimary = Color(0xFF34262B);
-  static const textSecondary = Color(0xFF6C5B62);
-  static const textMuted = Color(0xFF9B8991);
-  static const textOnPrimary = Color(0xFF2B1D23);
+  static const textPrimary = Color(0xFF2F2A23);
+  static const textSecondary = Color(0xFF6F665B);
+  static const textMuted = Color(0xFF9B9184);
+  static const textOnPrimary = Color(0xFFFFFFFF);
   static const textOnSecondary = Color(0xFFFFFFFF);
 
-  static const period = Color(0xFFF29AA7);
-  static const periodDeep = Color(0xFFD86F8A);
-  static const fertile = Color(0xFFB9E1C8);
-  static const fertileDeep = Color(0xFF5D9B79);
-  static const ovulation = Color(0xFFF9C67D);
-  static const ovulationDeep = Color(0xFFCC8E38);
-  static const pms = Color(0xFFD8C6E8);
-  static const pmsDeep = Color(0xFF8F73AA);
-  static const predicted = Color(0xFFFAD6B1);
-  static const predictedDeep = Color(0xFFC9975D);
-  static const success = Color(0xFF73C69B);
-  static const warning = Color(0xFFF0B768);
-  static const error = Color(0xFFDB728E);
+  static const period = Color(0xFFE9909F);
+  static const periodDeep = Color(0xFFBC6272);
+  static const fertile = Color(0xFFC8DDBB);
+  static const fertileDeep = Color(0xFF65885D);
+  static const ovulation = Color(0xFFE9BC7B);
+  static const ovulationDeep = Color(0xFFB37C39);
+  static const pms = Color(0xFFD8CEE0);
+  static const pmsDeep = Color(0xFF89789A);
+  static const predicted = Color(0xFFF2D7BD);
+  static const predictedDeep = Color(0xFFA9784E);
+  static const success = Color(0xFF79A978);
+  static const warning = Color(0xFFE3AE65);
+  static const error = Color(0xFFC66A82);
 
-  static const darkPrimary = Color(0xFFF3B5BE);
-  static const darkPrimaryDeep = Color(0xFFC9DBC9);
-  static const darkAccent = Color(0xFFE8B17C);
-  static const darkBackground = Color(0xFF1C1418);
-  static const darkBackgroundAlt = Color(0xFF261C21);
-  static const darkBackgroundRaised = Color(0xFF31242A);
-  static const darkSurface = Color(0xFF281D22);
-  static const darkCard = Color(0xFF34262D);
-  static const darkBorder = Color(0xFF5D4A50);
-  static const darkTextPrimary = Color(0xFFF9F1F3);
-  static const darkTextSecondary = Color(0xFFE0CDD1);
-  static const darkTextMuted = Color(0xFFAA979D);
-  static const darkTextOnPrimary = Color(0xFF22181C);
+  static const darkPrimary = Color(0xFFC8DDBB);
+  static const darkPrimaryDeep = Color(0xFFE3D4C1);
+  static const darkAccent = Color(0xFFD9A46E);
+  static const darkBackground = Color(0xFF191B16);
+  static const darkBackgroundAlt = Color(0xFF20251E);
+  static const darkBackgroundRaised = Color(0xFF2A3026);
+  static const darkSurface = Color(0xFF23281F);
+  static const darkCard = Color(0xFF2D3429);
+  static const darkBorder = Color(0xFF56604D);
+  static const darkTextPrimary = Color(0xFFF8F2EA);
+  static const darkTextSecondary = Color(0xFFE2D7CA);
+  static const darkTextMuted = Color(0xFFB1A598);
+  static const darkTextOnPrimary = Color(0xFF20271D);
   static const darkTextOnSecondary = Color(0xFFFFFFFF);
 
   static ColorScheme get lightScheme => const ColorScheme.light(
@@ -100,11 +100,11 @@ class WellnessColors {
 
   static List<Color> backgroundGradientFor(Brightness brightness) =>
       brightness == Brightness.dark
-          ? const [darkBackground, darkBackgroundAlt, darkBackgroundRaised]
-          : const [background, backgroundAlt, surface];
+      ? const [darkBackground, darkBackgroundAlt, darkBackgroundRaised]
+      : const [background, background, backgroundAlt];
 
   static List<Color> heroGradientFor(Brightness brightness) =>
       brightness == Brightness.dark
-          ? const [Color(0xFF4A3136), Color(0xFF322227), Color(0xFF25191D)]
-          : const [Color(0xFFFFF1F0), Color(0xFFF4EEE8), Color(0xFFFFF4EA)];
+      ? const [Color(0xFF2D3529), Color(0xFF262E23), Color(0xFF20271D)]
+      : const [surface, Color(0xFFFCF8F1), Color(0xFFF1EBDD)];
 }

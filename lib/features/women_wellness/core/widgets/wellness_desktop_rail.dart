@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:her_wellness_calender/features/women_wellness/core/theme/app_decorations.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/theme/app_radius.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_colors.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_spacing.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_text_styles.dart';
 
-/// Theme-aware desktop navigation rail for the wellness shell.
+/// Stable desktop sidebar without NavigationRail auto-scroll behavior.
 class WellnessDesktopRail extends StatelessWidget {
   const WellnessDesktopRail({
     super.key,
@@ -33,42 +35,24 @@ class WellnessDesktopRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final isDark = brightness == Brightness.dark;
-    final surface = isDark
-        ? WellnessColors.darkCard.withValues(alpha: 0.92)
-        : WellnessColors.card.withValues(alpha: 0.9);
-    final shadowColor = isDark
-        ? Colors.black.withValues(alpha: 0.35)
-        : WellnessColors.primary.withValues(alpha: 0.14);
-
     return Container(
-      width: 196,
-      decoration: BoxDecoration(
-        color: surface,
-        borderRadius: BorderRadius.circular(WellnessSpacing.cardRadius),
-        border: Border.all(
-          color: WellnessColors.borderFor(brightness).withValues(alpha: 0.5),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: shadowColor,
-            blurRadius: 24,
-            offset: const Offset(0, 12),
-          ),
-        ],
-      ),
+      width: 248,
+      decoration: AppDecorations.softPanel(
+        brightness,
+      ).copyWith(borderRadius: BorderRadius.circular(AppRadius.lg)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(18, 20, 18, 10),
+            padding: const EdgeInsets.fromLTRB(20, 22, 20, 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Wellness',
-                  style: WellnessTextStyles.sectionHeader(brightness)
-                      .copyWith(fontSize: 24),
+                  style: WellnessTextStyles.sectionHeader(
+                    brightness,
+                  ).copyWith(fontSize: 24),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -78,39 +62,98 @@ class WellnessDesktopRail extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1),
+          Divider(
+            height: 1,
+            color: WellnessColors.borderFor(brightness).withValues(alpha: 0.5),
+          ),
           Expanded(
-            child: NavigationRail(
-              backgroundColor: Colors.transparent,
-              selectedIndex: selectedIndex,
-              onDestinationSelected: onSelected,
-              scrollable: true,
-              extended: true,
-              minExtendedWidth: 196,
-              labelType: NavigationRailLabelType.none,
-              indicatorColor: isDark
-                  ? WellnessColors.darkPrimary.withValues(alpha: 0.35)
-                  : WellnessColors.primaryHot.withValues(alpha: 0.45),
-              selectedIconTheme: IconThemeData(
-                color: isDark
-                    ? WellnessColors.darkPrimary
-                    : WellnessColors.primaryDeep,
-                size: 24,
-              ),
-              unselectedIconTheme: IconThemeData(
-                color: WellnessColors.textSecondaryFor(brightness),
-                size: 22,
-              ),
-              destinations: [
-                for (final d in _destinations)
-                  NavigationRailDestination(
-                    icon: Icon(d.$1),
-                    label: Text(d.$2),
-                  ),
-              ],
+            child: ListView.separated(
+              padding: const EdgeInsets.all(14),
+              itemCount: _destinations.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 6),
+              itemBuilder: (context, index) {
+                final destination = _destinations[index];
+                final selected = index == selectedIndex;
+                return _RailTile(
+                  icon: destination.$1,
+                  label: destination.$2,
+                  selected: selected,
+                  onTap: () => onSelected(index),
+                );
+              },
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _RailTile extends StatelessWidget {
+  const _RailTile({
+    required this.icon,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final selectedBackground = brightness == Brightness.dark
+        ? WellnessColors.darkPrimary.withValues(alpha: 0.18)
+        : WellnessColors.secondary.withValues(alpha: 0.55);
+    final selectedForeground = brightness == Brightness.dark
+        ? WellnessColors.darkPrimary
+        : WellnessColors.primaryDeep;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          decoration: BoxDecoration(
+            color: selected ? selectedBackground : Colors.transparent,
+            borderRadius: BorderRadius.circular(AppRadius.md),
+            border: Border.all(
+              color: selected
+                  ? selectedForeground.withValues(alpha: 0.18)
+                  : Colors.transparent,
+            ),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                size: 22,
+                color: selected
+                    ? selectedForeground
+                    : WellnessColors.textSecondaryFor(brightness),
+              ),
+              const SizedBox(width: WellnessSpacing.md),
+              Expanded(
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: selected
+                        ? WellnessColors.textPrimaryFor(brightness)
+                        : WellnessColors.textSecondaryFor(brightness),
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

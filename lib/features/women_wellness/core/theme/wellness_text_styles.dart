@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'wellness_colors.dart';
 
-/// Typography: Cormorant Garamond for emotion, Plus Jakarta Sans for clarity.
+/// Typography: restrained display type and clear product UI text.
 class WellnessTextStyles {
   WellnessTextStyles._();
 
@@ -13,21 +13,21 @@ class WellnessTextStyles {
     final primary = WellnessColors.textPrimaryFor(brightness);
     final secondary = WellnessColors.textSecondaryFor(brightness);
     final bodyTheme = GoogleFonts.plusJakartaSansTextTheme();
-    final displayTheme = GoogleFonts.cormorantGaramondTextTheme();
+    final displayTheme = GoogleFonts.plusJakartaSansTextTheme();
 
     return bodyTheme.copyWith(
       displayLarge: displayTheme.displayLarge?.copyWith(
         fontSize: 42,
         fontWeight: FontWeight.w700,
         height: 1.02,
-        letterSpacing: -1.2,
+        letterSpacing: 0,
         color: primary,
       ),
       displayMedium: displayTheme.displayMedium?.copyWith(
         fontSize: 34,
         fontWeight: FontWeight.w700,
         height: 1.08,
-        letterSpacing: -0.8,
+        letterSpacing: 0,
         color: primary,
       ),
       headlineLarge: displayTheme.headlineLarge?.copyWith(
@@ -106,98 +106,96 @@ class WellnessTextStyles {
   }
 
   static TextStyle appTitle(Brightness brightness) =>
-      GoogleFonts.cormorantGaramond(
-        fontSize: 30,
-        fontWeight: FontWeight.w700,
+      GoogleFonts.plusJakartaSans(
+        fontSize: 26,
+        fontWeight: FontWeight.w800,
         height: 1.0,
-        letterSpacing: -0.8,
+        letterSpacing: 0,
         color: WellnessColors.textPrimaryFor(brightness),
       );
 
   static TextStyle sectionHeader(Brightness brightness) =>
-      GoogleFonts.cormorantGaramond(
-        fontSize: 26,
-        fontWeight: FontWeight.w600,
-        height: 1.06,
+      GoogleFonts.plusJakartaSans(
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+        height: 1.15,
         color: WellnessColors.textPrimaryFor(brightness),
       );
 
-  static TextStyle display({Color? color}) => GoogleFonts.cormorantGaramond(
-        fontSize: 36,
-        fontWeight: FontWeight.w700,
-        height: 1.02,
-        letterSpacing: -0.9,
-        color: color,
-      );
+  static TextStyle display({Color? color}) => GoogleFonts.plusJakartaSans(
+    fontSize: 34,
+    fontWeight: FontWeight.w800,
+    height: 1.08,
+    letterSpacing: 0,
+    color: color,
+  );
 
   static TextStyle statNumber({Color? color}) => GoogleFonts.plusJakartaSans(
-        fontSize: 48,
-        fontWeight: FontWeight.w700,
-        height: 0.95,
-        letterSpacing: -1.4,
-        color: color,
-      );
+    fontSize: 48,
+    fontWeight: FontWeight.w700,
+    height: 0.95,
+    letterSpacing: 0,
+    color: color,
+  );
 
   static TextStyle heroNumber({Color? color}) => GoogleFonts.plusJakartaSans(
-        fontSize: 56,
-        fontWeight: FontWeight.w700,
-        height: 0.92,
-        letterSpacing: -2.2,
-        color: color,
-      );
+    fontSize: 56,
+    fontWeight: FontWeight.w700,
+    height: 0.92,
+    letterSpacing: 0,
+    color: color,
+  );
 
-  static TextStyle get title => GoogleFonts.cormorantGaramond(
-        fontSize: 24,
-        fontWeight: FontWeight.w600,
-        height: 1.1,
-      );
+  static TextStyle get title => GoogleFonts.plusJakartaSans(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    height: 1.1,
+  );
 
   static TextStyle titleFor(BuildContext context) => title.copyWith(
-        color: WellnessColors.textPrimaryFor(Theme.of(context).brightness),
-      );
+    color: WellnessColors.textPrimaryFor(Theme.of(context).brightness),
+  );
 
   static TextStyle get section => GoogleFonts.plusJakartaSans(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        height: 1.25,
-      );
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    height: 1.25,
+  );
 
   static TextStyle get label => GoogleFonts.plusJakartaSans(
-        fontSize: 13,
-        fontWeight: FontWeight.w600,
-        height: 1.25,
-      );
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    height: 1.25,
+  );
 
-  static TextStyle button(Brightness brightness) =>
-      GoogleFonts.plusJakartaSans(
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
-        height: 1.25,
-        color: WellnessColors.textPrimaryFor(brightness),
-      );
+  static TextStyle button(Brightness brightness) => GoogleFonts.plusJakartaSans(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    height: 1.25,
+    color: WellnessColors.textPrimaryFor(brightness),
+  );
 
   static TextStyle get body => GoogleFonts.plusJakartaSans(
-        fontSize: 15,
-        fontWeight: FontWeight.w400,
-        height: _bodyHeight,
-      );
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    height: _bodyHeight,
+  );
 
   static TextStyle bodyFor(BuildContext context) => body.copyWith(
-        color: WellnessColors.textPrimaryFor(Theme.of(context).brightness),
-      );
+    color: WellnessColors.textPrimaryFor(Theme.of(context).brightness),
+  );
 
-  static TextStyle bodyForBrightness(Brightness brightness) => body.copyWith(
-        color: WellnessColors.textPrimaryFor(brightness),
-      );
+  static TextStyle bodyForBrightness(Brightness brightness) =>
+      body.copyWith(color: WellnessColors.textPrimaryFor(brightness));
 
   static TextStyle get captionStatic => GoogleFonts.plusJakartaSans(
-        fontSize: 12,
-        fontWeight: FontWeight.w400,
-        height: 1.5,
-        color: WellnessColors.textSecondary,
-      );
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    height: 1.5,
+    color: WellnessColors.textSecondary,
+  );
 
   static TextStyle caption(BuildContext context) => captionStatic.copyWith(
-        color: WellnessColors.textSecondaryFor(Theme.of(context).brightness),
-      );
+    color: WellnessColors.textSecondaryFor(Theme.of(context).brightness),
+  );
 }

@@ -33,15 +33,18 @@ class WellnessInsightCard extends StatelessWidget {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  accent.withValues(alpha: 0.75),
-                  accent.withValues(alpha: 0.25),
-                ],
+              color: accent.withValues(
+                alpha: brightness == Brightness.dark ? 0.18 : 0.24,
               ),
               borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: accent.withValues(alpha: 0.28)),
             ),
-            child: Icon(icon, color: WellnessColors.textOnPrimary),
+            child: Icon(
+              icon,
+              color: brightness == Brightness.dark
+                  ? WellnessColors.darkTextPrimary
+                  : WellnessColors.primaryDeep,
+            ),
           ),
           const SizedBox(width: WellnessSpacing.md),
           Expanded(
@@ -50,8 +53,9 @@ class WellnessInsightCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: WellnessTextStyles.sectionHeader(brightness)
-                      .copyWith(fontSize: 22),
+                  style: WellnessTextStyles.sectionHeader(
+                    brightness,
+                  ).copyWith(fontSize: 22),
                 ),
                 const SizedBox(height: 6),
                 Text(

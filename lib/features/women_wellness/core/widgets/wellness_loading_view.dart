@@ -7,6 +7,7 @@ import 'package:her_wellness_calender/features/women_wellness/core/theme/wellnes
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_spacing.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_text_styles.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_glass_card.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_skeleton.dart';
 
 /// Standard premium loading view with soft glow ring.
 class WellnessLoadingView extends StatefulWidget {
@@ -57,6 +58,10 @@ class _WellnessLoadingViewState extends State<WellnessLoadingView>
               textAlign: TextAlign.center,
               style: WellnessTextStyles.caption(context),
             ),
+            const SizedBox(height: WellnessSpacing.lg),
+            const WellnessSkeleton(height: 12, width: 180),
+            const SizedBox(height: WellnessSpacing.sm),
+            const WellnessSkeleton(height: 12, width: 120),
           ],
         ),
       ),

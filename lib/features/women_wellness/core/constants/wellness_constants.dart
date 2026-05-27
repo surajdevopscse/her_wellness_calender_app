@@ -2,7 +2,7 @@
 class WellnessConstants {
   WellnessConstants._();
 
-  static const appTitle = 'Her Wellness Calendar';
+  static const appTitle = 'Serene';
   static const moduleTitle = 'Women Wellness';
   static const dashboardTitle = 'Cycle overview';
   static const profileTitle = 'Wellness profile';

@@ -29,12 +29,27 @@ class WellnessErrorState extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
-                  Icons.error_outline,
-                  size: 40,
-                  color: WellnessColors.error,
+                Container(
+                  width: 72,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: WellnessColors.error.withValues(alpha: 0.12),
+                  ),
+                  child: const Icon(
+                    Icons.error_outline,
+                    size: 34,
+                    color: WellnessColors.error,
+                  ),
                 ),
                 const SizedBox(height: WellnessSpacing.md),
+                Text(
+                  'Something needs attention',
+                  textAlign: TextAlign.center,
+                  style: WellnessTextStyles.sectionHeader(brightness)
+                      .copyWith(fontSize: 24),
+                ),
+                const SizedBox(height: WellnessSpacing.sm),
                 Text(
                   message,
                   textAlign: TextAlign.center,
