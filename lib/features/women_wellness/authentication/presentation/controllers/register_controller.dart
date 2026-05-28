@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:her_wellness_calender/core/errors/exceptions.dart';
+import 'package:her_wellness_calender/features/women_wellness/authentication/authentication_routes.dart';
 import 'package:her_wellness_calender/features/women_wellness/authentication/domain/usecases/register_usecase.dart';
-import 'package:her_wellness_calender/features/women_wellness/core/routes/wellness_routes.dart';
 
 class RegisterController extends GetxController {
   RegisterController(this.registerUseCase);
@@ -49,7 +49,7 @@ class RegisterController extends GetxController {
         emailOrMobile: emailController.text.trim(),
         password: passwordController.text,
       );
-      Get.offAllNamed(WellnessRoutes.dashboard);
+      Get.offAllNamed(AuthenticationRoutes.setupOnboarding);
     } on AppException catch (error) {
       errorMessage.value = error.message;
     } catch (_) {

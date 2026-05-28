@@ -30,6 +30,7 @@ import 'package:her_wellness_calender/features/women_wellness/notifications/pres
 import 'package:her_wellness_calender/features/women_wellness/notifications/presentation/pages/notifications_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/onboarding/presentation/bindings/onboarding_binding.dart';
 import 'package:her_wellness_calender/features/women_wellness/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:her_wellness_calender/features/women_wellness/onboarding/presentation/pages/setup_onboarding_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/pdf_report/presentation/bindings/pdf_report_binding.dart';
 import 'package:her_wellness_calender/features/women_wellness/pdf_report/presentation/pages/pdf_report_preview_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/period_tracking/presentation/bindings/period_tracking_binding.dart';
@@ -71,6 +72,11 @@ class App extends StatelessWidget {
           GetPage(
             name: AuthenticationRoutes.onboarding,
             page: () => const OnboardingPage(),
+            binding: OnboardingBinding(),
+          ),
+          GetPage(
+            name: AuthenticationRoutes.setupOnboarding,
+            page: () => const SetupOnboardingPage(),
             binding: OnboardingBinding(),
           ),
           GetPage(

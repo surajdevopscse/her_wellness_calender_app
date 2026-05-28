@@ -34,7 +34,12 @@ class SplashController extends GetxController {
     isLoading.value = false;
 
     if (token != null && token.isNotEmpty) {
-      Get.offAllNamed(WellnessRoutes.dashboard);
+      final setupDone = await onboardingRepository.isSetupCompleted();
+      Get.offAllNamed(
+        setupDone
+            ? WellnessRoutes.dashboard
+            : AuthenticationRoutes.setupOnboarding,
+      );
     } else {
       Get.offAllNamed(AuthenticationRoutes.login);
     }

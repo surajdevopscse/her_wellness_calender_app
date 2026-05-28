@@ -30,23 +30,26 @@ class WellnessMobileNav extends StatelessWidget {
 
     return WellnessBlurContainer(
       radius: 22,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       color: isDark
           ? WellnessColors.darkCard.withValues(alpha: 0.72)
           : WellnessColors.surface.withValues(alpha: 0.94),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: _items.map((item) {
-          final selected = selectedPageIndex == item.$3;
-          final prominent = item.$3 == 3;
-          return _MobileNavItem(
-            icon: item.$1,
-            label: item.$2,
-            selected: selected,
-            prominent: prominent,
-            onTap: () => onSelected(item.$3),
-          );
-        }).toList(),
+      child: SizedBox(
+        height: 62,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: _items.map((item) {
+            final selected = selectedPageIndex == item.$3;
+            final prominent = item.$3 == 3;
+            return _MobileNavItem(
+              icon: item.$1,
+              label: item.$2,
+              selected: selected,
+              prominent: prominent,
+              onTap: () => onSelected(item.$3),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -80,7 +83,7 @@ class _MobileNavItem extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 240),
           padding: EdgeInsets.symmetric(
-            vertical: prominent ? 2 : 3,
+            vertical: prominent ? 1 : 2,
             horizontal: prominent ? 0 : 4,
           ),
           child: Column(
@@ -88,8 +91,8 @@ class _MobileNavItem extends StatelessWidget {
             children: [
               AnimatedContainer(
                 duration: const Duration(milliseconds: 240),
-                width: prominent ? 42 : (selected ? 36 : 32),
-                height: prominent ? 42 : 32,
+                width: prominent ? 38 : (selected ? 34 : 30),
+                height: prominent ? 38 : 30,
                 decoration: BoxDecoration(
                   color: prominent
                       ? WellnessColors.primaryDeep
@@ -112,9 +115,10 @@ class _MobileNavItem extends StatelessWidget {
                 child: Icon(
                   icon,
                   color: selected || prominent ? activeColor : inactiveColor,
+                  size: prominent ? 22 : 18,
                 ),
               ),
-              const SizedBox(height: 3),
+              const SizedBox(height: 4),
               Text(
                 label,
                 style: WellnessTextStyles.caption(context).copyWith(

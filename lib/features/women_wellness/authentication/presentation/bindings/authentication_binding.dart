@@ -12,6 +12,7 @@ import 'package:her_wellness_calender/features/women_wellness/authentication/pre
 import 'package:her_wellness_calender/features/women_wellness/authentication/presentation/controllers/register_controller.dart';
 import 'package:her_wellness_calender/features/women_wellness/authentication/presentation/controllers/reset_password_controller.dart';
 import 'package:her_wellness_calender/features/women_wellness/authentication/presentation/controllers/verify_otp_controller.dart';
+import 'package:her_wellness_calender/features/women_wellness/onboarding/domain/repositories/onboarding_repository.dart';
 
 class AuthenticationBinding extends Bindings {
   @override
@@ -23,8 +24,17 @@ class AuthenticationBinding extends Bindings {
     Get.lazyPut(() => ResetPasswordUseCase(repo), fenix: true);
     Get.lazyPut(() => VerifyOtpUseCase(repo), fenix: true);
     Get.lazyPut(() => LogoutUseCase(repo), fenix: true);
-    Get.lazyPut(() => LoginController(Get.find<LoginUseCase>()), fenix: true);
-    Get.lazyPut(() => RegisterController(Get.find<RegisterUseCase>()), fenix: true);
+    Get.lazyPut(
+      () => LoginController(
+        Get.find<LoginUseCase>(),
+        Get.find<OnboardingRepository>(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => RegisterController(Get.find<RegisterUseCase>()),
+      fenix: true,
+    );
     Get.lazyPut(
       () => ForgotPasswordController(Get.find<ForgotPasswordUseCase>()),
       fenix: true,
@@ -33,6 +43,9 @@ class AuthenticationBinding extends Bindings {
       () => ResetPasswordController(Get.find<ResetPasswordUseCase>()),
       fenix: true,
     );
-    Get.lazyPut(() => VerifyOtpController(Get.find<VerifyOtpUseCase>()), fenix: true);
+    Get.lazyPut(
+      () => VerifyOtpController(Get.find<VerifyOtpUseCase>()),
+      fenix: true,
+    );
   }
 }
