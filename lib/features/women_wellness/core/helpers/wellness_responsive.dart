@@ -45,7 +45,7 @@ class WellnessResponsive {
   static double bottomContentInset(BuildContext context) {
     final safeBottom = MediaQuery.paddingOf(context).bottom;
     if (isMobile(context)) {
-      return 86 + safeBottom;
+      return 66 + safeBottom;
     }
     return 28 + safeBottom;
   }

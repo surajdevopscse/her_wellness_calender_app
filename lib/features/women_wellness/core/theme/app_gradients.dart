@@ -9,12 +9,12 @@ class AppGradients {
   static const heroSoft = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [WellnessColors.surface, Color(0xFFFAF6EF), Color(0xFFF2EDE4)],
+    colors: [WellnessColors.surface, Color(0xFFFFF1F8), Color(0xFFF3E8FB)],
   );
 
   static const accentGlow = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [WellnessColors.primaryDeep, Color(0xFF6F8A62)],
+    colors: [WellnessColors.primaryDeep, Color(0xFFB76FA6)],
   );
 }

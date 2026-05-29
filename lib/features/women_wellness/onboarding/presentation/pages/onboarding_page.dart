@@ -502,10 +502,10 @@ class _MobileIllustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final glowColors = [
-      const Color(0xFFF7D6DE),
-      const Color(0xFFF2D2B8),
-      const Color(0xFFDCEACF),
-      const Color(0xFFE7DCEB),
+      const Color(0xFFF7C9DD),
+      const Color(0xFFE8D4FA),
+      const Color(0xFFF2C4E2),
+      const Color(0xFFDCC8F4),
     ];
     final glow = glowColors[index % glowColors.length];
 
@@ -518,7 +518,7 @@ class _MobileIllustration extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [const Color(0xFFFFF4F0), glow, const Color(0xFFE2EED9)],
+            colors: [const Color(0xFFFFF2F8), glow, const Color(0xFFF0E5FA)],
             stops: const [0.0, 0.54, 1.0],
           ),
           border: Border.all(

@@ -20,7 +20,7 @@ void main() async {
     ),
   );
 
-  await AppDependencies.initialize(environment: AppEnvironment.mock);
+  await AppDependencies.initialize(environment: AppEnvironment.live);
 
   runApp(const App());
 }
