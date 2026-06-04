@@ -5,6 +5,8 @@ import 'package:her_wellness_calender/features/women_wellness/privacy/domain/ent
 import 'package:her_wellness_calender/features/women_wellness/privacy/domain/usecases/delete_wellness_data_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/privacy/domain/usecases/get_privacy_settings_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/privacy/domain/usecases/update_privacy_settings_usecase.dart';
+import 'package:her_wellness_calender/features/women_wellness/authentication/authentication_routes.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 /// View model for privacy settings, save state, and delete actions.
 class PrivacySettingsController extends GetxController {
@@ -36,6 +38,8 @@ class PrivacySettingsController extends GetxController {
     errorMessage.value = '';
     try {
       settings.value = await getPrivacySettingsUseCase();
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.privacyLoadError;
     } finally {
@@ -51,6 +55,14 @@ class PrivacySettingsController extends GetxController {
     errorMessage.value = '';
     try {
       settings.value = await updatePrivacySettingsUseCase(next);
+      Get.snackbar(
+        WellnessConstants.privacyTitle,
+        WellnessConstants.privacySaveSuccess,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } on AppException catch (error) {
+      settings.value = previous;
+      errorMessage.value = error.message;
     } catch (_) {
       settings.value = previous;
       errorMessage.value = WellnessConstants.privacySaveError;
@@ -72,6 +84,13 @@ class PrivacySettingsController extends GetxController {
             : WellnessConstants.wellnessDataDeleted,
         snackPosition: SnackPosition.BOTTOM,
       );
+      Get.offAllNamed(
+        includeAccount
+            ? AuthenticationRoutes.login
+            : AuthenticationRoutes.setupOnboarding,
+      );
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.error;
     } finally {

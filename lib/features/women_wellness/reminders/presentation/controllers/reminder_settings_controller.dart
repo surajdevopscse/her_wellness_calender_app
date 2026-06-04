@@ -4,6 +4,7 @@ import 'package:her_wellness_calender/features/women_wellness/reminders/domain/e
 import 'package:her_wellness_calender/features/women_wellness/reminders/domain/usecases/get_reminders_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/reminders/domain/usecases/update_reminder_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/constants/wellness_constants.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 /// Reminder settings state.
 class ReminderSettingsController extends GetxController {
@@ -29,8 +30,10 @@ class ReminderSettingsController extends GetxController {
     errorMessage.value = '';
     try {
       reminders.value = await getRemindersUseCase();
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
-      errorMessage.value = WellnessConstants.error;
+      errorMessage.value = WellnessConstants.remindersLoadError;
     } finally {
       isLoading.value = false;
     }
@@ -38,9 +41,29 @@ class ReminderSettingsController extends GetxController {
 
   Future<void> toggle(WellnessReminder reminder, bool value) async {
     final updated = reminder.copyWith(isEnabled: value);
-    await updateReminderUseCase(updated);
     reminders.value = reminders
         .map((item) => item.id == updated.id ? updated : item)
+        .toList();
+    errorMessage.value = '';
+    try {
+      await updateReminderUseCase(updated);
+      Get.snackbar(
+        WellnessConstants.remindersTitle,
+        WellnessConstants.reminderUpdated,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } on AppException catch (error) {
+      _rollback(reminder);
+      errorMessage.value = error.message;
+    } catch (_) {
+      _rollback(reminder);
+      errorMessage.value = WellnessConstants.remindersSaveError;
+    }
+  }
+
+  void _rollback(WellnessReminder reminder) {
+    reminders.value = reminders
+        .map((item) => item.id == reminder.id ? reminder : item)
         .toList();
   }
 }

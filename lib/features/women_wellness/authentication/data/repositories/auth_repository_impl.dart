@@ -25,6 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<AuthUser> login({
     required String emailOrMobile,
     required String password,
+    required bool rememberMe,
   }) async {
     if (environment.isMockMode) {
       final payload = await mockDatasource.getUsersPayload();
@@ -45,7 +46,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       final model = AuthUserModel.fromJson(match.first);
       final response = await mockDatasource.loginSuccess(model.toJson());
-      await _persistSession(response);
+      await _persistSession(response, persist: rememberMe);
       return model.toEntity();
     }
 
@@ -53,7 +54,7 @@ class AuthRepositoryImpl implements AuthRepository {
       'emailOrMobile': emailOrMobile,
       'password': password,
     });
-    await _persistSession(response);
+    await _persistSession(response, persist: rememberMe);
     return AuthUserModel.fromJson(_normalizeUserPayload(response)).toEntity();
   }
 
@@ -153,16 +154,21 @@ class AuthRepositoryImpl implements AuthRepository {
     await storageService.setString(WellnessStorageKeys.currentUserId, '');
   }
 
-  Future<void> _persistSession(Map<String, dynamic> response) async {
+  Future<void> _persistSession(
+    Map<String, dynamic> response, {
+    bool persist = true,
+  }) async {
     final data = response['data'] as Map<String, dynamic>?;
     if (data == null) return;
     final tokens = data['tokens'] as Map<String, dynamic>?;
     final token = (tokens?['accessToken'] ?? data['token']) as String?;
     final refreshToken = tokens?['refreshToken'] as String?;
     final user = data['user'] as Map<String, dynamic>?;
-    if (token != null) await storageService.saveAuthToken(token);
+    if (token != null) {
+      await storageService.saveAuthToken(token, persist: persist);
+    }
     if (refreshToken != null && refreshToken.isNotEmpty) {
-      await storageService.saveRefreshToken(refreshToken);
+      await storageService.saveRefreshToken(refreshToken, persist: persist);
     }
     if (user != null) {
       await storageService.setString(

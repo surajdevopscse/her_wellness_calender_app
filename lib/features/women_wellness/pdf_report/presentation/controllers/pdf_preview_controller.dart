@@ -6,6 +6,7 @@ import 'package:her_wellness_calender/features/women_wellness/reports/domain/ent
 import 'package:her_wellness_calender/features/women_wellness/pdf_report/domain/usecases/export_pdf_report_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/reports/domain/usecases/get_reports_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/constants/wellness_constants.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 /// PDF preview and export state.
 class PdfPreviewController extends GetxController {
@@ -29,7 +30,14 @@ class PdfPreviewController extends GetxController {
     errorMessage.value = '';
     try {
       report.value = await getReportsUseCase();
-      pdfBytes.value = await exportPdfReportUseCase(report.value!);
+      final currentReport = report.value;
+      if (currentReport?.hasData == true) {
+        pdfBytes.value = await exportPdfReportUseCase(currentReport!);
+      } else {
+        pdfBytes.value = null;
+      }
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.error;
     } finally {

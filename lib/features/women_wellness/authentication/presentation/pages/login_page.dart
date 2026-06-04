@@ -27,6 +27,7 @@ class LoginPage extends GetView<LoginController> {
           TextField(
             controller: controller.emailController,
             keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
             decoration: const InputDecoration(
               hintText: 'Enter your email or mobile',
               prefixIcon: Icon(Icons.alternate_email_outlined),
@@ -39,6 +40,10 @@ class LoginPage extends GetView<LoginController> {
             () => TextField(
               controller: controller.passwordController,
               obscureText: controller.obscurePassword.value,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) {
+                if (!controller.isLoading.value) controller.login();
+              },
               decoration: InputDecoration(
                 hintText: 'Enter your password',
                 prefixIcon: const Icon(Icons.lock_outline),

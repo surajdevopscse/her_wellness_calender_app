@@ -3,6 +3,7 @@ import 'package:her_wellness_calender/features/women_wellness/reports/domain/ent
 /// JSON model for wellness reports.
 class WellnessReportModel {
   const WellnessReportModel({
+    required this.hasData,
     required this.averageCycleLength,
     required this.averagePeriodLength,
     required this.cycleRegularity,
@@ -19,6 +20,7 @@ class WellnessReportModel {
     required this.notes,
   });
 
+  final bool hasData;
   final double averageCycleLength;
   final double averagePeriodLength;
   final String cycleRegularity;
@@ -37,6 +39,7 @@ class WellnessReportModel {
   factory WellnessReportModel.fromJson(
     Map<String, dynamic> json,
   ) => WellnessReportModel(
+    hasData: json['hasData'] as bool? ?? true,
     averageCycleLength: (json['averageCycleLength'] as num).toDouble(),
     averagePeriodLength: (json['averagePeriodLength'] as num).toDouble(),
     cycleRegularity: json['cycleRegularity'] as String,
@@ -58,6 +61,7 @@ class WellnessReportModel {
   );
 
   WellnessReport toEntity() => WellnessReport(
+    hasData: hasData,
     averageCycleLength: averageCycleLength,
     averagePeriodLength: averagePeriodLength,
     cycleRegularity: cycleRegularity,

@@ -10,6 +10,7 @@ import 'package:her_wellness_calender/features/women_wellness/daily_log/domain/e
 import 'package:her_wellness_calender/features/women_wellness/daily_log/presentation/controllers/daily_log_controller.dart';
 import 'package:her_wellness_calender/features/women_wellness/dashboard/presentation/controllers/wellness_dashboard_controller.dart';
 import 'package:her_wellness_calender/features/women_wellness/period_tracking/presentation/controllers/period_entry_controller.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 /// Calendar state, day selection, and detail sheet actions.
 class WellnessCalendarController extends GetxController {
@@ -32,6 +33,8 @@ class WellnessCalendarController extends GetxController {
     errorMessage.value = '';
     try {
       calendarData.value = await getCalendarDataUseCase();
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.error;
     } finally {

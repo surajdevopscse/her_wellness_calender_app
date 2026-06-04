@@ -9,6 +9,7 @@ import 'package:her_wellness_calender/features/women_wellness/period_tracking/do
 import 'package:her_wellness_calender/features/women_wellness/period_tracking/domain/usecases/delete_period_entry_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/period_tracking/domain/usecases/get_period_history_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/period_tracking/domain/usecases/update_period_entry_usecase.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 /// View model for period history and add/edit/delete form state.
 class PeriodEntryController extends GetxController {
@@ -63,6 +64,8 @@ class PeriodEntryController extends GetxController {
     errorMessage.value = '';
     try {
       history.assignAll(await getHistoryUseCase());
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.periodTrackingLoadError;
     } finally {
@@ -132,10 +135,12 @@ class PeriodEntryController extends GetxController {
       message.value = saved.periodLength > 10
           ? WellnessConstants.unusuallyLongPeriod
           : WellnessConstants.periodEntrySaved;
-    } catch (error) {
-      message.value = error is ArgumentError
-          ? error.message.toString()
-          : WellnessConstants.periodTrackingSaveError;
+    } on AppException catch (error) {
+      message.value = error.message;
+    } on ArgumentError catch (error) {
+      message.value = error.message.toString();
+    } catch (_) {
+      message.value = WellnessConstants.periodTrackingSaveError;
     } finally {
       isSaving.value = false;
     }
@@ -152,6 +157,8 @@ class PeriodEntryController extends GetxController {
       history.removeWhere((entry) => entry.id == current.id);
       bindEntry(null);
       message.value = WellnessConstants.periodEntryDeleted;
+    } on AppException catch (error) {
+      message.value = error.message;
     } catch (_) {
       message.value = WellnessConstants.error;
     } finally {

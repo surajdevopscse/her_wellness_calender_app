@@ -9,6 +9,11 @@ class LoginUseCase {
   Future<AuthUser> call({
     required String emailOrMobile,
     required String password,
+    required bool rememberMe,
   }) =>
-      repository.login(emailOrMobile: emailOrMobile, password: password);
+      repository.login(
+        emailOrMobile: emailOrMobile,
+        password: password,
+        rememberMe: rememberMe,
+      );
 }

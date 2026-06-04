@@ -6,6 +6,7 @@ import 'package:her_wellness_calender/features/women_wellness/core/enums/wellnes
 import 'package:her_wellness_calender/features/women_wellness/symptoms/domain/entities/symptom_item.dart';
 import 'package:her_wellness_calender/features/women_wellness/symptoms/domain/usecases/get_symptoms_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/symptoms/domain/usecases/save_selected_symptoms_usecase.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 /// View model for searching, selecting, and returning symptoms.
 class SymptomsController extends GetxController {
@@ -53,6 +54,8 @@ class SymptomsController extends GetxController {
       final loaded = await getSymptomsUseCase();
       symptoms.assignAll(loaded);
       _hydrateInitialSelection();
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.symptomsLoadError;
     } finally {
@@ -91,6 +94,8 @@ class SymptomsController extends GetxController {
     try {
       await saveSelectedSymptomsUseCase(selectedSymptoms.toList());
       Get.back<List<SymptomType>>(result: selectedSymptomTypes);
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.symptomsSaveError;
     } finally {

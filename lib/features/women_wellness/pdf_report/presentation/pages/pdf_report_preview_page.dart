@@ -8,6 +8,7 @@ import 'package:her_wellness_calender/features/women_wellness/core/theme/wellnes
 import 'package:her_wellness_calender/features/women_wellness/pdf_report/presentation/controllers/pdf_preview_controller.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_card.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_error_state.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_empty_state.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_insight_card.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_loading_view.dart';
 
@@ -28,8 +29,8 @@ class PdfReportPreviewPage extends GetView<PdfPreviewController> {
         );
       }
       final bytes = controller.pdfBytes.value;
-      if (bytes == null) {
-        return const SizedBox.shrink();
+      if (bytes == null || controller.report.value?.hasData != true) {
+        return const WellnessEmptyState(message: WellnessConstants.reportsEmpty);
       }
       return SingleChildScrollView(
         child: WellnessPageContainer(

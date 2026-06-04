@@ -7,6 +7,7 @@ import 'package:her_wellness_calender/features/women_wellness/core/helpers/welln
 import 'package:her_wellness_calender/features/women_wellness/profile/domain/entities/wellness_profile.dart';
 import 'package:her_wellness_calender/features/women_wellness/profile/domain/usecases/get_wellness_profile_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/profile/domain/usecases/update_wellness_profile_usecase.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 /// View model for profile form state, validation, loading, and persistence.
 class WellnessProfileController extends GetxController {
@@ -45,6 +46,8 @@ class WellnessProfileController extends GetxController {
       if (loadedProfile != null) {
         _bindProfileToForm(loadedProfile);
       }
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.profileLoadError;
     } finally {
@@ -90,10 +93,12 @@ class WellnessProfileController extends GetxController {
         WellnessConstants.profileSaveSuccess,
         snackPosition: SnackPosition.BOTTOM,
       );
-    } catch (error) {
-      errorMessage.value = error is ArgumentError
-          ? error.message.toString()
-          : WellnessConstants.profileSaveError;
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
+    } on ArgumentError catch (error) {
+      errorMessage.value = error.message.toString();
+    } catch (_) {
+      errorMessage.value = WellnessConstants.profileSaveError;
     } finally {
       isSaving.value = false;
     }

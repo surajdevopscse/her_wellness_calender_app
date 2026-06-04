@@ -27,12 +27,15 @@ class InsightsPage extends GetView<ReportsController> {
         );
       }
       final report = controller.report.value;
-      if (report == null) {
+      if (report == null || !report.hasData) {
         return const WellnessEmptyState(message: WellnessConstants.reportsEmpty);
       }
-      return SingleChildScrollView(
-        padding: const EdgeInsets.all(WellnessSpacing.xl),
-        child: Column(
+      return RefreshIndicator(
+        onRefresh: controller.load,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(WellnessSpacing.xl),
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             WellnessCard(
@@ -86,6 +89,7 @@ class InsightsPage extends GetView<ReportsController> {
             const SizedBox(height: WellnessSpacing.lg),
             WellnessChartCard(title: 'Symptom heatmap', values: report.symptomFrequency),
           ],
+          ),
         ),
       );
     });

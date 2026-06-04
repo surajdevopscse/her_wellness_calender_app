@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 import 'package:her_wellness_calender/core/storage/storage_service.dart';
 import 'package:her_wellness_calender/features/women_wellness/authentication/authentication_routes.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/constants/wellness_storage_keys.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/routes/wellness_routes.dart';
 import 'package:her_wellness_calender/features/women_wellness/onboarding/domain/repositories/onboarding_repository.dart';
 
@@ -34,14 +36,28 @@ class SplashController extends GetxController {
     isLoading.value = false;
 
     if (token != null && token.isNotEmpty) {
-      final setupDone = await onboardingRepository.isSetupCompleted();
-      Get.offAllNamed(
-        setupDone
-            ? WellnessRoutes.dashboard
-            : AuthenticationRoutes.setupOnboarding,
-      );
+      try {
+        final setupDone = await onboardingRepository.isSetupCompleted();
+        Get.offAllNamed(
+          setupDone
+              ? WellnessRoutes.dashboard
+              : AuthenticationRoutes.setupOnboarding,
+        );
+      } on UnauthorizedAppException {
+        await _clearInvalidSession();
+        Get.offAllNamed(AuthenticationRoutes.login);
+      } on ForbiddenAppException {
+        await _clearInvalidSession();
+        Get.offAllNamed(AuthenticationRoutes.login);
+      }
     } else {
       Get.offAllNamed(AuthenticationRoutes.login);
     }
+  }
+
+  Future<void> _clearInvalidSession() async {
+    await storageService.clearAuthToken();
+    await storageService.clearRefreshToken();
+    await storageService.setString(WellnessStorageKeys.currentUserId, '');
   }
 }

@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
+import 'package:her_wellness_calender/features/women_wellness/authentication/authentication_routes.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/constants/wellness_constants.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/helpers/wellness_validators.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/routes/wellness_routes.dart';
 import 'package:her_wellness_calender/features/women_wellness/onboarding/domain/usecases/complete_setup_onboarding_usecase.dart';
 
@@ -21,6 +25,7 @@ class SetupOnboardingController extends GetxController {
   final cycleLength = 28.obs;
   final periodLength = 5.obs;
   final isSaving = false.obs;
+  final errorMessage = ''.obs;
 
   bool get canContinue {
     if (pageIndex.value == 0) return selectedGoal.value.isNotEmpty;
@@ -28,9 +33,15 @@ class SetupOnboardingController extends GetxController {
     return true;
   }
 
-  void selectGoal(String goal) => selectedGoal.value = goal;
+  void selectGoal(String goal) {
+    errorMessage.value = '';
+    selectedGoal.value = goal;
+  }
 
-  void selectDate(DateTime date) => selectedDate.value = date;
+  void selectDate(DateTime date) {
+    errorMessage.value = '';
+    selectedDate.value = date;
+  }
 
   void previousMonth() {
     visibleMonth.value = DateTime(
@@ -47,19 +58,23 @@ class SetupOnboardingController extends GetxController {
   }
 
   void incrementCycleLength() {
+    errorMessage.value = '';
     if (cycleLength.value < 45) cycleLength.value++;
   }
 
   void decrementCycleLength() {
-    if (cycleLength.value > 18) cycleLength.value--;
+    errorMessage.value = '';
+    if (cycleLength.value > 21) cycleLength.value--;
   }
 
   void incrementPeriodLength() {
-    if (periodLength.value < 12) periodLength.value++;
+    errorMessage.value = '';
+    if (periodLength.value < 10) periodLength.value++;
   }
 
   void decrementPeriodLength() {
-    if (periodLength.value > 1) periodLength.value--;
+    errorMessage.value = '';
+    if (periodLength.value > 2) periodLength.value--;
   }
 
   void next() {
@@ -76,14 +91,30 @@ class SetupOnboardingController extends GetxController {
       pageIndex.value--;
       return;
     }
-    Get.offAllNamed(WellnessRoutes.dashboard);
+    Get.offAllNamed(AuthenticationRoutes.login);
   }
 
   Future<void> completeSetup() async {
     final lastPeriodStart = selectedDate.value;
     if (selectedGoal.value.isEmpty || lastPeriodStart == null) return;
 
+    final dateError = WellnessValidators.validateDateNotInFuture(
+      lastPeriodStart,
+    );
+    final cycleError = WellnessValidators.validateCycleLength(
+      cycleLength.value,
+    );
+    final periodError = WellnessValidators.validatePeriodLength(
+      periodLength.value,
+    );
+    final validationError = dateError ?? cycleError ?? periodError;
+    if (validationError != null) {
+      _showError(validationError);
+      return;
+    }
+
     isSaving.value = true;
+    errorMessage.value = '';
     try {
       await completeSetupOnboardingUseCase(
         goal: selectedGoal.value,
@@ -91,9 +122,29 @@ class SetupOnboardingController extends GetxController {
         cycleLength: cycleLength.value,
         periodLength: periodLength.value,
       );
+      Get.snackbar(
+        WellnessConstants.onboardingTitle,
+        WellnessConstants.onboardingSaveSuccess,
+        snackPosition: SnackPosition.BOTTOM,
+      );
       Get.offAllNamed(WellnessRoutes.dashboard);
+    } catch (error) {
+      _showError(
+        error is AppException
+            ? error.message
+            : WellnessConstants.onboardingSaveError,
+      );
     } finally {
       isSaving.value = false;
     }
+  }
+
+  void _showError(String message) {
+    errorMessage.value = message;
+    Get.snackbar(
+      WellnessConstants.onboardingTitle,
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:her_wellness_calender/features/women_wellness/notifications/domain/entities/notification_template.dart';
 import 'package:her_wellness_calender/features/women_wellness/notifications/domain/repositories/notifications_repository.dart';
 import 'package:her_wellness_calender/features/women_wellness/privacy/domain/repositories/privacy_repository.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 class NotificationsController extends GetxController {
   NotificationsController(this.notificationsRepository, this.privacyRepository);
@@ -27,6 +28,8 @@ class NotificationsController extends GetxController {
       templates.assignAll(await notificationsRepository.getTemplates());
       final privacy = await privacyRepository.getSettings();
       hideSensitive.value = privacy?.hideNotificationText ?? true;
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = 'Unable to load notification settings.';
     } finally {
@@ -42,10 +45,14 @@ class NotificationsController extends GetxController {
     }
 
     hideSensitive.value = value;
+    errorMessage.value = '';
     try {
       await privacyRepository.updateSettings(
         current.copyWith(hideNotificationText: value),
       );
+    } on AppException catch (error) {
+      hideSensitive.value = !value;
+      errorMessage.value = error.message;
     } catch (_) {
       hideSensitive.value = !value;
       errorMessage.value = 'Unable to update notification privacy.';

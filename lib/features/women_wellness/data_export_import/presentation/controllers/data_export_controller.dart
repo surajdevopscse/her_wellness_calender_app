@@ -6,6 +6,8 @@ import 'package:her_wellness_calender/features/women_wellness/data_export_import
 import 'package:her_wellness_calender/features/women_wellness/data_export_import/domain/usecases/export_wellness_data_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/data_export_import/domain/usecases/import_wellness_data_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/data_export_import/domain/usecases/restore_wellness_data_usecase.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/constants/wellness_constants.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/routes/wellness_routes.dart';
 
 class DataExportController extends GetxController {
   DataExportController(
@@ -32,16 +34,15 @@ class DataExportController extends GetxController {
     try {
       final result = await exportUseCase(format);
       lastExport.value = result;
-      statusMessage.value =
-          'Saved ${result.fileName} (${result.byteLength} bytes)';
+      statusMessage.value = WellnessConstants.exportSuccess;
       await SharePlus.instance.share(
         ShareParams(
           files: [XFile(result.path)],
           text: 'Her Wellness Calendar export',
         ),
       );
-    } catch (error) {
-      statusMessage.value = 'Export failed: $error';
+    } catch (_) {
+      statusMessage.value = WellnessConstants.exportError;
     } finally {
       isBusy.value = false;
     }
@@ -61,11 +62,15 @@ class DataExportController extends GetxController {
       }
       final bundle = await importUseCase(picked.files.single.path!);
       await restoreUseCase(bundle);
-      statusMessage.value =
-          'Restored backup from ${bundle.exportedAt.toIso8601String()} '
-          'with ${bundle.periods.length} periods and ${bundle.dailyLogs.length} daily logs.';
-    } catch (error) {
-      statusMessage.value = 'Import failed: $error';
+      statusMessage.value = WellnessConstants.restoreSuccess;
+      Get.snackbar(
+        WellnessConstants.backupRestoreTitle,
+        WellnessConstants.restoreSuccess,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      Get.offAllNamed(WellnessRoutes.dashboard);
+    } catch (_) {
+      statusMessage.value = WellnessConstants.restoreError;
     } finally {
       isBusy.value = false;
     }

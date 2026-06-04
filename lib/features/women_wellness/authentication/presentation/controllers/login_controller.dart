@@ -36,6 +36,7 @@ class LoginController extends GetxController {
       await loginUseCase(
         emailOrMobile: identifier,
         password: passwordController.text,
+        rememberMe: rememberMe.value,
       );
       final setupDone = await onboardingRepository.isSetupCompleted();
       Get.offAllNamed(

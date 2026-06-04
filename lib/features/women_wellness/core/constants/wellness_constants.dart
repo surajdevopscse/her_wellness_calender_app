@@ -5,6 +5,10 @@ class WellnessConstants {
   static const appTitle = 'Serene';
   static const moduleTitle = 'Women Wellness';
   static const dashboardTitle = 'Cycle overview';
+  static const dashboardEndpoint = '/api/v1/women-wellness/dashboard';
+  static const dashboardLoadError =
+      'Unable to load your dashboard. Please try again.';
+  static const dashboardRefreshSuccess = 'Dashboard refreshed.';
   static const profileTitle = 'Wellness profile';
   static const calendarTitle = 'Wellness calendar';
   static const periodTrackingTitle = 'Period tracking';
@@ -210,6 +214,26 @@ class WellnessConstants {
   static const calendarEmpty =
       'Your calendar will show period, ovulation, fertile, and wellness log markers once you start tracking.';
   static const reportsEmpty = 'Track at least one cycle to generate reports.';
+  static const cycleHistoryEmpty =
+      'No cycle history yet. Add a period entry to begin.';
+  static const remindersLoadError =
+      'Unable to load reminders. Please try again.';
+  static const remindersSaveError =
+      'Unable to update reminder. Please try again.';
+  static const reminderUpdated = 'Reminder updated.';
+  static const settingsLoadError =
+      'Unable to load settings. Please try again.';
+  static const settingsSaveError =
+      'Unable to update settings. Please try again.';
+  static const logoutTitle = 'Sign out?';
+  static const logoutConfirmation =
+      'You will need to sign in again to access your wellness data.';
+  static const logoutError = 'Unable to sign out. Please try again.';
+  static const exportSuccess = 'Wellness data exported successfully.';
+  static const exportError = 'Unable to export wellness data.';
+  static const backupRestoreTitle = 'Backup & restore';
+  static const restoreSuccess = 'Wellness backup restored successfully.';
+  static const restoreError = 'Unable to restore wellness backup.';
   static const error = 'Something went wrong. Please try again.';
   static const loading = 'Loading wellness data...';
   static const retry = 'Retry';
@@ -284,6 +308,11 @@ class WellnessConstants {
   static const profileMockAsset = 'assets/mock/wellness_profile.json';
   static const profileEndpoint = '/api/v1/women-wellness/profile';
   static const profileUserIdQuery = 'userId';
+  static const onboardingEndpoint = '/api/v1/women-wellness/onboarding';
+  static const onboardingTitle = 'Setup';
+  static const onboardingSaveSuccess = 'Your wellness setup is complete.';
+  static const onboardingSaveError =
+      'Unable to complete setup. Please review your details and try again.';
   static const privateNotificationTitle = 'Wellness Reminder';
   static const privateNotificationBody =
       'You have a private wellness reminder.';

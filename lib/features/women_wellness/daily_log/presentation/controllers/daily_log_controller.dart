@@ -10,6 +10,7 @@ import 'package:her_wellness_calender/features/women_wellness/daily_log/domain/u
 import 'package:her_wellness_calender/features/women_wellness/daily_log/domain/usecases/delete_daily_log_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/daily_log/domain/usecases/get_daily_logs_usecase.dart';
 import 'package:her_wellness_calender/features/women_wellness/daily_log/domain/usecases/update_daily_log_usecase.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 /// View model for daily log history and add/edit/delete form state.
 class DailyLogController extends GetxController {
@@ -59,6 +60,8 @@ class DailyLogController extends GetxController {
     errorMessage.value = '';
     try {
       logs.assignAll(await getLogsUseCase());
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.dailyLogLoadError;
     } finally {
@@ -139,10 +142,12 @@ class DailyLogController extends GetxController {
       _upsertLog(saved);
       bindLog(saved);
       message.value = WellnessConstants.dailyLogSaved;
-    } catch (error) {
-      message.value = error is ArgumentError
-          ? error.message.toString()
-          : WellnessConstants.dailyLogSaveError;
+    } on AppException catch (error) {
+      message.value = error.message;
+    } on ArgumentError catch (error) {
+      message.value = error.message.toString();
+    } catch (_) {
+      message.value = WellnessConstants.dailyLogSaveError;
     } finally {
       isSaving.value = false;
     }
@@ -159,6 +164,8 @@ class DailyLogController extends GetxController {
       logs.removeWhere((log) => log.id == current.id);
       bindLog(null);
       message.value = WellnessConstants.dailyLogDeleted;
+    } on AppException catch (error) {
+      message.value = error.message;
     } catch (_) {
       message.value = WellnessConstants.error;
     } finally {

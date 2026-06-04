@@ -42,6 +42,15 @@ class SetupOnboardingPage extends GetView<SetupOnboardingController> {
                             child: _StepBody(step: controller.pageIndex.value),
                           ),
                           const SizedBox(height: WellnessSpacing.xl),
+                          if (controller.errorMessage.value.isNotEmpty) ...[
+                            Text(
+                              controller.errorMessage.value,
+                              textAlign: TextAlign.center,
+                              style: WellnessTextStyles.caption(context)
+                                  .copyWith(color: WellnessColors.periodDeep),
+                            ),
+                            const SizedBox(height: WellnessSpacing.md),
+                          ],
                           FilledButton(
                             onPressed: controller.canContinue
                                 ? controller.next
@@ -398,11 +407,16 @@ class _CalendarCard extends GetView<SetupOnboardingController> {
                         controller.selectedDate.value,
                         date,
                       );
+                      final today = DateTime.now();
+                      final isFuture = date.isAfter(
+                        DateTime(today.year, today.month, today.day),
+                      );
 
                       return Expanded(
                         child: _CalendarDay(
                           day: day,
                           selected: selected,
+                          enabled: !isFuture,
                           onTap: () => controller.selectDate(date),
                         ),
                       );
@@ -422,17 +436,19 @@ class _CalendarDay extends StatelessWidget {
   const _CalendarDay({
     required this.day,
     required this.selected,
+    required this.enabled,
     required this.onTap,
   });
 
   final int day;
   final bool selected;
+  final bool enabled;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: enabled ? onTap : null,
       borderRadius: BorderRadius.circular(999),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 140),
@@ -445,9 +461,13 @@ class _CalendarDay extends StatelessWidget {
         child: Text(
           '$day',
           style: WellnessTextStyles.caption(context).copyWith(
-            color: selected
+            color: !enabled
+                ? WellnessColors.textMuted
+                : selected
                 ? WellnessColors.textOnPrimary
-                : WellnessColors.textSecondaryFor(Theme.of(context).brightness),
+                : WellnessColors.textSecondaryFor(
+                    Theme.of(context).brightness,
+                  ),
             fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
           ),
         ),

@@ -8,6 +8,9 @@ import 'package:her_wellness_calender/features/women_wellness/daily_log/data/dat
 import 'package:her_wellness_calender/features/women_wellness/daily_log/data/datasources/daily_log_remote_datasource.dart';
 import 'package:her_wellness_calender/features/women_wellness/daily_log/data/repositories/daily_log_repository_impl.dart';
 import 'package:her_wellness_calender/features/women_wellness/daily_log/domain/repositories/daily_log_repository.dart';
+import 'package:her_wellness_calender/features/women_wellness/dashboard/data/datasources/dashboard_remote_datasource.dart';
+import 'package:her_wellness_calender/features/women_wellness/dashboard/data/repositories/dashboard_repository_impl.dart';
+import 'package:her_wellness_calender/features/women_wellness/dashboard/domain/repositories/dashboard_repository.dart';
 import 'package:her_wellness_calender/features/women_wellness/privacy/data/datasources/privacy_mock_datasource.dart';
 import 'package:her_wellness_calender/features/women_wellness/privacy/data/datasources/privacy_remote_datasource.dart';
 import 'package:her_wellness_calender/features/women_wellness/privacy/data/repositories/privacy_repository_impl.dart';
@@ -41,6 +44,7 @@ import 'package:her_wellness_calender/features/women_wellness/notifications/data
 import 'package:her_wellness_calender/features/women_wellness/notifications/data/repositories/notifications_repository_impl.dart';
 import 'package:her_wellness_calender/features/women_wellness/notifications/domain/repositories/notifications_repository.dart';
 import 'package:her_wellness_calender/features/women_wellness/onboarding/data/repositories/onboarding_repository_impl.dart';
+import 'package:her_wellness_calender/features/women_wellness/onboarding/data/datasources/onboarding_remote_datasource.dart';
 import 'package:her_wellness_calender/features/women_wellness/onboarding/domain/repositories/onboarding_repository.dart';
 import 'package:her_wellness_calender/features/women_wellness/settings/data/datasources/settings_mock_datasource.dart';
 import 'package:her_wellness_calender/features/women_wellness/settings/data/datasources/settings_remote_datasource.dart';
@@ -158,6 +162,21 @@ class AppDependencies {
       ),
       fenix: true,
     );
+    Get.lazyPut<DashboardRemoteDatasource>(
+      () => DashboardRemoteDatasource(Get.find<ApiClient>()),
+      fenix: true,
+    );
+    Get.lazyPut<DashboardRepository>(
+      () => DashboardRepositoryImpl(
+        environment: Get.find<AppEnvironment>(),
+        remoteDatasource: Get.find<DashboardRemoteDatasource>(),
+        profileRepository: Get.find<WellnessProfileRepository>(),
+        periodRepository: Get.find<PeriodTrackingRepository>(),
+        dailyLogRepository: Get.find<DailyLogRepository>(),
+        reportsRepository: Get.find<ReportsRepository>(),
+      ),
+      fenix: true,
+    );
     Get.lazyPut<RemindersMockDatasource>(
       () => RemindersMockDatasource(Get.find<MockAssetLoader>()),
       fenix: true,
@@ -207,8 +226,16 @@ class AppDependencies {
       ),
       fenix: true,
     );
+    Get.lazyPut<OnboardingRemoteDatasource>(
+      () => OnboardingRemoteDatasource(Get.find<ApiClient>()),
+      fenix: true,
+    );
     Get.lazyPut<OnboardingRepository>(
-      () => OnboardingRepositoryImpl(Get.find<StorageService>()),
+      () => OnboardingRepositoryImpl(
+        storageService: Get.find<StorageService>(),
+        environment: Get.find<AppEnvironment>(),
+        remoteDatasource: Get.find<OnboardingRemoteDatasource>(),
+      ),
       fenix: true,
     );
     Get.lazyPut<SettingsMockDatasource>(

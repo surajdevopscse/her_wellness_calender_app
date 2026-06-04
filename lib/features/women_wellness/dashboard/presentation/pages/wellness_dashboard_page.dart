@@ -121,44 +121,50 @@ class _DashboardHome extends StatelessWidget {
       }
       final data = controller.dashboard.value;
       if (data == null) {
-        return const WellnessEmptyState(
+        return WellnessEmptyState(
           message: WellnessConstants.dashboardEmpty,
+          actionLabel: 'Refresh',
+          onAction: controller.refresh,
         );
       }
-      return SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(
-          WellnessResponsive.isMobile(context)
-              ? WellnessSpacing.lg + WellnessSpacing.xs
-              : WellnessSpacing.xl,
-          WellnessSpacing.lg,
-          WellnessResponsive.isMobile(context)
-              ? WellnessSpacing.lg + WellnessSpacing.xs
-              : WellnessSpacing.xl,
-          WellnessResponsive.bottomContentInset(context),
-        ),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: WellnessSpacing.pageMaxWidth,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                WellnessHeroCard(data: data, tip: controller.dailyTip),
-                const SizedBox(height: WellnessSpacing.lg),
-                _InsightStrip(data: data),
-                const SizedBox(height: WellnessSpacing.lg),
-                const DashboardDisclaimerStrip(),
-                const SizedBox(height: WellnessSpacing.lg),
-                DashboardMetricsGrid(
-                  children: _dashboardCards(data, controller),
-                ),
-                const SizedBox(height: WellnessSpacing.lg),
-                QuickLogCard(
-                  onAddPeriod: () => controller.selectTab(2),
-                  onAddLog: () => controller.selectTab(3),
-                ),
-              ],
+      return RefreshIndicator(
+        onRefresh: controller.refresh,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.fromLTRB(
+            WellnessResponsive.isMobile(context)
+                ? WellnessSpacing.lg + WellnessSpacing.xs
+                : WellnessSpacing.xl,
+            WellnessSpacing.lg,
+            WellnessResponsive.isMobile(context)
+                ? WellnessSpacing.lg + WellnessSpacing.xs
+                : WellnessSpacing.xl,
+            WellnessResponsive.bottomContentInset(context),
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: WellnessSpacing.pageMaxWidth,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  WellnessHeroCard(data: data, tip: controller.dailyTip),
+                  const SizedBox(height: WellnessSpacing.lg),
+                  _InsightStrip(data: data),
+                  const SizedBox(height: WellnessSpacing.lg),
+                  const DashboardDisclaimerStrip(),
+                  const SizedBox(height: WellnessSpacing.lg),
+                  DashboardMetricsGrid(
+                    children: _dashboardCards(data, controller),
+                  ),
+                  const SizedBox(height: WellnessSpacing.lg),
+                  QuickLogCard(
+                    onAddPeriod: () => controller.selectTab(2),
+                    onAddLog: () => controller.selectTab(3),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

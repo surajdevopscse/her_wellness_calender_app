@@ -61,6 +61,7 @@ class DataExportRepositoryImpl implements DataExportRepository {
           .map((item) => SymptomItemModel.fromEntity(item).toJson())
           .toList(),
       reports: {
+        'hasData': report.hasData,
         'averageCycleLength': report.averageCycleLength,
         'averagePeriodLength': report.averagePeriodLength,
         'cycleRegularity': report.cycleRegularity,

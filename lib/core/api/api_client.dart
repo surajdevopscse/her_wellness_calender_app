@@ -166,9 +166,7 @@ class ApiClient {
     }
 
     final message = payload is Map<String, dynamic>
-        ? (payload['message'] as String? ??
-              payload['error'] as String? ??
-              'Request failed')
+        ? _extractErrorMessage(payload)
         : 'Request failed';
 
     switch (response.statusCode) {
@@ -189,5 +187,21 @@ class ApiClient {
           statusCode: response.statusCode,
         );
     }
+  }
+
+  String _extractErrorMessage(Map<String, dynamic> payload) {
+    final errors = payload['errors'];
+    if (errors is Map<String, dynamic>) {
+      for (final value in errors.values) {
+        if (value is List && value.isNotEmpty) {
+          return value.first.toString();
+        }
+        if (value is String && value.isNotEmpty) return value;
+      }
+    }
+
+    return payload['message'] as String? ??
+        payload['error'] as String? ??
+        'Request failed';
   }
 }

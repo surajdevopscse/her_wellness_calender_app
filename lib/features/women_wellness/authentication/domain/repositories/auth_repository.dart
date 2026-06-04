@@ -5,6 +5,7 @@ abstract class AuthRepository {
   Future<AuthUser> login({
     required String emailOrMobile,
     required String password,
+    required bool rememberMe,
   });
 
   Future<AuthUser> register({

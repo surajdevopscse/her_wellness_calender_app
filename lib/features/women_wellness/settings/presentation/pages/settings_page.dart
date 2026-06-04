@@ -8,6 +8,7 @@ import 'package:her_wellness_calender/features/women_wellness/core/widgets/welln
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_insight_card.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_loading_view.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_section_header.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_error_state.dart';
 import 'package:her_wellness_calender/features/women_wellness/settings/domain/entities/app_settings.dart';
 import 'package:her_wellness_calender/features/women_wellness/settings/presentation/controllers/settings_controller.dart';
 
@@ -19,6 +20,13 @@ class SettingsPage extends GetView<SettingsController> {
     return Obx(() {
       if (controller.isLoading.value && controller.settings.value == null) {
         return const WellnessLoadingView();
+      }
+      if (controller.errorMessage.value.isNotEmpty &&
+          controller.settings.value == null) {
+        return WellnessErrorState(
+          message: controller.errorMessage.value,
+          onRetry: controller.load,
+        );
       }
       final settings = controller.settings.value;
       return SingleChildScrollView(
@@ -228,7 +236,9 @@ class SettingsPage extends GetView<SettingsController> {
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton.icon(
-                    onPressed: controller.logout,
+                    onPressed: controller.isLoggingOut.value
+                        ? null
+                        : controller.confirmLogout,
                     style: FilledButton.styleFrom(
                       backgroundColor: WellnessColors.periodDeep,
                       foregroundColor: Colors.white,
@@ -247,7 +257,11 @@ class SettingsPage extends GetView<SettingsController> {
                       ),
                     ),
                     icon: const Icon(Icons.logout_rounded, size: 18),
-                    label: const Text('Sign out'),
+                    label: Text(
+                      controller.isLoggingOut.value
+                          ? 'Signing out...'
+                          : 'Sign out',
+                    ),
                   ),
                 ),
               ],

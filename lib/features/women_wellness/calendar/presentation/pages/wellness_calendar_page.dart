@@ -41,14 +41,17 @@ class WellnessCalendarPage extends GetView<WellnessCalendarController> {
         );
       }
       final focused = controller.selectedDate.value;
-      return SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(
+      return RefreshIndicator(
+        onRefresh: controller.load,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.fromLTRB(
           WellnessSpacing.lg,
           WellnessSpacing.lg,
           WellnessSpacing.lg,
           WellnessResponsive.bottomContentInset(context),
-        ),
-        child: Center(
+          ),
+          child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(
               maxWidth: WellnessSpacing.pageMaxWidth,
@@ -141,6 +144,7 @@ class WellnessCalendarPage extends GetView<WellnessCalendarController> {
                 ),
               ],
             ),
+          ),
           ),
         ),
       );

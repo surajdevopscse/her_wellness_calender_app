@@ -33,19 +33,22 @@ class ReportsPage extends GetView<ReportsController> {
         );
       }
       final report = controller.report.value;
-      if (report == null) {
+      if (report == null || !report.hasData) {
         return const WellnessEmptyState(
           message: WellnessConstants.reportsEmpty,
         );
       }
-      return SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(
+      return RefreshIndicator(
+        onRefresh: controller.load,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.fromLTRB(
           WellnessResponsive.pagePadding(context).left,
           WellnessResponsive.pagePadding(context).top,
           WellnessResponsive.pagePadding(context).right,
           WellnessResponsive.bottomContentInset(context),
-        ),
-        child: Center(
+          ),
+          child: Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: WellnessResponsive.contentMaxWidth(context),
@@ -186,6 +189,7 @@ class ReportsPage extends GetView<ReportsController> {
                 ),
               ],
             ),
+          ),
           ),
         ),
       );

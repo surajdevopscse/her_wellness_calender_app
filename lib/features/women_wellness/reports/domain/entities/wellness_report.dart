@@ -1,6 +1,7 @@
 /// Analytics report for cycles, symptoms, mood, pain, flow, and summaries.
 class WellnessReport {
   const WellnessReport({
+    required this.hasData,
     required this.averageCycleLength,
     required this.averagePeriodLength,
     required this.cycleRegularity,
@@ -17,6 +18,7 @@ class WellnessReport {
     required this.notes,
   });
 
+  final bool hasData;
   final double averageCycleLength;
   final double averagePeriodLength;
   final String cycleRegularity;

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/constants/wellness_constants.dart';
 import 'package:her_wellness_calender/features/women_wellness/period_tracking/domain/entities/period_entry.dart';
 import 'package:her_wellness_calender/features/women_wellness/period_tracking/domain/usecases/get_period_history_usecase.dart';
+import 'package:her_wellness_calender/core/errors/exceptions.dart';
 
 /// Loads cycle history.
 class CycleHistoryController extends GetxController {
@@ -24,6 +25,8 @@ class CycleHistoryController extends GetxController {
     errorMessage.value = '';
     try {
       periods.value = await getPeriodHistoryUseCase();
+    } on AppException catch (error) {
+      errorMessage.value = error.message;
     } catch (_) {
       errorMessage.value = WellnessConstants.error;
     } finally {
