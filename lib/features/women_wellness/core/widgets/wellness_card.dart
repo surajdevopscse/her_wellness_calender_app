@@ -36,7 +36,7 @@ class WellnessCard extends StatelessWidget {
                       ? WellnessColors.darkCard.withValues(alpha: 0.62)
                       : WellnessColors.surface.withValues(alpha: 0.92))
             : null,
-        gradient: null,
+        gradient: gradient,
         padding: padding ?? const EdgeInsets.all(WellnessSpacing.xl),
         child: DefaultTextStyle.merge(
           style: TextStyle(color: textColor, decoration: TextDecoration.none),

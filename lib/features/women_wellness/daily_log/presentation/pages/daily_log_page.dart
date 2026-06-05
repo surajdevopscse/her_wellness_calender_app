@@ -89,21 +89,24 @@ class DailyLogPage extends GetView<DailyLogController> {
                   const SizedBox(height: WellnessSpacing.lg),
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      final useColumns = WellnessResponsive.useComfortableColumns(
-                        context,
-                        constraints.maxWidth,
-                      );
-                      if (!useColumns) {
-                        return _buildSingleColumn(context);
-                      }
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(child: _buildPrimaryColumn(context)),
-                          const SizedBox(width: WellnessSpacing.xl),
-                          Expanded(child: _buildSecondaryColumn(context)),
-                        ],
-                      );
+                      return Obx(() {
+                        final useColumns =
+                            WellnessResponsive.useComfortableColumns(
+                              context,
+                              constraints.maxWidth,
+                            );
+                        if (!useColumns) {
+                          return _buildSingleColumn(context);
+                        }
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: _buildPrimaryColumn(context)),
+                            const SizedBox(width: WellnessSpacing.xl),
+                            Expanded(child: _buildSecondaryColumn(context)),
+                          ],
+                        );
+                      });
                     },
                   ),
                   if (controller.message.value.isNotEmpty) ...[

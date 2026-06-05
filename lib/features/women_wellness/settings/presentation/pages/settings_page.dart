@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:her_wellness_calender/core/constants/app_constants.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/helpers/wellness_responsive.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_colors.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_spacing.dart';
@@ -176,25 +177,12 @@ class SettingsPage extends GetView<SettingsController> {
                   ),
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
-                const WellnessSectionHeader(
-                  title: 'Data & portability',
-                  subtitle:
-                      'Export, restore, and review how your information moves with you.',
-                ),
+               
                 const SizedBox(height: WellnessSpacing.md),
                 WellnessCard(
                   child: Column(
                     children: [
-                      ListTile(
-                        leading: const Icon(Icons.upload_outlined),
-                        title: const Text('Export data'),
-                        onTap: controller.openExport,
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.cloud_sync_outlined),
-                        title: const Text('Backup & restore'),
-                        onTap: controller.openBackup,
-                      ),
+                     
                       ListTile(
                         leading: const Icon(Icons.language_outlined),
                         title: const Text('Language'),
@@ -217,7 +205,9 @@ class SettingsPage extends GetView<SettingsController> {
                       const ListTile(
                         leading: Icon(Icons.info_outline),
                         title: Text('App info'),
-                        subtitle: Text('Her Wellness Calendar v1.0.0'),
+                        subtitle: Text(
+                          '${AppConstants.appTagline} v${AppConstants.appVersion}',
+                        ),
                       ),
                       ListTile(
                         leading: const Icon(Icons.policy_outlined),

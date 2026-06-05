@@ -37,11 +37,13 @@ class WellnessBlurContainer extends StatelessWidget {
         child: Container(
           padding: padding ?? const EdgeInsets.all(WellnessSpacing.xl),
           decoration: BoxDecoration(
-            color:
-                color ??
+            color: gradient != null
+                ? null
+                : color ??
                 (isDark
                     ? WellnessColors.darkCard.withValues(alpha: 0.96)
                     : WellnessColors.surface),
+            gradient: gradient,
             borderRadius: BorderRadius.circular(resolvedRadius),
             border: Border.all(
               color:

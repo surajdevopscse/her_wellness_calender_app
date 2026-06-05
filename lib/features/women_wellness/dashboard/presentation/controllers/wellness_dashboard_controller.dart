@@ -39,6 +39,7 @@ class WellnessDashboardController extends GetxController {
     }
   }
 
+  @override
   Future<void> refresh() async {
     await load();
     if (errorMessage.value.isEmpty) {

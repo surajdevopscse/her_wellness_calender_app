@@ -95,8 +95,8 @@ class WellnessProfileController extends GetxController {
       );
     } on AppException catch (error) {
       errorMessage.value = error.message;
-    } on ArgumentError catch (error) {
-      errorMessage.value = error.message.toString();
+    } on ArgumentError {
+      errorMessage.value = WellnessConstants.profileSaveError;
     } catch (_) {
       errorMessage.value = WellnessConstants.profileSaveError;
     } finally {

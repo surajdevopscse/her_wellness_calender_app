@@ -35,6 +35,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/
     - assets/mock/women_wellness.json
     - assets/mock/wellness_profile.json
     - assets/mock/privacy_settings.json

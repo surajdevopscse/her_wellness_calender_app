@@ -51,9 +51,6 @@ import 'package:her_wellness_calender/features/women_wellness/settings/data/data
 import 'package:her_wellness_calender/features/women_wellness/settings/data/repositories/settings_repository_impl.dart';
 import 'package:her_wellness_calender/features/women_wellness/settings/domain/repositories/settings_repository.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/services/theme_controller.dart';
-import 'package:her_wellness_calender/features/women_wellness/data_export_import/data/repositories/data_export_repository_impl.dart';
-import 'package:her_wellness_calender/features/women_wellness/data_export_import/data/services/wellness_export_file_writer.dart';
-import 'package:her_wellness_calender/features/women_wellness/data_export_import/domain/repositories/data_export_repository.dart';
 import 'package:her_wellness_calender/app/environment/app_environment.dart';
 
 /// Registers app-wide services and repository abstractions.
@@ -276,23 +273,6 @@ class AppDependencies {
     Get.put<ThemeController>(
       ThemeController(Get.find<SettingsRepository>()),
       permanent: true,
-    );
-    Get.lazyPut<WellnessExportFileWriter>(
-      () => const WellnessExportFileWriter(),
-      fenix: true,
-    );
-    Get.lazyPut<DataExportRepository>(
-      () => DataExportRepositoryImpl(
-        profileRepository: Get.find<WellnessProfileRepository>(),
-        periodRepository: Get.find<PeriodTrackingRepository>(),
-        dailyLogRepository: Get.find<DailyLogRepository>(),
-        privacyRepository: Get.find<PrivacyRepository>(),
-        remindersRepository: Get.find<RemindersRepository>(),
-        symptomsRepository: Get.find<SymptomsRepository>(),
-        reportsRepository: Get.find<ReportsRepository>(),
-        fileWriter: Get.find<WellnessExportFileWriter>(),
-      ),
-      fenix: true,
     );
   }
 }

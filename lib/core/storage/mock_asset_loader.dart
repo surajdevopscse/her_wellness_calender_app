@@ -16,7 +16,9 @@ class DefaultMockAssetLoader implements MockAssetLoader {
     if (decoded is Map<String, dynamic>) {
       return decoded;
     }
-    throw ParsingAppException(message: 'Expected a map at $path');
+    throw const ParsingAppException(
+      message: 'Unable to load this data. Please try again.',
+    );
   }
 
   @override
@@ -25,16 +27,18 @@ class DefaultMockAssetLoader implements MockAssetLoader {
     if (decoded is List<dynamic>) {
       return decoded;
     }
-    throw ParsingAppException(message: 'Expected a list at $path');
+    throw const ParsingAppException(
+      message: 'Unable to load this data. Please try again.',
+    );
   }
 
   Future<dynamic> _decode(String path) async {
     try {
       final raw = await rootBundle.loadString(path);
       return jsonDecode(raw);
-    } catch (error) {
-      throw ParsingAppException(
-        message: 'Failed to load mock asset $path: $error',
+    } catch (_) {
+      throw const ParsingAppException(
+        message: 'Unable to load this data. Please try again.',
       );
     }
   }

@@ -137,8 +137,8 @@ class PeriodEntryController extends GetxController {
           : WellnessConstants.periodEntrySaved;
     } on AppException catch (error) {
       message.value = error.message;
-    } on ArgumentError catch (error) {
-      message.value = error.message.toString();
+    } on ArgumentError {
+      message.value = WellnessConstants.periodTrackingSaveError;
     } catch (_) {
       message.value = WellnessConstants.periodTrackingSaveError;
     } finally {

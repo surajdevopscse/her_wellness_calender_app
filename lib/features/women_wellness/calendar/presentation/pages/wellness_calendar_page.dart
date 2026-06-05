@@ -9,6 +9,7 @@ import 'package:her_wellness_calender/features/women_wellness/calendar/presentat
 import 'package:her_wellness_calender/features/women_wellness/calendar/presentation/widgets/wellness_calendar.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/helpers/wellness_responsive.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/helpers/wellness_date_helper.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/theme/app_gradients.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_colors.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_text_styles.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_animations.dart';
@@ -61,6 +62,9 @@ class WellnessCalendarPage extends GetView<WellnessCalendarController> {
               children: [
                 FadeInContainer(
                   child: WellnessCard(
+                    gradient: Theme.of(context).brightness == Brightness.dark
+                        ? null
+                        : AppGradients.aquaGlow,
                     child: Row(
                       children: [
                         Container(
@@ -71,9 +75,7 @@ class WellnessCalendarPage extends GetView<WellnessCalendarController> {
                             color:
                                 Theme.of(context).brightness == Brightness.dark
                                 ? WellnessColors.darkSurface
-                                : WellnessColors.secondary.withValues(
-                                    alpha: 0.42,
-                                  ),
+                                : Colors.white.withValues(alpha: 0.72),
                             border: Border.all(
                               color: WellnessColors.borderFor(
                                 Theme.of(context).brightness,
@@ -85,7 +87,7 @@ class WellnessCalendarPage extends GetView<WellnessCalendarController> {
                             color:
                                 Theme.of(context).brightness == Brightness.dark
                                 ? WellnessColors.darkPrimary
-                                : WellnessColors.primaryDeep,
+                                : WellnessColors.fertileDeep,
                           ),
                         ),
                         const SizedBox(width: WellnessSpacing.md),
@@ -237,7 +239,7 @@ class _StatusPill extends StatelessWidget {
       decoration: BoxDecoration(
         color: brightness == Brightness.dark
             ? Colors.white.withValues(alpha: 0.04)
-            : Colors.white.withValues(alpha: 0.6),
+            : WellnessColors.surface.withValues(alpha: 0.84),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: WellnessColors.borderFor(brightness).withValues(alpha: 0.38),

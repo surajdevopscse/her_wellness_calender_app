@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:her_wellness_calender/features/women_wellness/core/helpers/wellness_date_helper.dart';
+import 'package:her_wellness_calender/features/women_wellness/core/theme/app_gradients.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_colors.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_spacing.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/theme/wellness_text_styles.dart';
@@ -26,6 +27,12 @@ class WellnessHeroCard extends StatelessWidget {
     return FadeInContainer(
       child: WellnessBlurContainer(
         radius: 34,
+        gradient: Theme.of(context).brightness == Brightness.dark
+            ? null
+            : AppGradients.heroSoft,
+        borderColor: Theme.of(context).brightness == Brightness.dark
+            ? null
+            : Colors.white.withValues(alpha: 0.74),
         child: Column(
           children: [
             LayoutBuilder(
@@ -123,16 +130,24 @@ class _HeroCopy extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
+            Icon(
               Icons.auto_awesome_rounded,
-              color: WellnessColors.primaryDeep,
+              color: brightness == Brightness.dark
+                  ? WellnessColors.darkPrimary
+                  : Colors.white,
             ),
             const SizedBox(width: 8),
             Text(
               greeting,
               style: WellnessTextStyles.caption(
                 context,
-              ).copyWith(fontWeight: FontWeight.w700, letterSpacing: 0.4),
+              ).copyWith(
+                color: brightness == Brightness.dark
+                    ? WellnessColors.darkTextSecondary
+                    : Colors.white.withValues(alpha: 0.88),
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0,
+              ),
             ),
           ],
         ),
@@ -148,7 +163,9 @@ class _HeroCopy extends StatelessWidget {
               'You are in your $phaseName phase',
               maxLines: compact ? 3 : null,
               style: WellnessTextStyles.display(
-                color: WellnessColors.textPrimaryFor(brightness),
+                color: brightness == Brightness.dark
+                    ? WellnessColors.darkTextPrimary
+                    : Colors.white,
               ).copyWith(fontSize: fontSize, height: compact ? 1.06 : 1.1),
             );
           },
@@ -159,8 +176,11 @@ class _HeroCopy extends StatelessWidget {
               ? 'Next period in $next days'
               : 'Your next period may be arriving later than expected.',
           style: WellnessTextStyles.body.copyWith(
-            color: WellnessColors.textSecondaryFor(brightness),
+            color: brightness == Brightness.dark
+                ? WellnessColors.darkTextSecondary
+                : Colors.white.withValues(alpha: 0.88),
             fontSize: compact ? 15 : 17,
+            fontWeight: FontWeight.w600,
           ),
         ),
         SizedBox(height: compact ? WellnessSpacing.md : WellnessSpacing.lg),

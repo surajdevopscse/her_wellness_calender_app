@@ -27,9 +27,9 @@ class WellnessDesktopRail extends StatelessWidget {
     (Icons.history_rounded, 'History'),
     (Icons.notifications_rounded, 'Reminders'),
     (Icons.lock_rounded, 'Privacy'),
-    (Icons.settings_rounded, 'Settings'),
     (Icons.insights_rounded, 'Insights'),
     (Icons.picture_as_pdf_rounded, 'PDF'),
+    (Icons.settings_rounded, 'Settings'),
   ];
 
   @override
@@ -45,19 +45,44 @@ class WellnessDesktopRail extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 22, 20, 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                Text(
-                  'Wellness',
-                  style: WellnessTextStyles.sectionHeader(
-                    brightness,
-                  ).copyWith(fontSize: 24),
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.94),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: WellnessColors.primaryDeep.withValues(alpha: 0.22),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: Image.asset(
+                    'assets/images/wozone_logo.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  'Your daily cycle space',
-                  style: WellnessTextStyles.caption(context),
+                const SizedBox(width: WellnessSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'WoZone',
+                        style: WellnessTextStyles.sectionHeader(
+                          brightness,
+                        ).copyWith(fontSize: 24),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Track. Understand. Thrive.',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: WellnessTextStyles.caption(context),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

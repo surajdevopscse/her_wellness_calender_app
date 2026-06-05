@@ -8,6 +8,25 @@ import 'package:her_wellness_calender/core/errors/exceptions.dart';
 typedef TokenProvider = String? Function();
 
 class ApiClient {
+  static const _genericErrorMessage =
+      'Something went wrong. Please try again.';
+  static const _networkErrorMessage =
+      'Unable to connect. Please check your internet connection and try again.';
+  static const _responseParsingErrorMessage =
+      'We could not read the server response. Please try again.';
+  static const _requestFailedMessage =
+      'Request failed. Please try again.';
+  static const _serverErrorMessage =
+      'The service is temporarily unavailable. Please try again later.';
+  static const _validationErrorMessage =
+      'Please review the highlighted details and try again.';
+  static const _unauthorizedErrorMessage =
+      'Please sign in again to continue.';
+  static const _forbiddenErrorMessage =
+      'You do not have permission to perform this action.';
+  static const _notFoundErrorMessage =
+      'The requested information could not be found.';
+
   ApiClient({
     required this.baseUrl,
     required this.connectTimeout,
@@ -138,12 +157,16 @@ class ApiClient {
               .timeout(connectTimeout);
           break;
         default:
-          throw UnknownAppException(message: 'Unsupported method: $method');
+          throw const UnknownAppException(message: _genericErrorMessage);
       }
     } on TimeoutException {
       throw const TimeoutAppException();
     } catch (error) {
-      throw NetworkAppException(message: error.toString());
+      if (error is AppException) {
+        throw error;
+      }
+
+      throw const NetworkAppException(message: _networkErrorMessage);
     }
 
     return _parseResponse(response);
@@ -157,7 +180,7 @@ class ApiClient {
           : jsonDecode(response.body);
     } catch (_) {
       throw const ParsingAppException(
-        message: 'Unable to parse response payload',
+        message: _responseParsingErrorMessage,
       );
     }
 
@@ -166,24 +189,34 @@ class ApiClient {
     }
 
     final message = payload is Map<String, dynamic>
-        ? _extractErrorMessage(payload)
-        : 'Request failed';
+        ? _sanitizeErrorMessage(_extractErrorMessage(payload))
+        : _requestFailedMessage;
 
     switch (response.statusCode) {
       case 400:
       case 409:
-        throw ValidationAppException(message: message);
+        throw ValidationAppException(
+          message: message.isEmpty ? _validationErrorMessage : message,
+        );
       case 401:
-        throw UnauthorizedAppException(message: message);
+        throw UnauthorizedAppException(
+          message: message.isEmpty ? _unauthorizedErrorMessage : message,
+        );
       case 403:
-        throw ForbiddenAppException(message: message);
+        throw ForbiddenAppException(
+          message: message.isEmpty ? _forbiddenErrorMessage : message,
+        );
       case 404:
-        throw NotFoundAppException(message: message);
+        throw NotFoundAppException(
+          message: message.isEmpty ? _notFoundErrorMessage : message,
+        );
       case 422:
-        throw ValidationAppException(message: message);
+        throw ValidationAppException(
+          message: message.isEmpty ? _validationErrorMessage : message,
+        );
       default:
         throw ServerAppException(
-          message: message,
+          message: _serverErrorMessage,
           statusCode: response.statusCode,
         );
     }
@@ -202,6 +235,32 @@ class ApiClient {
 
     return payload['message'] as String? ??
         payload['error'] as String? ??
-        'Request failed';
+        _requestFailedMessage;
+  }
+
+  String _sanitizeErrorMessage(String message) {
+    final trimmed = message.trim();
+    if (trimmed.isEmpty) return '';
+
+    final technicalTerms = [
+      'exception',
+      'stacktrace',
+      'stack trace',
+      'socketexception',
+      'httpexception',
+      'formatexception',
+      'typeerror',
+      'null check operator',
+      'system.',
+      'microsoft.',
+      'dart:',
+      'package:',
+      ' at ',
+      '\\',
+    ];
+
+    final lower = trimmed.toLowerCase();
+    final looksTechnical = technicalTerms.any((term) => lower.contains(term));
+    return looksTechnical ? '' : trimmed;
   }
 }

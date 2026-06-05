@@ -1,11 +1,11 @@
 {
-    "name": "her_wellness_calender",
-    "short_name": "her_wellness_calender",
+    "name": "WoZone",
+    "short_name": "WoZone",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FFF5F8",
+    "theme_color": "#C21758",
+    "description": "WoZone - Track. Understand. Thrive.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

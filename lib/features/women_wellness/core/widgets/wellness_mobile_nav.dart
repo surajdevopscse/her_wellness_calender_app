@@ -33,7 +33,10 @@ class WellnessMobileNav extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       color: isDark
           ? WellnessColors.darkCard.withValues(alpha: 0.72)
-          : WellnessColors.surface.withValues(alpha: 0.94),
+          : Colors.white.withValues(alpha: 0.96),
+      borderColor: isDark
+          ? Colors.white.withValues(alpha: 0.12)
+          : WellnessColors.glowRose.withValues(alpha: 0.85),
       child: SizedBox(
         height: 62,
         child: Row(
@@ -73,7 +76,7 @@ class _MobileNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final activeColor = prominent ? Colors.white : WellnessColors.primaryDeep;
+    final activeColor = prominent ? Colors.white : WellnessColors.primaryHot;
     final inactiveColor = WellnessColors.textSecondaryFor(brightness);
 
     return Expanded(
@@ -95,16 +98,16 @@ class _MobileNavItem extends StatelessWidget {
                 height: prominent ? 38 : 30,
                 decoration: BoxDecoration(
                   color: prominent
-                      ? WellnessColors.primaryDeep
+                      ? WellnessColors.primaryHot
                       : selected
-                      ? WellnessColors.secondary.withValues(alpha: 0.75)
+                      ? WellnessColors.blush
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(prominent ? 14 : 12),
                   boxShadow: selected || prominent
                       ? [
                           BoxShadow(
                             color: WellnessColors.primaryHot.withValues(
-                              alpha: 0.22,
+                              alpha: 0.28,
                             ),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
@@ -123,7 +126,7 @@ class _MobileNavItem extends StatelessWidget {
                 label,
                 style: WellnessTextStyles.caption(context).copyWith(
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                  color: selected ? WellnessColors.primaryDeep : inactiveColor,
+                  color: selected ? WellnessColors.primaryHot : inactiveColor,
                   fontSize: 10,
                   height: 1.1,
                 ),

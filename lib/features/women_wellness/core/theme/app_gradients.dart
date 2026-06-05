@@ -9,12 +9,24 @@ class AppGradients {
   static const heroSoft = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [WellnessColors.surface, Color(0xFFFFF1F8), Color(0xFFF3E8FB)],
+    colors: [Color(0xFFFF6F98), Color(0xFFFF9FBC), Color(0xFFFFE2EC)],
   );
 
   static const accentGlow = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [WellnessColors.primaryDeep, Color(0xFFB76FA6)],
+    colors: [WellnessColors.primaryHot, WellnessColors.accent],
+  );
+
+  static const aquaGlow = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [WellnessColors.secondary, Color(0xFFF0FFFE)],
+  );
+
+  static const peachGlow = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [WellnessColors.peach, Color(0xFFFFF5EF)],
   );
 }

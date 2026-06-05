@@ -11,7 +11,6 @@ import 'package:her_wellness_calender/features/women_wellness/core/widgets/welln
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_empty_state.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_error_state.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/widgets/wellness_loading_view.dart';
-import 'package:her_wellness_calender/features/women_wellness/core/routes/wellness_routes.dart';
 import 'package:her_wellness_calender/features/women_wellness/reports/presentation/controllers/reports_controller.dart';
 import 'package:her_wellness_calender/features/women_wellness/reports/presentation/widgets/report_summary_card.dart';
 import 'package:her_wellness_calender/features/women_wellness/reports/presentation/widgets/wellness_chart_card.dart';
@@ -182,11 +181,6 @@ class ReportsPage extends GetView<ReportsController> {
                   values: report.moodDistribution,
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
-                OutlinedButton.icon(
-                  onPressed: () => Get.toNamed(WellnessRoutes.insights),
-                  icon: const Icon(Icons.insights_outlined),
-                  label: const Text('Explore deeper insights'),
-                ),
               ],
             ),
           ),

@@ -104,10 +104,34 @@ class AuthShellLayout extends StatelessWidget {
                   color: WellnessColors.primaryDeep.withValues(alpha: 0.22),
                 ),
               ),
-              child: Icon(
-                heroIcon,
-                size: compact ? 28 : 34,
-                color: WellnessColors.primaryDeep,
+              padding: EdgeInsets.all(compact ? 11 : 14),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned.fill(
+                    child: Image.asset(
+                      'assets/images/wozone_logo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Positioned(
+                    right: compact ? -7 : -8,
+                    bottom: compact ? -7 : -8,
+                    child: Container(
+                      width: compact ? 22 : 26,
+                      height: compact ? 22 : 26,
+                      decoration: const BoxDecoration(
+                        color: WellnessColors.primaryDeep,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        heroIcon,
+                        size: compact ? 13 : 15,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: WellnessSpacing.xl),

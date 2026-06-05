@@ -144,8 +144,8 @@ class DailyLogController extends GetxController {
       message.value = WellnessConstants.dailyLogSaved;
     } on AppException catch (error) {
       message.value = error.message;
-    } on ArgumentError catch (error) {
-      message.value = error.message.toString();
+    } on ArgumentError {
+      message.value = WellnessConstants.dailyLogSaveError;
     } catch (_) {
       message.value = WellnessConstants.dailyLogSaveError;
     } finally {

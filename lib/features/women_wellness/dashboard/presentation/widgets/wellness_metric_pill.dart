@@ -26,7 +26,7 @@ class WellnessMetricPill extends StatelessWidget {
     final fgMuted = WellnessColors.textSecondaryFor(brightness);
     final bg = isDark
         ? WellnessColors.darkSurface
-        : WellnessColors.secondary.withValues(alpha: 0.34);
+        : Colors.white.withValues(alpha: 0.72);
 
     return ConstrainedBox(
       constraints: BoxConstraints(
@@ -39,7 +39,9 @@ class WellnessMetricPill extends StatelessWidget {
           color: bg,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: WellnessColors.borderFor(brightness).withValues(alpha: 0.8),
+            color: isDark
+                ? WellnessColors.borderFor(brightness).withValues(alpha: 0.8)
+                : Colors.white.withValues(alpha: 0.82),
           ),
         ),
         child: Row(

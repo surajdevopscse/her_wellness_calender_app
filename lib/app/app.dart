@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:her_wellness_calender/core/constants/app_constants.dart';
 import 'package:her_wellness_calender/features/auth/splash/presentation/bindings/splash_binding.dart';
 import 'package:her_wellness_calender/features/auth/splash/presentation/pages/splash_page.dart';
 
@@ -10,7 +11,6 @@ import 'package:her_wellness_calender/features/women_wellness/authentication/pre
 import 'package:her_wellness_calender/features/women_wellness/authentication/presentation/pages/register_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/authentication/presentation/pages/reset_password_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/authentication/presentation/pages/verify_otp_page.dart';
-import 'package:her_wellness_calender/features/women_wellness/backup_restore/presentation/pages/backup_restore_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/calendar/presentation/bindings/calendar_binding.dart';
 import 'package:her_wellness_calender/features/women_wellness/calendar/presentation/pages/wellness_calendar_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/core/routes/wellness_routes.dart';
@@ -22,8 +22,6 @@ import 'package:her_wellness_calender/features/women_wellness/dashboard/presenta
 import 'package:her_wellness_calender/features/women_wellness/daily_log/presentation/bindings/daily_log_binding.dart';
 import 'package:her_wellness_calender/features/women_wellness/daily_log/presentation/pages/daily_log_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/dashboard/presentation/pages/wellness_dashboard_page.dart';
-import 'package:her_wellness_calender/features/women_wellness/data_export_import/presentation/bindings/data_export_binding.dart';
-import 'package:her_wellness_calender/features/women_wellness/data_export_import/presentation/pages/data_export_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/insights/presentation/bindings/insights_binding.dart';
 import 'package:her_wellness_calender/features/women_wellness/insights/presentation/pages/insights_page.dart';
 import 'package:her_wellness_calender/features/women_wellness/notifications/presentation/bindings/notifications_binding.dart';
@@ -57,7 +55,7 @@ class App extends StatelessWidget {
     final themeController = Get.find<ThemeController>();
     return Obx(
       () => GetMaterialApp(
-        title: 'Serene',
+        title: AppConstants.appName,
         theme: WellnessTheme.light,
         darkTheme: WellnessTheme.dark,
         themeMode: themeController.materialThemeMode,
@@ -168,16 +166,6 @@ class App extends StatelessWidget {
             name: WellnessRoutes.notifications,
             page: () => const NotificationsPage(),
             binding: NotificationsBinding(),
-          ),
-          GetPage(
-            name: WellnessRoutes.dataExport,
-            page: () => const DataExportPage(),
-            binding: DataExportBinding(),
-          ),
-          GetPage(
-            name: WellnessRoutes.backupRestore,
-            page: () => const BackupRestorePage(),
-            binding: DataExportBinding(),
           ),
           GetPage(
             name: WellnessRoutes.pdfPreview,

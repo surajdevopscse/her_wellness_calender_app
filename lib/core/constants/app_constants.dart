@@ -1,8 +1,10 @@
-/// Global constants for the Her Wellness Calendar app.
+/// Global constants for the WoZone app.
 class AppConstants {
   AppConstants._();
 
-  static const String appName = 'Her Wellness Calendar';
+  static const String appName = 'WoZone';
+  static const String appTagline =
+      'WoZone – Empowering Every Phase of Womanhood';
   static const String appVersion = '1.0.0';
 
   static const double mobileBreakpoint = 600;

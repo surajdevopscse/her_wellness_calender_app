@@ -2,7 +2,7 @@
 class WellnessConstants {
   WellnessConstants._();
 
-  static const appTitle = 'Serene';
+  static const appTitle = 'WoZone';
   static const moduleTitle = 'Women Wellness';
   static const dashboardTitle = 'Cycle overview';
   static const dashboardEndpoint = '/api/v1/women-wellness/dashboard';

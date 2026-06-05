@@ -41,10 +41,10 @@ class WellnessAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ],
             ),
-            child: const Icon(
-              Icons.spa_rounded,
-              size: 20,
-              color: WellnessColors.primaryDeep,
+            padding: const EdgeInsets.all(8),
+            child: Image.asset(
+              'assets/images/wozone_logo.png',
+              fit: BoxFit.contain,
             ),
           ),
           const SizedBox(width: WellnessSpacing.md),

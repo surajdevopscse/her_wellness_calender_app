@@ -322,6 +322,13 @@ class WellnessCalendarMonthHeader extends StatelessWidget {
       padding: const EdgeInsets.all(WellnessSpacing.lg),
       decoration: BoxDecoration(
         color: isDark ? WellnessColors.darkSurface : WellnessColors.surface,
+        gradient: isDark
+            ? null
+            : const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [WellnessColors.blush, WellnessColors.surface],
+              ),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: WellnessColors.borderFor(brightness).withValues(alpha: 0.45),
@@ -335,7 +342,7 @@ class WellnessCalendarMonthHeader extends StatelessWidget {
             decoration: BoxDecoration(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.08)
-                  : Colors.white.withValues(alpha: 0.7),
+                  : WellnessColors.primaryHot.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(14),
             ),
             child: Icon(
