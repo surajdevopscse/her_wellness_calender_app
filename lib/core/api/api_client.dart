@@ -8,20 +8,17 @@ import 'package:her_wellness_calender/core/errors/exceptions.dart';
 typedef TokenProvider = String? Function();
 
 class ApiClient {
-  static const _genericErrorMessage =
-      'Something went wrong. Please try again.';
+  static const _genericErrorMessage = 'Something went wrong. Please try again.';
   static const _networkErrorMessage =
       'Unable to connect. Please check your internet connection and try again.';
   static const _responseParsingErrorMessage =
       'We could not read the server response. Please try again.';
-  static const _requestFailedMessage =
-      'Request failed. Please try again.';
+  static const _requestFailedMessage = 'Request failed. Please try again.';
   static const _serverErrorMessage =
       'The service is temporarily unavailable. Please try again later.';
   static const _validationErrorMessage =
       'Please review the highlighted details and try again.';
-  static const _unauthorizedErrorMessage =
-      'Please sign in again to continue.';
+  static const _unauthorizedErrorMessage = 'Please sign in again to continue.';
   static const _forbiddenErrorMessage =
       'You do not have permission to perform this action.';
   static const _notFoundErrorMessage =
@@ -163,7 +160,7 @@ class ApiClient {
       throw const TimeoutAppException();
     } catch (error) {
       if (error is AppException) {
-        throw error;
+        rethrow;
       }
 
       throw const NetworkAppException(message: _networkErrorMessage);
@@ -179,9 +176,7 @@ class ApiClient {
           ? <String, dynamic>{}
           : jsonDecode(response.body);
     } catch (_) {
-      throw const ParsingAppException(
-        message: _responseParsingErrorMessage,
-      );
+      throw const ParsingAppException(message: _responseParsingErrorMessage);
     }
 
     if (response.statusCode >= 200 && response.statusCode < 300) {

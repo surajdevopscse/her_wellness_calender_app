@@ -177,17 +177,15 @@ class SettingsPage extends GetView<SettingsController> {
                   ),
                 ),
                 const SizedBox(height: WellnessSpacing.lg),
-               
                 const SizedBox(height: WellnessSpacing.md),
                 WellnessCard(
                   child: Column(
                     children: [
-                     
                       ListTile(
                         leading: const Icon(Icons.language_outlined),
                         title: const Text('Language'),
-                        subtitle: const Text('English (placeholder)'),
-                        onTap: () {},
+                        subtitle: const Text('English'),
+                        onTap: controller.showLanguageOptions,
                       ),
                     ],
                   ),
@@ -212,12 +210,12 @@ class SettingsPage extends GetView<SettingsController> {
                       ListTile(
                         leading: const Icon(Icons.policy_outlined),
                         title: const Text('Privacy policy'),
-                        onTap: () {},
+                        onTap: controller.showPrivacyPolicy,
                       ),
                       ListTile(
                         leading: const Icon(Icons.article_outlined),
                         title: const Text('Terms and conditions'),
-                        onTap: () {},
+                        onTap: controller.showTerms,
                       ),
                     ],
                   ),

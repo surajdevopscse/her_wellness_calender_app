@@ -47,15 +47,15 @@ class WellnessDashboardPage extends GetView<WellnessDashboardController> {
       _DashboardHome(controller: controller),
       const WellnessCalendarPage(),
       const AddEditPeriodPage(),
-      const DailyLogPage(),
+      const DailyLogPage(showScaffold: false),
       const SymptomsSelectionPage(),
       const ReportsPage(),
       const CycleHistoryPage(),
       const ReminderSettingsPage(),
       const PrivacySettingsPage(),
-      const SettingsPage(),
       const InsightsPage(),
       const PdfReportPreviewPage(),
+      const SettingsPage(),
     ];
     return Obx(
       () => Scaffold(

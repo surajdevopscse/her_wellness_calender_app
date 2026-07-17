@@ -25,15 +25,15 @@ class ForgotPasswordController extends GetxController {
     isLoading.value = true;
     try {
       await forgotPasswordUseCase(emailOrMobile: emailController.text.trim());
-      successMessage.value = 'Reset instructions sent.';
+      successMessage.value = 'Reset code sent.';
       Get.toNamed(
-        AuthenticationRoutes.resetPassword,
+        AuthenticationRoutes.verifyOtp,
         arguments: emailController.text.trim(),
       );
     } on AppException catch (error) {
       errorMessage.value = error.message;
     } catch (_) {
-      errorMessage.value = 'Unable to send reset link.';
+      errorMessage.value = 'Unable to send reset code.';
     } finally {
       isLoading.value = false;
     }

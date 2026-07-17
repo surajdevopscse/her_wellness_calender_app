@@ -19,7 +19,18 @@ class AppEnvironment {
 
   bool get isMockMode => dataSourceMode == DataSourceMode.local;
 
-  // bool get isMockMode => false;
+  static const _configuredBaseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: 'https://localhost:7210',
+  );
+
+  static const _configuredMode = String.fromEnvironment(
+    'APP_DATA_SOURCE',
+    defaultValue: 'remote',
+  );
+
+  static AppEnvironment get current =>
+      _configuredMode.toLowerCase() == DataSourceMode.local.name ? mock : live;
 
   static const AppEnvironment mock = AppEnvironment(
     name: 'mock',
@@ -32,7 +43,7 @@ class AppEnvironment {
 
   static const AppEnvironment live = AppEnvironment(
     name: 'live',
-    baseUrl: 'https://localhost:7210',
+    baseUrl: _configuredBaseUrl,
     connectTimeout: Duration(seconds: 15),
     receiveTimeout: Duration(seconds: 20),
     dataSourceMode: DataSourceMode.remote,

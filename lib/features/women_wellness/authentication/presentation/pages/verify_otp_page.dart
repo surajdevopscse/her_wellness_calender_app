@@ -13,7 +13,7 @@ class VerifyOtpPage extends GetView<VerifyOtpController> {
   Widget build(BuildContext context) {
     return AuthShellLayout(
       title: 'Verify OTP',
-      subtitle: 'Enter the 6-digit code. Mock code: 123456',
+      subtitle: 'Enter the 6-digit code sent to your email or mobile.',
       heroIcon: Icons.verified_user_outlined,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -27,10 +27,13 @@ class VerifyOtpPage extends GetView<VerifyOtpController> {
                 width: 44,
                 child: TextField(
                   controller: controller.otpControllers[index],
+                  focusNode: controller.otpFocusNodes[index],
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.number,
                   maxLength: 1,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  onChanged: (value) =>
+                      controller.handleOtpChanged(index, value),
                   decoration: const InputDecoration(counterText: ''),
                 ),
               );
@@ -42,19 +45,25 @@ class VerifyOtpPage extends GetView<VerifyOtpController> {
                 ? const SizedBox.shrink()
                 : Text(
                     controller.errorMessage.value,
-                    style: TextStyle(color: Theme.of(context).colorScheme.error),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
           ),
           Obx(
             () => FilledButton(
               onPressed: controller.isLoading.value ? null : controller.verify,
-              child: Text(controller.isLoading.value ? 'Verifying...' : 'Verify'),
+              child: Text(
+                controller.isLoading.value ? 'Verifying...' : 'Verify',
+              ),
             ),
           ),
           Obx(
             () => TextButton(
               onPressed: controller.canResend.value ? controller.resend : null,
-              child: const Text('Resend OTP'),
+              child: Text(
+                controller.canResend.value ? 'Resend OTP' : 'Sending...',
+              ),
             ),
           ),
         ],

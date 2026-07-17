@@ -22,11 +22,21 @@ class ResetPasswordController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    emailOrMobile = (Get.arguments as String?) ?? '';
+    final args = Get.arguments;
+    if (args is Map) {
+      emailOrMobile = args['emailOrMobile'] as String? ?? '';
+      otpController.text = args['otp'] as String? ?? '';
+    } else {
+      emailOrMobile = (args as String?) ?? '';
+    }
   }
 
   Future<void> resetPassword() async {
     errorMessage.value = '';
+    if (emailOrMobile.isEmpty) {
+      errorMessage.value = 'Email or mobile is required.';
+      return;
+    }
     if (otpController.text.trim().isEmpty) {
       errorMessage.value = 'Reset code is required.';
       return;

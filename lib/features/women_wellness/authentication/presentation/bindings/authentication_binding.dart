@@ -44,7 +44,10 @@ class AuthenticationBinding extends Bindings {
       fenix: true,
     );
     Get.lazyPut(
-      () => VerifyOtpController(Get.find<VerifyOtpUseCase>()),
+      () => VerifyOtpController(
+        Get.find<VerifyOtpUseCase>(),
+        Get.find<ForgotPasswordUseCase>(),
+      ),
       fenix: true,
     );
   }

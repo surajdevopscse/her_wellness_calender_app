@@ -27,7 +27,9 @@ import 'package:her_wellness_calender/features/women_wellness/symptoms/presentat
 
 /// Daily log screen for flow, pain, mood, symptoms, habits, and notes.
 class DailyLogPage extends GetView<DailyLogController> {
-  const DailyLogPage({super.key});
+  const DailyLogPage({super.key, this.showScaffold = true});
+
+  final bool showScaffold;
 
   @override
   Widget build(BuildContext context) {
@@ -43,95 +45,102 @@ class DailyLogPage extends GetView<DailyLogController> {
       }
 
       final isMobile = WellnessResponsive.isMobile(context);
-      return Scaffold(
-        backgroundColor: Colors.transparent,
-        bottomNavigationBar: isMobile ? _buildMobileActions(context) : null,
-        body: SingleChildScrollView(
-          padding: WellnessResponsive.pagePadding(context),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxWidth: WellnessSpacing.pageMaxWidth,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  WellnessCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          controller.isEditMode
-                              ? 'Reflect on how your body felt'
-                              : 'Capture today with more care',
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
-                        const SizedBox(height: WellnessSpacing.sm),
-                        Text(
-                          'Mood, pain, sleep, hydration, and notes come together here so your trends feel more human than clinical.',
-                          style: WellnessTextStyles.bodyFor(context).copyWith(
-                            color: WellnessColors.textSecondaryFor(
-                              Theme.of(context).brightness,
-                            ),
+      final body = SingleChildScrollView(
+        padding: WellnessResponsive.pagePadding(
+          context,
+        ).copyWith(bottom: WellnessResponsive.bottomContentInset(context)),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: WellnessSpacing.pageMaxWidth,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                WellnessCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        controller.isEditMode
+                            ? 'Reflect on how your body felt'
+                            : 'Capture today with more care',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                      const SizedBox(height: WellnessSpacing.sm),
+                      Text(
+                        'Mood, pain, sleep, hydration, and notes come together here so your trends feel more human than clinical.',
+                        style: WellnessTextStyles.bodyFor(context).copyWith(
+                          color: WellnessColors.textSecondaryFor(
+                            Theme.of(context).brightness,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                ),
+                const SizedBox(height: WellnessSpacing.lg),
+                const WellnessInsightCard(
+                  title: 'A gentler habit',
+                  message:
+                      'Even quick entries create stronger patterns for mood, pain, and symptom insights over time.',
+                  icon: Icons.auto_awesome_rounded,
+                  tint: WellnessColors.secondary,
+                ),
+                const SizedBox(height: WellnessSpacing.lg),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Obx(() {
+                      final useColumns =
+                          WellnessResponsive.useComfortableColumns(
+                            context,
+                            constraints.maxWidth,
+                          );
+                      if (!useColumns) {
+                        return _buildSingleColumn(context);
+                      }
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(child: _buildPrimaryColumn(context)),
+                          const SizedBox(width: WellnessSpacing.xl),
+                          Expanded(child: _buildSecondaryColumn(context)),
+                        ],
+                      );
+                    });
+                  },
+                ),
+                if (controller.message.value.isNotEmpty) ...[
                   const SizedBox(height: WellnessSpacing.lg),
-                  const WellnessInsightCard(
-                    title: 'A gentler habit',
-                    message:
-                        'Even quick entries create stronger patterns for mood, pain, and symptom insights over time.',
-                    icon: Icons.auto_awesome_rounded,
-                    tint: WellnessColors.secondary,
-                  ),
-                  const SizedBox(height: WellnessSpacing.lg),
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      return Obx(() {
-                        final useColumns =
-                            WellnessResponsive.useComfortableColumns(
-                              context,
-                              constraints.maxWidth,
-                            );
-                        if (!useColumns) {
-                          return _buildSingleColumn(context);
-                        }
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(child: _buildPrimaryColumn(context)),
-                            const SizedBox(width: WellnessSpacing.xl),
-                            Expanded(child: _buildSecondaryColumn(context)),
-                          ],
-                        );
-                      });
-                    },
-                  ),
-                  if (controller.message.value.isNotEmpty) ...[
-                    const SizedBox(height: WellnessSpacing.lg),
-                    WellnessCard(
-                      child: Text(
-                        controller.message.value,
-                        style: TextStyle(
-                          color: controller.message.value ==
-                                  WellnessConstants.dailyLogSaved
-                              ? WellnessColors.success
-                              : Theme.of(context).colorScheme.error,
-                        ),
+                  WellnessCard(
+                    child: Text(
+                      controller.message.value,
+                      style: TextStyle(
+                        color:
+                            controller.message.value ==
+                                WellnessConstants.dailyLogSaved
+                            ? WellnessColors.success
+                            : Theme.of(context).colorScheme.error,
                       ),
                     ),
-                  ],
-                  if (!isMobile) ...[
-                    const SizedBox(height: WellnessSpacing.xl),
-                    _buildDesktopActions(context),
-                  ],
+                  ),
                 ],
-              ),
+                if (!isMobile || !showScaffold) ...[
+                  const SizedBox(height: WellnessSpacing.xl),
+                  _buildDesktopActions(context),
+                ],
+              ],
             ),
           ),
         ),
+      );
+
+      if (!showScaffold) return body;
+
+      return Scaffold(
+        backgroundColor: Colors.transparent,
+        bottomNavigationBar: isMobile ? _buildMobileActions(context) : null,
+        body: body,
       );
     });
   }
@@ -241,7 +250,9 @@ class DailyLogPage extends GetView<DailyLogController> {
                 value: controller.medicineTaken.value,
                 onChanged: (value) => controller.medicineTaken.value = value,
                 title: const Text(WellnessConstants.medicineTaken),
-                subtitle: const Text('Add a note when medication is part of your day.'),
+                subtitle: const Text(
+                  'Add a note when medication is part of your day.',
+                ),
                 contentPadding: EdgeInsets.zero,
               ),
               TextField(

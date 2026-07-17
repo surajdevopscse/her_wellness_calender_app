@@ -20,7 +20,7 @@ class WellnessMobileNav extends StatelessWidget {
     (Icons.calendar_month_rounded, 'Cycle', 1),
     (Icons.edit_note_rounded, 'Log', 3),
     (Icons.insights_rounded, 'Trends', 5),
-    (Icons.tune_rounded, 'More', 9),
+    (Icons.tune_rounded, 'More', 11),
   ];
 
   @override

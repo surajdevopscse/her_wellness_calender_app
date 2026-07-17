@@ -115,4 +115,54 @@ class SettingsController extends GetxController {
   void openExport() => Get.toNamed(WellnessRoutes.dataExport);
   void openBackup() => Get.toNamed(WellnessRoutes.backupRestore);
   void openNotifications() => Get.toNamed(WellnessRoutes.notifications);
+
+  Future<void> showLanguageOptions() {
+    return Get.dialog<void>(
+      AlertDialog(
+        title: const Text('Language'),
+        content: const ListTile(
+          leading: Icon(Icons.check_circle_outline),
+          title: Text('English'),
+          subtitle: Text('More languages can be added from settings later.'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: Get.back,
+            child: const Text(WellnessConstants.close),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> showPrivacyPolicy() {
+    return _showInfoDialog(
+      title: 'Privacy policy',
+      body:
+          'Your cycle dates, symptoms, daily logs, reminders, and profile details are used only to provide tracking, predictions, reports, reminders, and privacy controls inside this app. You can update, export, or delete wellness data from the app settings. We do not use wellness data for advertising.',
+    );
+  }
+
+  Future<void> showTerms() {
+    return _showInfoDialog(
+      title: 'Terms and conditions',
+      body:
+          'This app helps you track wellness patterns and cycle estimates. It is not medical advice, contraception guidance, diagnosis, or treatment. For severe pain, unusually heavy bleeding, pregnancy concerns, fever, fainting, or symptoms that feel unsafe or unusual, contact a qualified healthcare professional.',
+    );
+  }
+
+  Future<void> _showInfoDialog({required String title, required String body}) {
+    return Get.dialog<void>(
+      AlertDialog(
+        title: Text(title),
+        content: SingleChildScrollView(child: Text(body)),
+        actions: [
+          TextButton(
+            onPressed: Get.back,
+            child: const Text(WellnessConstants.close),
+          ),
+        ],
+      ),
+    );
+  }
 }

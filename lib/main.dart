@@ -20,7 +20,7 @@ void main() async {
     ),
   );
 
-  await AppDependencies.initialize(environment: AppEnvironment.live);
+  await AppDependencies.initialize(environment: AppEnvironment.current);
 
   runApp(const App());
 }
